@@ -1,0 +1,26 @@
+{
+  "home": "Accueil",
+  "schedule": "Horaire",
+  "presentations": "Présentations",
+  "sponsors": "Partenaires",
+  "design_day": "Journée du design {{ semester }} {{ year }}",
+  "home_paragraph": "Ingéniosité et créativité en valeur! La Journée du design saura vous épater par notre innovation et inspiration étudiante! En collaboration avec des partenaires de l'industrie et de la communauté, nos étudiants ont développé des solutions concrètes pour leurs clients. Cet événement offre l'opportunité aux étudiants de présenter leurs projets de conception, de célébrer leur réussite et de gagner des prix.",
+  "schedule_paragraph": "Bienvenue à la journée de design de l'automne 2022. Ce programme vous permettra de vous orienter durant toutes les présentations. Rejoignez-nous dans l'édifice STEM et SITE pour voir les projets.",
+  "semesters": {
+    "fall": "Automne",
+    "winter": "Hiver",
+    "summer": "Été"
+  },
+  "section": "Section",
+  "group": "Groupe",
+  "time": "Heure",
+  "project": "Projet",
+  "event": "Événement",
+  "description": "Description :",
+  "presentation_paragraph": "Les séries de présentations suivantes auront lieu en parallèle. Le format des présentations est le suivant :",
+  "presentation_li_1": "Chaque groupe présentera pendant 3 minutes",
+  "presentation_li_2": "Il y aura 5 minutes de question par groupe",
+  "centre_for_entrepreneurship_and_engineering_design": "CENTRE EN GÉNIE ENTREPRENEURIAL DE LA CONCEPTION",
+  "github_contributors": "CONTRIBUTEURS GITHUB",
+  "awards_ceremony_paragraph": "Rejoignez-nous dans l'atrium de STEM pour la cérémonie de remise des prix et les remarques de clôture à 15h15."
+}

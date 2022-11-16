@@ -1,0 +1,26 @@
+{
+  "home": "Home",
+  "schedule": "Schedule",
+  "presentations": "Presentations",
+  "sponsors": "Sponsors",
+  "design_day": "{{ semester }} {{ year }} Design Day",
+  "home_paragraph": "Creativity and ingenuity on display! Design Day promises to amaze you with our students' innovation and inspiration! Students have worked closely with external partners of the Faculty to develop solutions for real clients. This event showcases engineering design projects, and celebrates the achievements of our students.",
+  "schedule_paragraph": "Welcome to the Fall 2022 Design day. This program will allow you to orient yourself during all the presentations. Please join us in the STEM and SITE buildings to see the projects.",
+  "semesters": {
+    "fall": "Fall",
+    "winter": "Winter",
+    "summer": "Summer"
+  },
+  "section": "Section",
+  "group": "Group",
+  "time": "Time",
+  "project": "Project",
+  "event": "Event",
+  "description": "Description:",
+  "presentation_paragraph": "The following sets of presentations will happen in parallel. The format of the presentations is the following:",
+  "presentation_li_1": "Each group will present for 3 minutes",
+  "presentation_li_2": "There will be 5 minutes for questions per group",
+  "centre_for_entrepreneurship_and_engineering_design": "CENTRE FOR ENTREPRENEURSHIP AND ENGINEERING DESIGN",
+  "github_contributors": "GITHUB CONTRIBUTORS",
+  "awards_ceremony_paragraph": "Please join us in the STEM atrium for the award ceremony and closing remarks at 3:15 PM."
+}
