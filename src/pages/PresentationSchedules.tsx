@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
-import { Disclosure } from "@headlessui/react";
+import { Disclosure, Transition } from "@headlessui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 
@@ -51,7 +51,6 @@ const PresentationSchedules = () => {
         }
 
         setCategories(categories);
-        console.log(categories);
       });
   }, []);
 
@@ -60,95 +59,106 @@ const PresentationSchedules = () => {
       <div className="w-full lg:w-1/2 pb-10 px-4 lg:px-0">
         <div className="rounded-2xl pb-5">
           {categories.map((category) => (
-            <Disclosure>
+            <Disclosure key={category.name}>
               {({ open }) => (
                 <>
-                  <Disclosure.Button className="flex w-full bg-ceed text-white my-2 justify-between rounded-lg px-4 py-3 text-left text-sm font-medium focus:outline-none">
+                  <Disclosure.Button className="flex w-full bg-ceed text-white my-2 items-center justify-between rounded-lg px-4 py-3 text-left text-sm font-medium focus:outline-none">
                     <span>{category.name}</span>
                     <FontAwesomeIcon
                       icon={open ? solid("chevron-up") : solid("chevron-down")}
                     />
                   </Disclosure.Button>
-                  <Disclosure.Panel className="px-4 text-sm text-gray-500">
-                    <div className="flex p-2 items-center w-full justify-between">
-                      <p>
-                        {t("description")}{" "}
-                        <a className="underline" href={category.description}>
-                          {category.description}
-                        </a>
-                      </p>
-                      <div className="px-2 py-1 bg-ceed text-white rounded-2xl">
-                        {category.location}
+                  <Transition
+                    enter="transition duration-100 ease-out"
+                    enterFrom="transform scale-95 opacity-0"
+                    enterTo="transform scale-100 opacity-100"
+                    leave="transition duration-75 ease-out"
+                    leaveFrom="transform scale-100 opacity-100"
+                    leaveTo="transform scale-95 opacity-0"
+                  >
+                    <Disclosure.Panel className="px-4 text-sm text-gray-500">
+                      <div className="p-2 items-center w-full sm:flex sm:justify-between">
+                        <p className="mb-2 lg:mb-0">
+                          {t("description")}{" "}
+                          <a className="underline" href={category.description}>
+                            {category.description}
+                          </a>
+                        </p>
+                        <div className="px-2 py-1 bg-ceed text-white rounded-2xl flex justify-center">
+                          {category.location}
+                        </div>
                       </div>
-                    </div>
-                    <div className="overflow-scroll">
-                      <table className="min-w-full leading-normal">
-                        <thead>
-                          <tr>
-                            <th
-                              scope="col"
-                              className="px-5 py-3 border-b border-gray-300 text-gray-800 text-left text-sm uppercase font-semibold"
-                            >
-                              {t("section")}
-                            </th>
-                            <th
-                              scope="col"
-                              className="px-5 py-3 border-b border-gray-300 text-gray-800 text-left text-sm uppercase font-semibold"
-                            >
-                              {t("group")}
-                            </th>
-                            <th
-                              scope="col"
-                              className="px-5 py-3 border-b border-gray-300 text-gray-800 text-left text-sm uppercase font-semibold"
-                            >
-                              {t("time")}
-                            </th>
-                            <th
-                              scope="col"
-                              className="px-5 py-3 border-b border-gray-300 text-gray-800 text-left text-sm uppercase font-semibold"
-                            >
-                              {t("project")}
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {category.presentations.map((presentation) => (
-                            <tr key={presentation.group}>
-                              <td className="px-5 py-5 border-b border-gray-300 text-sm">
-                                <p className="text-gray-900 whitespace-no-wrap">
-                                  {presentation.section}
-                                </p>
-                              </td>
-                              <td className="px-5 py-5 border-b border-gray-300 text-sm">
-                                <p className="text-gray-900 whitespace-no-wrap">
-                                  {presentation.group}
-                                </p>
-                              </td>
-                              <td className="px-5 py-5 border-b border-gray-300 text-sm">
-                                <p className="text-gray-900 whitespace-no-wrap">
-                                  {presentation.time}
-                                </p>
-                              </td>
-                              <td className="px-5 py-5 border-b border-gray-300 text-sm">
-                                <p className="text-gray-900 whitespace-no-wrap">
-                                  {presentation.project.includes("https://") ? (
-                                    <a
-                                      className="underline"
-                                      href={presentation.project}
-                                    >
-                                      {presentation.project}
-                                    </a>
-                                  ) : (
-                                    presentation.project
-                                  )}
-                                </p>
-                              </td>
+                      <div className="overflow-x-scroll">
+                        <table className="min-w-full leading-normal">
+                          <thead>
+                            <tr>
+                              <th
+                                scope="col"
+                                className="px-5 py-3 border-b border-gray-300 text-gray-800 text-left text-sm uppercase font-semibold"
+                              >
+                                {t("section")}
+                              </th>
+                              <th
+                                scope="col"
+                                className="px-5 py-3 border-b border-gray-300 text-gray-800 text-left text-sm uppercase font-semibold"
+                              >
+                                {t("group")}
+                              </th>
+                              <th
+                                scope="col"
+                                className="px-5 py-3 border-b border-gray-300 text-gray-800 text-left text-sm uppercase font-semibold"
+                              >
+                                {t("time")}
+                              </th>
+                              <th
+                                scope="col"
+                                className="px-5 py-3 border-b border-gray-300 text-gray-800 text-left text-sm uppercase font-semibold"
+                              >
+                                {t("project")}
+                              </th>
                             </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </Disclosure.Panel>
+                          </thead>
+                          <tbody>
+                            {category.presentations.map((presentation) => (
+                              <tr key={presentation.group}>
+                                <td className="px-5 py-5 border-b border-gray-300 text-sm">
+                                  <p className="text-gray-900 whitespace-no-wrap">
+                                    {presentation.section}
+                                  </p>
+                                </td>
+                                <td className="px-5 py-5 border-b border-gray-300 text-sm">
+                                  <p className="text-gray-900 whitespace-no-wrap">
+                                    {presentation.group}
+                                  </p>
+                                </td>
+                                <td className="px-5 py-5 border-b border-gray-300 text-sm">
+                                  <p className="text-gray-900 whitespace-no-wrap">
+                                    {presentation.time}
+                                  </p>
+                                </td>
+                                <td className="px-5 py-5 border-b border-gray-300 text-sm">
+                                  <p className="text-gray-900 whitespace-no-wrap">
+                                    {presentation.project.includes(
+                                      "https://"
+                                    ) ? (
+                                      <a
+                                        className="underline"
+                                        href={presentation.project}
+                                      >
+                                        {presentation.project}
+                                      </a>
+                                    ) : (
+                                      presentation.project
+                                    )}
+                                  </p>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </Disclosure.Panel>
+                  </Transition>
                 </>
               )}
             </Disclosure>

@@ -62,11 +62,9 @@ const Header = () => {
                 onClick={() =>
                   i18n.changeLanguage(
                     i18n.language === "fr" ? "en" : "fr",
-                    () =>
-                      localStorage.setItem(
-                        "defaultLang",
-                        i18n.language === "fr" ? "en" : "fr"
-                      )
+                    () => {
+                      localStorage.setItem("defaultLang", i18n.language);
+                    }
                   )
                 }
                 className="flex items-center justify-center sm:justify-end text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"

@@ -10,10 +10,10 @@ const Home = () => {
   return (
     <div
       id="home"
-      className="bg-center min-h-650"
+      className="bg-center min-h-650 bg-fixed"
       style={{ backgroundImage: `url(${backgroundImg})` }}
     >
-      <div className="lg:w-5/6 flex items-center justify-center py-10 px-5">
+      <div className="lg:w-2/3 flex items-center justify-center py-10 px-5">
         <div className="bg-white p-4 rounded-2xl lg:w-2/3">
           <h1 className="text-5xl font-normal leading-normal mt-0 mb-2">
             {t("design_day", {
