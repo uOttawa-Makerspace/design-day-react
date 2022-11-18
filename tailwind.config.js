@@ -8,6 +8,7 @@ module.exports = {
       },
       colors: {
         ceed: "#f84b33",
+        "ceed-light": "rgba(155,44,29,0.58)",
       },
     },
   },

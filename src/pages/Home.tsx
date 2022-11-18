@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import config from "../config/config";
 import { useTranslation } from "react-i18next";
-import i18n from "i18next";
 
 const Home = () => {
   const { t } = useTranslation();
@@ -18,7 +17,7 @@ const Home = () => {
         <div className="bg-white p-4 rounded-2xl lg:w-2/3">
           <h1 className="text-5xl font-normal leading-normal mt-0 mb-2">
             {t("design_day", {
-              year: i18n.language === "fr" ? config.dateFr : config.dateEn,
+              year: config.year,
               semester: t(`semesters.${config.semester}`),
             })}
           </h1>
