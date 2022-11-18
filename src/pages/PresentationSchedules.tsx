@@ -119,7 +119,7 @@ const PresentationSchedules = () => {
   }, []);
 
   return (
-    <div id="schedule" className="flex justify-center">
+    <div id="presentation" className="flex justify-center">
       <div className="w-full lg:w-1/2 pb-10 px-4 lg:px-0">
         <div className="rounded-2xl pb-5">
           {categories.map((category) => (
