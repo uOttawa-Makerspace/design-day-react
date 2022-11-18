@@ -13,14 +13,18 @@ enum Semesters {
 interface Config {
   year: number;
   semester: Semesters;
-  date: string;
+  dateFr: string;
+  dateEn: string;
+  sheetId: string;
   generalSchedule: GeneralSchedule[];
 }
 
 const config: Config = {
   year: 2022,
   semester: Semesters.fall,
-  date: "01/12/2022",
+  dateFr: "01/12/2022",
+  dateEn: "2022/12/01",
+  sheetId: "1cH8HX01hMJarwz5Idsd6hqybOqJruonuSqn8GgFlXOw",
   generalSchedule: [
     {
       time: "10h30-11h00",

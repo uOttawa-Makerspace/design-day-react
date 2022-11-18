@@ -9,7 +9,9 @@ const GeneralSchedule = () => {
     <div id="schedule" className="flex justify-center">
       <div className="lg:w-1/2 pt-10 py-3 px-4 lg:px-0">
         <h2 className="text-5xl font-normal mt-0 mb-2">{t("schedule")}</h2>
-        <h3 className="text-2xl font-normal mt-0 mb-2">{config.date}</h3>
+        <h3 className="text-2xl font-normal mt-0 mb-2">
+          {i18n.language === "fr" ? config.dateFr : config.dateEn}
+        </h3>
         <p className="text-base font-light leading-relaxed mt-0 mb-2">
           {t("schedule_paragraph")}
         </p>

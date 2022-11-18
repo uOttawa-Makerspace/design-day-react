@@ -3,10 +3,11 @@ import { useEffect, useState } from "react";
 import { Disclosure, Transition } from "@headlessui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
+import config from "../config/config";
 
 interface Categories {
   name: string;
-  description: string;
+  description?: string;
   location: string;
   presentations: Presentation[];
 }
@@ -24,7 +25,7 @@ const PresentationSchedules = () => {
 
   useEffect(() => {
     fetch(
-      `https://sheets.googleapis.com/v4/spreadsheets/${process.env.REACT_APP_GOOGLE_SHEETS_ID}/values/1st-year?key=${process.env.REACT_APP_GOOGLE_API_KEY}&range=!A2:Z1000`
+      `https://sheets.googleapis.com/v4/spreadsheets/${config.sheetId}/values/1st-year?key=${process.env.REACT_APP_GOOGLE_API_KEY}&range=!A2:ZZZ1000`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -78,12 +79,17 @@ const PresentationSchedules = () => {
                   >
                     <Disclosure.Panel className="px-4 text-sm text-gray-500">
                       <div className="p-2 items-center w-full sm:flex sm:justify-between">
-                        <p className="mb-2 lg:mb-0">
-                          {t("description")}{" "}
-                          <a className="underline" href={category.description}>
-                            {category.description}
-                          </a>
-                        </p>
+                        {category.description && (
+                          <p className="mb-2 lg:mb-0">
+                            {t("description")}{" "}
+                            <a
+                              className="underline"
+                              href={category.description}
+                            >
+                              {category.description}
+                            </a>
+                          </p>
+                        )}
                         <div className="px-2 py-1 bg-ceed text-white rounded-2xl flex justify-center">
                           {category.location}
                         </div>
@@ -138,7 +144,7 @@ const PresentationSchedules = () => {
                                 </td>
                                 <td className="px-5 py-5 border-b border-gray-300 text-sm">
                                   <p className="text-gray-900 whitespace-no-wrap">
-                                    {presentation.project.includes(
+                                    {presentation.project?.includes(
                                       "https://"
                                     ) ? (
                                       <a
