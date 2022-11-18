@@ -15,6 +15,8 @@
   "group": "Groupe",
   "time": "Heure",
   "project": "Projet",
+  "project_description": "Description du projet",
+  "project_repo": "Repertoire du projet",
   "event": "Événement",
   "description": "Description :",
   "presentation_paragraph": "Les séries de présentations suivantes auront lieu en parallèle. Le format des présentations est le suivant :",

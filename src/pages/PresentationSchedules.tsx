@@ -13,10 +13,12 @@ interface Categories {
 }
 
 interface Presentation {
-  section: string;
-  group: string;
-  time: string;
-  project: string;
+  section?: string;
+  group?: string;
+  time?: string;
+  project?: string;
+  project_description?: string;
+  project_repo?: string;
 }
 
 const PresentationSchedules = () => {
@@ -30,7 +32,7 @@ const PresentationSchedules = () => {
       .then((res) => res.json())
       .then((data) => {
         const categories: Categories[] = [];
-        for (let i = 0; i < data.values[0].length; i += 5) {
+        for (let i = 0; i < data.values[0].length; i += 7) {
           categories.push({
             name: data.values[0][i],
             description: data.values[0][i + 1],
@@ -41,13 +43,17 @@ const PresentationSchedules = () => {
 
         const presentationData = data.values.slice(3);
         for (let i = 0; i < presentationData.length; i++) {
-          for (let j = 0; j < presentationData[i].length; j += 5) {
-            categories[j / 5].presentations.push({
-              section: presentationData[i][j],
-              group: presentationData[i][j + 1],
-              time: presentationData[i][j + 2],
-              project: presentationData[i][j + 3],
-            });
+          for (let j = 0; j < presentationData[i].length; j += 7) {
+            if (presentationData[i].slice(j, j + 6).some((el: string) => el)) {
+              categories[j / 7].presentations.push({
+                section: presentationData[i][j],
+                group: presentationData[i][j + 1],
+                time: presentationData[i][j + 2],
+                project: presentationData[i][j + 3],
+                project_description: presentationData[i][j + 4],
+                project_repo: presentationData[i][j + 5],
+              });
+            }
           }
         }
 
@@ -122,11 +128,23 @@ const PresentationSchedules = () => {
                               >
                                 {t("project")}
                               </th>
+                              <th
+                                scope="col"
+                                className="px-5 py-3 border-b border-gray-300 text-gray-800 text-left text-sm uppercase font-semibold"
+                              >
+                                {t("project_description")}
+                              </th>
+                              <th
+                                scope="col"
+                                className="px-5 py-3 border-b border-gray-300 text-gray-800 text-left text-sm uppercase font-semibold"
+                              >
+                                {t("project_repo")}
+                              </th>
                             </tr>
                           </thead>
                           <tbody>
-                            {category.presentations.map((presentation) => (
-                              <tr key={presentation.group}>
+                            {category.presentations.map((presentation, i) => (
+                              <tr key={i}>
                                 <td className="px-5 py-5 border-b border-gray-300 text-sm">
                                   <p className="text-gray-900 whitespace-no-wrap">
                                     {presentation.section}
@@ -144,17 +162,38 @@ const PresentationSchedules = () => {
                                 </td>
                                 <td className="px-5 py-5 border-b border-gray-300 text-sm">
                                   <p className="text-gray-900 whitespace-no-wrap">
-                                    {presentation.project?.includes(
+                                    {presentation.project}
+                                  </p>
+                                </td>
+                                <td className="px-5 py-5 border-b border-gray-300 text-sm">
+                                  <p className="text-gray-900 whitespace-no-wrap">
+                                    {presentation.project_description?.includes(
                                       "https://"
                                     ) ? (
                                       <a
                                         className="underline"
-                                        href={presentation.project}
+                                        href={presentation.project_description}
                                       >
-                                        {presentation.project}
+                                        {presentation.project_description}
                                       </a>
                                     ) : (
-                                      presentation.project
+                                      presentation.project_description
+                                    )}
+                                  </p>
+                                </td>
+                                <td className="px-5 py-5 border-b border-gray-300 text-sm">
+                                  <p className="text-gray-900 whitespace-no-wrap">
+                                    {presentation.project_repo?.includes(
+                                      "https://"
+                                    ) ? (
+                                      <a
+                                        className="underline"
+                                        href={presentation.project_repo}
+                                      >
+                                        {presentation.project_repo}
+                                      </a>
+                                    ) : (
+                                      presentation.project_repo
                                     )}
                                   </p>
                                 </td>
