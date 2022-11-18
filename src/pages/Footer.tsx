@@ -42,7 +42,7 @@ const Footer = () => {
         AND{" "}
         <a
           className="underline"
-          href="https://github.com/uOttawa-Makerspace/design-day-schedule/graphs/contributors"
+          href="https://github.com/uOttawa-Makerspace/design-day-react/graphs/contributors"
         >
           {t("github_contributors")}
         </a>
