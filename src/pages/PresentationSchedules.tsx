@@ -4,6 +4,14 @@ import { Disclosure, Transition } from "@headlessui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import config from "../config/config";
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
+import siteAtrium1FloorPlanImg from "../images/floorplans/Floorplan_SITEatrium_1_student.png";
+import siteAtrium2FloorPlanImg from "../images/floorplans/Floorplan_SITEatrium_2_student.png";
+import siteRotundaFloorPlanImg from "../images/floorplans/Floorplan_SITErotunda_student.png";
+import stemFloorPlanImg from "../images/floorplans/Floorplan_STEM_student.png";
+import Captions from "yet-another-react-lightbox/plugins/captions";
+import "yet-another-react-lightbox/plugins/captions.css";
 
 interface Category {
   name: string;
@@ -78,6 +86,26 @@ const DisplayTd = ({
 const PresentationSchedules = () => {
   const { t } = useTranslation();
   const [categories, setCategories] = useState<Category[]>([]);
+  const [isImgPopupOpen, setIsImgPopupOpen] = useState(false);
+  const [imgIndex, setImgIndex] = useState(0);
+  const images = [
+    {
+      title: "SITE Atrium 1",
+      caption: "SITE Atrium 1",
+      src: siteAtrium1FloorPlanImg,
+    },
+    {
+      title: "SITE Atrium 2",
+      caption: "SITE Atrium 2",
+      src: siteAtrium2FloorPlanImg,
+    },
+    {
+      title: "SITE Rotunda",
+      caption: "SITE Rotunda",
+      src: siteRotundaFloorPlanImg,
+    },
+    { title: "STEM", caption: "STEM", src: stemFloorPlanImg },
+  ];
 
   useEffect(() => {
     fetch(
@@ -306,6 +334,36 @@ const PresentationSchedules = () => {
             </Disclosure>
           ))}
         </div>
+
+        <h4 className="text-xl font-normal mt-0 mb-2">{t("floor_plans")}</h4>
+
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+          {images.map((images, i) => (
+            <button
+              onClick={() => {
+                setImgIndex(i);
+                setIsImgPopupOpen(true);
+              }}
+              className="h-48"
+              key={images.title}
+            >
+              <img
+                className="w-auto h-auto max-h-full"
+                src={images.src}
+                alt={images.caption}
+              />
+            </button>
+          ))}
+        </div>
+
+        <Lightbox
+          open={isImgPopupOpen}
+          index={imgIndex}
+          slides={images}
+          close={() => setIsImgPopupOpen(false)}
+          plugins={[Captions]}
+        />
+
         <p className="text-base font-light leading-relaxed mt-0">
           {t("awards_ceremony_paragraph")}
         </p>
