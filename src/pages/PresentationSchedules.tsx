@@ -6,10 +6,10 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import config from "../config/config";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
-import siteAtrium1FloorPlanImg from "../images/floorplans/Floorplan_SITEatrium_1_student.png";
-import siteAtrium2FloorPlanImg from "../images/floorplans/Floorplan_SITEatrium_2_student.png";
-import siteRotundaFloorPlanImg from "../images/floorplans/Floorplan_SITErotunda_student.png";
-import stemFloorPlanImg from "../images/floorplans/Floorplan_STEM_student.png";
+import siteAtrium1FloorPlanImg from "../images/floorplans/Floorplan_SITEatrium_1_student.webp";
+import siteAtrium2FloorPlanImg from "../images/floorplans/Floorplan_SITEatrium_2_student.webp";
+import siteRotundaFloorPlanImg from "../images/floorplans/Floorplan_SITErotunda_student.webp";
+import stemFloorPlanImg from "../images/floorplans/Floorplan_STEM_student.webp";
 import Captions from "yet-another-react-lightbox/plugins/captions";
 import "yet-another-react-lightbox/plugins/captions.css";
 
