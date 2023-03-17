@@ -5,7 +5,7 @@
   "sponsors": "Sponsors",
   "design_day": "{{ semester }} {{ year }} Design Day",
   "home_paragraph": "Creativity and ingenuity on display! Design Day promises to amaze you with our students' innovation and inspiration! Students have worked closely with external partners of the Faculty to develop solutions for real clients. This event showcases engineering design projects, and celebrates the achievements of our students.",
-  "schedule_paragraph": "Welcome to the Winter 2023 Design day. This program will allow you to orient yourself during all the presentations. Please join us in the STEM and SITE buildings to see the projects.",
+  "schedule_paragraph": "Welcome to the {{ semester }} {{ year }} Design day. This program will allow you to orient yourself during all the presentations. Please join us in the STEM and SITE buildings to see the projects.",
   "semesters": {
     "fall": "Fall",
     "winter": "Winter",

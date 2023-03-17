@@ -15,7 +15,11 @@ const GeneralSchedule = () => {
         <p className="text-base font-light leading-relaxed mt-0 mb-2">
           {t("schedule_paragraph", {
             year: config.year,
-            semester: t(`semesters.${config.semester}`).toLowerCase(),
+            // semester: t(`semesters.${config.semester}`).toLowerCase()
+            semester:
+              i18n.language === "fr"
+                ? t(`semesters.${config.semester}`).toLowerCase()
+                : t(`semesters.${config.semester}`),
           })}
         </p>
         <div className="container mx-auto px-4 sm:px-8 max-w-3xl">
