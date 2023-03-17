@@ -48,8 +48,9 @@ const config: Config = {
     },
     {
       time: "13h15-14h15",
-      eventEn: "Closing remark and awards ceremony",
-      eventFr: "Remarques de clôture et cérémonie de remise des prix",
+      eventEn: "Closing remark and awards ceremony (STEM atrium)",
+      eventFr:
+        "Remarques de clôture et cérémonie de remise des prix (atrium STEM)",
     },
   ],
 };

@@ -13,7 +13,10 @@ const GeneralSchedule = () => {
           {i18n.language === "fr" ? config.dateFr : config.dateEn}
         </h3>
         <p className="text-base font-light leading-relaxed mt-0 mb-2">
-          {t("schedule_paragraph")}
+          {t("schedule_paragraph", {
+            year: config.year,
+            semester: t(`semesters.${config.semester}`).toLowerCase(),
+          })}
         </p>
         <div className="container mx-auto px-4 sm:px-8 max-w-3xl">
           <div className="py-4">
