@@ -6,10 +6,9 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import config from "../config/config";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
-import siteAtrium1FloorPlanImg from "../images/floorplans/Floorplan_SITEatrium_1_student.webp";
-import siteAtrium2FloorPlanImg from "../images/floorplans/Floorplan_SITEatrium_2_student.webp";
-import siteRotundaFloorPlanImg from "../images/floorplans/Floorplan_SITErotunda_student.webp";
-import stemFloorPlanImg from "../images/floorplans/Floorplan_STEM_student.webp";
+import siteFloorPlan from "../images/floorplans/Floorplan_SITEatrium_student.webp";
+import siteRotundaFloorPlan from "../images/floorplans/Floorplan_SITErotunda_student.webp";
+import stemFloorPlan from "../images/floorplans/Floorplan_STEM_student.webp";
 import Captions from "yet-another-react-lightbox/plugins/captions";
 import "yet-another-react-lightbox/plugins/captions.css";
 
@@ -90,21 +89,16 @@ const PresentationSchedules = () => {
   const [imgIndex, setImgIndex] = useState(0);
   const images = [
     {
-      title: "SITE Atrium 1",
-      caption: "SITE Atrium 1",
-      src: siteAtrium1FloorPlanImg,
-    },
-    {
-      title: "SITE Atrium 2",
-      caption: "SITE Atrium 2",
-      src: siteAtrium2FloorPlanImg,
+      title: "SITE Atrium",
+      caption: "SITE Atrium",
+      src: siteFloorPlan,
     },
     {
       title: "SITE Rotunda",
       caption: "SITE Rotunda",
-      src: siteRotundaFloorPlanImg,
+      src: siteRotundaFloorPlan,
     },
-    { title: "STEM", caption: "STEM", src: stemFloorPlanImg },
+    { title: "STEM", caption: "STEM", src: stemFloorPlan },
   ];
 
   useEffect(() => {
@@ -337,7 +331,7 @@ const PresentationSchedules = () => {
 
         <h4 className="text-xl font-normal mt-0 mb-2">{t("floor_plans")}</h4>
 
-        {/* <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
           {images.map((images, i) => (
             <button
               onClick={() => {
@@ -362,7 +356,7 @@ const PresentationSchedules = () => {
           slides={images}
           close={() => setIsImgPopupOpen(false)}
           plugins={[Captions]}
-        /> */}
+        />
 
         <p className="text-base font-light leading-relaxed mt-0">
           {t("awards_ceremony_paragraph")}
