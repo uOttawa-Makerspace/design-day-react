@@ -24,7 +24,7 @@ const config: Config = {
   semester: Semesters.winter,
   dateFr: "30/03/2023",
   dateEn: "2023/03/30",
-  sheetId: "1edPKFVkc3KErPQHaG4zVG-L95Kz2psM96qxbeWKW7w4",
+  sheetId: process.env.REACT_APP_SHEET_ID || "",
   generalSchedule: [
     {
       time: "8h30-9h00",
