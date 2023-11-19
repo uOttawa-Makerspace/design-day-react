@@ -16,38 +16,57 @@ interface Config {
   dateFr: string;
   dateEn: string;
   sheetId: string;
-  generalSchedule: GeneralSchedule[];
+  judgesSchedule: GeneralSchedule[]; // judges schedule
+  studentsSchedule: GeneralSchedule[]; // students schedule
 }
 
 const config: Config = {
   year: 2023,
-  semester: Semesters.winter,
-  dateFr: "30/03/2023",
-  dateEn: "2023/03/30",
+  semester: Semesters.fall,
+  dateFr: "30/11/2023",
+  dateEn: "2023/11/30",
   sheetId: process.env.REACT_APP_GOOGLE_SHEETS_ID || "",
-  generalSchedule: [
+  judgesSchedule: [
     {
-      time: "8h30-9h00",
+      time: "9h15-9h45",
       eventEn: "Judge orientation",
       eventFr: "Orientation des juges",
     },
     {
-      time: "9h15-11h15",
+      time: "10h-12h",
       eventEn: "Judging",
       eventFr: "Évaluation",
     },
     {
-      time: "11h15-12h45",
+      time: "12h-13h15",
       eventEn: "Lunch and Deliberation",
       eventFr: "Diner et déliberation",
     },
     {
-      time: "11h15-13h15",
+      time: "14h-15h",
+      eventEn: "Closing remark and awards ceremony (STEM atrium)",
+      eventFr:
+        "Remarques de clôture et cérémonie de remise des prix (atrium STEM)",
+    },
+  ],
+  studentsSchedule: [
+    {
+      time: "9h15-9h45",
+      eventEn: "Table setup",
+      eventFr: "Installation de la table",
+    },
+    {
+      time: "10h-12h",
+      eventEn: "Judging",
+      eventFr: "Évaluation",
+    },
+    {
+      time: "12h-14h",
       eventEn: "Event open to the public",
       eventFr: "Evenement ouvert au public",
     },
     {
-      time: "13h15-14h15",
+      time: "14h-15h",
       eventEn: "Closing remark and awards ceremony (STEM atrium)",
       eventFr:
         "Remarques de clôture et cérémonie de remise des prix (atrium STEM)",

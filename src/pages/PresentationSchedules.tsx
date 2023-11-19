@@ -358,9 +358,9 @@ const PresentationSchedules = () => {
           plugins={[Captions]}
         />
 
-        <p className="text-base font-light leading-relaxed mt-0">
+        {/* <p className="text-base font-light leading-relaxed mt-0">
           {t("awards_ceremony_paragraph")}
-        </p>
+        </p> */}
       </div>
     </div>
   );

@@ -1,70 +1,37 @@
-import config from "../config/config";
+import React, { useState } from 'react';
 import { useTranslation } from "react-i18next";
-import i18n from "i18next";
+import ScheduleHeader from './ScheduleHeader';
+import ScheduleTable from './ScheduleTable';
+
+type TabType = 'judges' | 'students';
 
 const GeneralSchedule = () => {
+  const [activeTab, setActiveTab] = useState<TabType>('judges');
   const { t } = useTranslation();
 
   return (
     <div id="schedule" className="flex justify-center">
       <div className="lg:w-1/2 pt-10 py-3 px-4 lg:px-0">
-        <h2 className="text-5xl font-normal mt-0 mb-2">{t("schedule")}</h2>
-        <h3 className="text-2xl font-normal mt-0 mb-2">
-          {i18n.language === "fr" ? config.dateFr : config.dateEn}
-        </h3>
-        <p className="text-base font-light leading-relaxed mt-0 mb-2">
-          {t("schedule_paragraph", {
-            year: config.year,
-            semester:
-              i18n.language === "fr"
-                ? t(`semesters.${config.semester}`).toLowerCase()
-                : t(`semesters.${config.semester}`),
-          })}
-        </p>
-        <div className="container mx-auto px-4 sm:px-8 max-w-3xl">
-          <div className="py-4">
-            <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-              <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
-                <table className="min-w-full leading-normal bg-gray-50">
-                  <thead>
-                    <tr>
-                      <th
-                        scope="col"
-                        className="px-5 py-3 border-b border-gray-300 text-gray-800 text-left text-sm uppercase font-semibold"
-                      >
-                        {t("time")}
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-5 py-3 border-b border-gray-300 text-gray-800 text-left text-sm uppercase font-semibold"
-                      >
-                        {t("event")}
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {config.generalSchedule.map((sched) => (
-                      <tr key={sched.eventEn}>
-                        <td className="px-5 py-5 border-b border-gray-300 text-sm">
-                          <p className="text-gray-900 whitespace-no-wrap">
-                            {sched.time}
-                          </p>
-                        </td>
-                        <td className="px-5 py-5 border-b border-gray-300 text-sm">
-                          <p className="text-gray-900 whitespace-no-wrap">
-                            {i18n.language === "fr"
-                              ? sched.eventFr
-                              : sched.eventEn}
-                          </p>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
+        <ScheduleHeader />
+
+        <div className="flex justify-center mb-4">
+          <div className="border-b border-gray-300">
+            <button 
+              className={`px-6 py-2 inline-block ${activeTab === 'judges' ? 'text-ceed border-ceed' : 'text-gray-500 border-transparent'} border-b-2`}
+              onClick={() => setActiveTab('judges')}
+            >
+              Judges
+            </button>
+            <button 
+              className={`px-6 py-2 inline-block ${activeTab === 'students' ? 'text-orange-500 border-orange-500' : 'text-gray-500 border-transparent'} border-b-2`} 
+              onClick={() => setActiveTab('students')}
+            >
+              Students
+            </button>
           </div>
         </div>
+
+        <ScheduleTable type={activeTab} />
 
         <p className="text-base font-light leading-relaxed mt-0 mb-2">
           {t("presentation_paragraph")}
