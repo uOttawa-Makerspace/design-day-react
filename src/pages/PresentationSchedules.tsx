@@ -184,7 +184,9 @@ const PresentationSchedules = () => {
 
                       {Object.keys(category.presentations).map(
                         (presentationSection, i) => (
-                          <Disclosure key={i}>
+                          <Disclosure key={i}
+                          defaultOpen={Object.keys(category.presentations).length === 1}
+                          >
                             {({ open }) => (
                               <div>
                                 <Disclosure.Button className="flex w-full bg-ceed-light text-white my-2 items-center justify-between rounded-lg px-4 py-3 text-left text-sm font-medium focus:outline-none">
