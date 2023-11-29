@@ -18,19 +18,22 @@ Hosted by CloudFlare Pages
 
 To run and test the Design Day website locally, it's necessary to set up the environment variables. Follow these steps to set up your environment:
 
-1. **Create a `.env` File**:
-   In the root directory of your project, create a file named `.env`.
+1. **Create a `.env` File**
 
-2. **Add Environment Variables**:
-   Open the `.env` file and add the following lines:
-     ```
-     REACT_APP_GOOGLE_API_KEY=your_google_api_key
-     REACT_APP_GOOGLE_SHEETS_ID=your_google_sheets_id
-     ```
-   Replace `your_google_api_key` and `your_google_sheets_id` with your actual Google API key and Google Sheets ID, respectively. Both can be found on Cloudflare.
+    In the root directory of your project, create a file named `.env`.
 
-3. **Updating Environment Variables for Production**:
-   If you need to update the environment variables for the production environment, this can be done through Cloudflare Pages.
+2. **Add Environment Variables**
+    
+    Open the `.env` file and add the following lines: 
+    ```
+    REACT_APP_GOOGLE_API_KEY=your_google_api_key
+    REACT_APP_GOOGLE_SHEETS_ID=your_google_sheets_id
+    ```
+    Replace `your_google_api_key` and `your_google_sheets_id` with your actual Google API key and Google Sheets ID, respectively. Both can be found on Cloudflare.
+
+3. **Updating Environment Variables for Production**
+
+    If you need to update the environment variables for the production environment, this can be done through Cloudflare Pages.
 
 ## Available Scripts
 
