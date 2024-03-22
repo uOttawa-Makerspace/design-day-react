@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import ScheduleHeader from './ScheduleHeader';
-import ScheduleTable from './ScheduleTable';
+import ScheduleHeader from "./ScheduleHeader";
+import ScheduleTable from "./ScheduleTable";
 
-type TabType = 'judges' | 'students';
+type TabType = "judges" | "students";
 
 const GeneralSchedule = () => {
-  const [activeTab, setActiveTab] = useState<TabType>('judges');
+  const [activeTab, setActiveTab] = useState<TabType>("judges");
   const { t } = useTranslation();
 
   return (
@@ -16,17 +16,25 @@ const GeneralSchedule = () => {
 
         <div className="flex justify-center mb-4">
           <div className="border-b border-gray-300">
-            <button 
-              className={`px-6 py-2 inline-block ${activeTab === 'judges' ? 'text-ceed border-ceed' : 'text-gray-500 border-transparent'} border-b-2`}
-              onClick={() => setActiveTab('judges')}
+            <button
+              className={`px-6 py-2 inline-block ${
+                activeTab === "judges"
+                  ? "text-ceed border-ceed"
+                  : "text-gray-500 border-transparent"
+              } border-b-2`}
+              onClick={() => setActiveTab("judges")}
             >
-              Judges
+              {t("judges")}
             </button>
-            <button 
-              className={`px-6 py-2 inline-block ${activeTab === 'students' ? 'text-orange-500 border-orange-500' : 'text-gray-500 border-transparent'} border-b-2`} 
-              onClick={() => setActiveTab('students')}
+            <button
+              className={`px-6 py-2 inline-block ${
+                activeTab === "students"
+                  ? "text-orange-500 border-orange-500"
+                  : "text-gray-500 border-transparent"
+              } border-b-2`}
+              onClick={() => setActiveTab("students")}
             >
-              Students
+              {t("students")}
             </button>
           </div>
         </div>
