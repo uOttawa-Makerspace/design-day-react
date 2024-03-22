@@ -21,16 +21,16 @@ interface Config {
 }
 
 const config: Config = {
-  year: 2023,
-  semester: Semesters.fall,
-  dateFr: "30/11/2023",
-  dateEn: "2023/11/30",
+  year: 2024,
+  semester: Semesters.winter,
+  dateFr: "04/04/2024",
+  dateEn: "2024/04/04",
   sheetId: process.env.REACT_APP_GOOGLE_SHEETS_ID || "",
   judgesSchedule: [
     {
       time: "9h15-9h45",
-      eventEn: "Judge orientation",
-      eventFr: "Orientation des juges",
+      eventEn: "Judge orientation (STEM 364)",
+      eventFr: "Orientation des juges (STEM 364)",
     },
     {
       time: "10h-12h",
@@ -64,6 +64,11 @@ const config: Config = {
       time: "12h-14h",
       eventEn: "Event open to the public",
       eventFr: "Evenement ouvert au public",
+    },
+    {
+      time: "12h-13h15",
+      eventEn: "Concepts competition (STEM 122)",
+      eventFr: "Compétition de concepts (STEM 122)",
     },
     {
       time: "14h-15h",
