@@ -10,7 +10,7 @@ const ScheduleTable: React.FC<ScheduleTableProps> = ({ type }) => {
   const { t } = useTranslation();
 
   const scheduleData = type === 'judges' ? config.judgesSchedule : config.studentsSchedule;
-  const title = type === 'judges' ? t("Judges") : t("Students");
+  const title = type === 'judges' ? t("judges") : t("students");
 
   return (
     <div className="container mx-auto px-4 sm:px-8 max-w-3xl">
