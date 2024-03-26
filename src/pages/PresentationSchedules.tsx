@@ -89,16 +89,18 @@ const PresentationSchedules = () => {
   const [imgIndex, setImgIndex] = useState(0);
   const images = [
     {
-      title: "SITE Atrium",
-      caption: "SITE Atrium",
+      title: "SITE 1",
+      caption: "SITE 1",
       src: siteFloorPlan,
     },
     {
-      title: "SITE Rotunda",
-      caption: "SITE Rotunda",
+      title: "SITE 0",
+      caption: "SITE 0",
       src: siteRotundaFloorPlan,
     },
-    { title: "STEM", caption: "STEM", src: stemFloorPlan },
+    { title: "STEM", 
+      caption: "STEM", 
+      src: stemFloorPlan },
   ];
 
   useEffect(() => {
@@ -332,7 +334,7 @@ const PresentationSchedules = () => {
         </div>
 
         <h4 className="text-xl font-normal mt-0 mb-2">{t("floor_plans")}</h4>
-{/* 
+
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
           {images.map((images, i) => (
             <button
@@ -358,7 +360,7 @@ const PresentationSchedules = () => {
           slides={images}
           close={() => setIsImgPopupOpen(false)}
           plugins={[Captions]}
-        /> */}
+        />
 
         {/* <p className="text-base font-light leading-relaxed mt-0">
           {t("awards_ceremony_paragraph")}

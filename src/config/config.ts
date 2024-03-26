@@ -52,8 +52,8 @@ const config: Config = {
   studentsSchedule: [
     {
       time: "9h15-9h45",
-      eventEn: "Table setup",
-      eventFr: "Installation de la table",
+      eventEn: "Table setup and registration (near STEM front entrance and SITE spinning doors)",
+      eventFr: "Installation de la table et inscription (près de l'entrée principale de STEM et des portes tournantes de SITE)",
     },
     {
       time: "10h-12h",
