@@ -98,9 +98,7 @@ const PresentationSchedules = () => {
       caption: "SITE 0",
       src: siteRotundaFloorPlan,
     },
-    { title: "STEM", 
-      caption: "STEM", 
-      src: stemFloorPlan },
+    { title: "STEM", caption: "STEM", src: stemFloorPlan },
   ];
 
   useEffect(() => {
@@ -186,8 +184,11 @@ const PresentationSchedules = () => {
 
                       {Object.keys(category.presentations).map(
                         (presentationSection, i) => (
-                          <Disclosure key={i}
-                          defaultOpen={Object.keys(category.presentations).length === 1}
+                          <Disclosure
+                            key={i}
+                            defaultOpen={
+                              Object.keys(category.presentations).length === 1
+                            }
                           >
                             {({ open }) => (
                               <div>
@@ -332,23 +333,23 @@ const PresentationSchedules = () => {
             </Disclosure>
           ))}
         </div>
-
         <h4 className="text-xl font-normal mt-0 mb-2">{t("floor_plans")}</h4>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
-          {images.map((images, i) => (
+          {images.map((image, i) => (
             <button
               onClick={() => {
                 setImgIndex(i);
                 setIsImgPopupOpen(true);
               }}
-              className="h-48"
-              key={images.title}
+              className="flex flex-col items-center justify-center" 
+              key={image.title}
             >
+              <p className="text-sm font-semibold mb-2">{image.title}</p>
               <img
-                className="w-auto h-auto max-h-full"
-                src={images.src}
-                alt={images.caption}
+                className="w-auto h-36" 
+                src={image.src}
+                alt={image.caption}
               />
             </button>
           ))}
@@ -361,12 +362,8 @@ const PresentationSchedules = () => {
           close={() => setIsImgPopupOpen(false)}
           plugins={[Captions]}
         />
-
-        {/* <p className="text-base font-light leading-relaxed mt-0">
-          {t("awards_ceremony_paragraph")}
-        </p> */}
       </div>
-    </div> 
+    </div>
   );
 };
 
