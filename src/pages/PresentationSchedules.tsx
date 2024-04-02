@@ -6,9 +6,9 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import config from "../config/config";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
-import siteFloorPlan from "../images/floorplans/Floorplan_SITEatrium_student.webp";
-import siteRotundaFloorPlan from "../images/floorplans/Floorplan_SITErotunda_student.webp";
-import stemFloorPlan from "../images/floorplans/Floorplan_STEM_student.webp";
+import siteFloorPlan from "../images/floorplans/Floorplan_SITEatrium.webp";
+import siteRotundaFloorPlan from "../images/floorplans/Floorplan_SITErotunda.webp";
+import stemFloorPlan from "../images/floorplans/Floorplan_STEM.webp";
 import Captions from "yet-another-react-lightbox/plugins/captions";
 import "yet-another-react-lightbox/plugins/captions.css";
 
@@ -347,7 +347,7 @@ const PresentationSchedules = () => {
             >
               <p className="text-sm font-semibold mb-2">{image.title}</p>
               <img
-                className="w-auto h-36" 
+                className="w-auto h-auto max-h-full" 
                 src={image.src}
                 alt={image.caption}
               />
