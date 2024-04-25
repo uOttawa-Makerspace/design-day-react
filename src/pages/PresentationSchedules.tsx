@@ -82,6 +82,14 @@ const DisplayTd = ({
   ) : null;
 };
 
+/**
+ * Displays presentation schedules for different categories.
+ *
+ * This component fetches presentation data from a Google Sheets spreadsheet and displays it
+ * in a series of collapsible sections. Each section contains a table with presentation details
+ * such as section, group, time, project, project description, and project repository. It also
+ * includes a lightbox for viewing floor plans.
+ */
 const PresentationSchedules = () => {
   const { t } = useTranslation();
   const [categories, setCategories] = useState<Category[]>([]);
@@ -342,12 +350,12 @@ const PresentationSchedules = () => {
                 setImgIndex(i);
                 setIsImgPopupOpen(true);
               }}
-              className="flex flex-col items-center justify-center" 
+              className="flex flex-col items-center justify-center"
               key={image.title}
             >
               <p className="text-sm font-semibold mb-2">{image.title}</p>
               <img
-                className="w-auto h-auto max-h-full" 
+                className="w-auto h-auto max-h-full"
                 src={image.src}
                 alt={image.caption}
               />
