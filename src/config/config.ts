@@ -11,11 +11,11 @@ enum Semesters {
 }
 
 interface Config {
-  year: number;
-  semester: Semesters;
-  dateFr: string;
-  dateEn: string;
-  sheetId: string;
+  year: number; 
+  semester: Semesters; 
+  dateFr: string; // date in DD/MM/YYYY format
+  dateEn: string; // date in YYYY/MM/DD format
+  sheetId: string; 
   judgesSchedule: GeneralSchedule[]; // judges schedule
   studentsSchedule: GeneralSchedule[]; // students schedule
 }
@@ -45,8 +45,7 @@ const config: Config = {
     {
       time: "14h-15h",
       eventEn: "Closing remark and awards ceremony (STEM atrium)",
-      eventFr:
-        "Remarques de clôture et cérémonie de remise des prix (atrium STEM)",
+      eventFr: "Remarques de clôture et cérémonie de remise des prix (atrium STEM)",
     },
   ],
   studentsSchedule: [
@@ -73,8 +72,7 @@ const config: Config = {
     {
       time: "14h-15h",
       eventEn: "Closing remark and awards ceremony (STEM atrium)",
-      eventFr:
-        "Remarques de clôture et cérémonie de remise des prix (atrium STEM)",
+      eventFr: "Remarques de clôture et cérémonie de remise des prix (atrium STEM)",
     },
   ],
 };

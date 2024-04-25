@@ -5,13 +5,25 @@ import { useTranslation } from "react-i18next";
 import config from "../config/config";
 import i18n from "i18next";
 
+/**
+ * Utility function to combine CSS classes.
+ */
 const classNames = (...classes: string[]) => {
   return classes.filter(Boolean).join(" ");
 };
 
+/**
+ * Displays the navigation bar for the application.
+ *
+ * This component uses the Disclosure component from Headless UI to handle
+ * the mobile menu toggle. It displays the application title and navigation
+ * links for different sections. It also includes a button to switch between
+ * languages (English and French).
+ */
 const Header = () => {
   const { t } = useTranslation();
 
+  // Navigation links for the header
   const navigation = [
     { name: t("home"), href: "#home", current: true },
     { name: t("schedule"), href: "#schedule", current: false },
@@ -25,12 +37,13 @@ const Header = () => {
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div className="relative flex h-16 items-center justify-between">
+              {/* Mobile menu button */}
               <div className="inset-y-0 left-0 flex items-center sm:hidden">
-                {/* Mobile menu button*/}
                 <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                   <FontAwesomeIcon icon={solid("bars")} size="lg" />
                 </Disclosure.Button>
               </div>
+              {/* Application title */}
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center text-white">
                   {t("design_day", {
@@ -38,6 +51,7 @@ const Header = () => {
                     semester: t(`semesters.${config.semester}`),
                   })}
                 </div>
+                {/* Desktop navigation links */}
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
@@ -58,6 +72,7 @@ const Header = () => {
                   </div>
                 </div>
               </div>
+              {/* Language switch button */}
               <button
                 onClick={() =>
                   i18n.changeLanguage(
@@ -73,6 +88,7 @@ const Header = () => {
               </button>
             </div>
           </div>
+          {/* Mobile navigation menu */}
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 px-2 pt-2 pb-3">
               {navigation.map((item) => (
