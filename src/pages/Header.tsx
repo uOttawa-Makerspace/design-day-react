@@ -29,6 +29,7 @@ const Header = () => {
     { name: t("schedule"), href: "#schedule", current: false },
     { name: t("presentations"), href: "#presentation", current: false },
     { name: t("sponsors"), href: "#sponsors", current: false },
+    { name: t("makerepo"), href: "https://makerepo.com", current: false },
   ];
 
   return (

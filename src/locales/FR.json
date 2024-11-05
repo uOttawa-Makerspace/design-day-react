@@ -1,14 +1,15 @@
 {
   "home": "Accueil",
   "schedule": "Horaire",
-  "what_is_design_day": "Pour plus d'informations sur la Journée du design, cliquez ici",
-  "what_is_design_day_url": "https://www.uottawa.ca/faculte-genie/centre-genie-entrepreneurial-conception/journee-design",
   "presentations": "Présentations",
   "sponsors": "Partenaires",
+  "makerepo": "MakerRepo",
   "students": "Étudiants",
   "judges": "Juges",
   "design_day": "Journée du design {{ semester }} {{ year }}",
   "home_paragraph": "Ingéniosité et créativité en valeur! La Journée du design saura vous épater par notre innovation et inspiration étudiante! En collaboration avec des partenaires de l'industrie et de la communauté, nos étudiants ont développé des solutions concrètes pour leurs clients. Cet événement offre l'opportunité aux étudiants de présenter leurs projets de conception, de célébrer leur réussite et de gagner des prix.",
+  "what_is_design_day": "Pour plus d'informations sur la Journée du design, cliquez ici",
+  "what_is_design_day_url": "https://www.uottawa.ca/faculte-genie/centre-genie-entrepreneurial-conception/journee-design",
   "schedule_paragraph": "Bienvenue à la journée de design de l'{{ semester }} {{ year }}. Ce programme vous permettra de vous orienter durant toutes les présentations. Rejoignez-nous dans l'édifice STEM et SITE pour voir les projets.",
   "semesters": {
     "fall": "Automne",
