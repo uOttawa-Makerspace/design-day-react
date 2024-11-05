@@ -30,7 +30,13 @@ const Home = () => {
           </h1>
           {/* Event description */}
           <p className="text-base font-light leading-relaxed mt-0 mb-4">
-            {t("home_paragraph")}
+            {t("home_paragraph")}{" "}
+            <a
+              href={t("what_is_design_day_url") ?? ""}
+              className="font-medium text-ceed hover:underline"
+            >
+              {t("what_is_design_day")}
+            </a>
           </p>
           {/* Link to schedule section */}
           <a href="#schedule">
