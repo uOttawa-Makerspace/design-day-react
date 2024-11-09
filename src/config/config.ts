@@ -69,8 +69,8 @@ const config: Config = {
     },
     {
       time: "12h-13h15",
-      eventEn: "Concepts competition (STEM 122)",
-      eventFr: "Compétition de concepts (STEM 122)",
+      eventEn: "Entrepreneurship pitch competition (STEM 122)",
+      eventFr: "Compétition de présentations d'entrepreneuriat (STEM 122)",
     },
     {
       time: "14h-15h",
