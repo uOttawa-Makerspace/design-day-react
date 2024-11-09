@@ -16,6 +16,7 @@ interface Config {
   dateFr: string; // date in DD/MM/YYYY format
   dateEn: string; // date in YYYY/MM/DD format
   sheetId: string;
+  hideFloorPlan: boolean;
   judgesSchedule: GeneralSchedule[]; // judges schedule
   studentsSchedule: GeneralSchedule[]; // students schedule
 }
@@ -26,6 +27,7 @@ const config: Config = {
   dateFr: "28/11/2024",
   dateEn: "2024/11/28",
   sheetId: process.env.REACT_APP_GOOGLE_SHEETS_ID || "",
+  hideFloorPlan: true,
   judgesSchedule: [
     {
       time: "9h15-9h45",
@@ -69,8 +71,8 @@ const config: Config = {
     },
     {
       time: "12h-13h15",
-      eventEn: "Concepts competition (STEM 122)",
-      eventFr: "Compétition de concepts (STEM 122)",
+      eventEn: "Entrepreneurship pitch competition (STEM 122)",
+      eventFr: "Compétition de présentations d'entrepreneuriat (STEM 122)",
     },
     {
       time: "14h-15h",

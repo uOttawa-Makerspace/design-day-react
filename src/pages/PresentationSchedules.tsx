@@ -343,25 +343,29 @@ const PresentationSchedules = () => {
         </div>
         <h4 className="text-xl font-normal mt-0 mb-2">{t("floor_plans")}</h4>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
-          {images.map((image, i) => (
-            <button
-              onClick={() => {
-                setImgIndex(i);
-                setIsImgPopupOpen(true);
-              }}
-              className="flex flex-col items-center justify-center"
-              key={image.title}
-            >
-              <p className="text-sm font-semibold mb-2">{image.title}</p>
-              <img
-                className="w-auto h-auto max-h-full"
-                src={image.src}
-                alt={image.caption}
-              />
-            </button>
-          ))}
-        </div>
+        {config.hideFloorPlan ? (
+          t("no_floor_plans")
+        ) : (
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+            {images.map((image, i) => (
+              <button
+                onClick={() => {
+                  setImgIndex(i);
+                  setIsImgPopupOpen(true);
+                }}
+                className="flex flex-col items-center justify-center"
+                key={image.title}
+              >
+                <p className="text-sm font-semibold mb-2">{image.title}</p>
+                <img
+                  className="w-auto h-auto max-h-full"
+                  src={image.src}
+                  alt={image.caption}
+                />
+              </button>
+            ))}
+          </div>
+        )}
 
         <Lightbox
           open={isImgPopupOpen}
