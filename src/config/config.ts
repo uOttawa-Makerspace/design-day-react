@@ -27,7 +27,7 @@ const config: Config = {
   dateFr: "28/11/2024",
   dateEn: "2024/11/28",
   sheetId: process.env.REACT_APP_GOOGLE_SHEETS_ID || "",
-  hideFloorPlan: true,
+  hideFloorPlan: false,
   judgesSchedule: [
     {
       time: "9h15-9h45",
@@ -53,6 +53,11 @@ const config: Config = {
   ],
   studentsSchedule: [
     {
+      time: "9h-10h40",
+      eventEn: "Entrepreneurship pitch competition (CRX 623)",
+      eventFr: "Compétition de présentations d'entrepreneuriat (CRX 623)",
+    },
+    {
       time: "9h15-9h45",
       eventEn:
         "Table setup and registration (near STEM front entrance and SITE spinning doors)",
@@ -68,11 +73,6 @@ const config: Config = {
       time: "12h-14h",
       eventEn: "Event open to the public",
       eventFr: "Evenement ouvert au public",
-    },
-    {
-      time: "12h-13h15",
-      eventEn: "Entrepreneurship pitch competition (STEM 122)",
-      eventFr: "Compétition de présentations d'entrepreneuriat (STEM 122)",
     },
     {
       time: "14h-15h",
