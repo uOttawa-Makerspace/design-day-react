@@ -54,8 +54,8 @@ const config: Config = {
   studentsSchedule: [
     {
       time: "9h-10h40",
-      eventEn: "Entrepreneurship pitch competition (CRX 623)",
-      eventFr: "Compétition de présentations d'entrepreneuriat (CRX 623)",
+      eventEn: "Engineering pitch competition (CRX 623)",
+      eventFr: "Concours de pitch entrepreneurial en génie (CRX 623)",
     },
     {
       time: "9h15-9h45",
@@ -72,7 +72,7 @@ const config: Config = {
     {
       time: "12h-14h",
       eventEn: "Event open to the public",
-      eventFr: "Evenement ouvert au public",
+      eventFr: "Événement ouvert au public",
     },
     {
       time: "14h-15h",
