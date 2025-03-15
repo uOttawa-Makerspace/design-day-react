@@ -22,17 +22,17 @@ interface Config {
 }
 
 const config: Config = {
-  year: 2024,
-  semester: Semesters.fall,
-  dateFr: "28/11/2024",
-  dateEn: "2024/11/28",
+  year: 2025,
+  semester: Semesters.winter,
+  dateFr: "27/03/2025",
+  dateEn: "2025/03/27",
   sheetId: process.env.REACT_APP_GOOGLE_SHEETS_ID || "",
   hideFloorPlan: false,
   judgesSchedule: [
     {
       time: "9h15-9h45",
-      eventEn: "Judge orientation (STEM 464/564)",
-      eventFr: "Orientation des juges (STEM 464/564)",
+      eventEn: "Judge orientation (STEM 464/664)",
+      eventFr: "Orientation des juges (STEM 464/664)",
     },
     {
       time: "10h-12h",
@@ -53,11 +53,6 @@ const config: Config = {
   ],
   studentsSchedule: [
     {
-      time: "9h-10h40",
-      eventEn: "Engineering pitch competition (CRX 623)",
-      eventFr: "Concours de pitch entrepreneurial en génie (CRX 623)",
-    },
-    {
       time: "9h15-9h45",
       eventEn:
         "Table setup and registration (near STEM front entrance and SITE spinning doors)",
@@ -66,8 +61,23 @@ const config: Config = {
     },
     {
       time: "10h-12h",
-      eventEn: "Judging",
-      eventFr: "Évaluation",
+      eventEn: "Group evaluation",
+      eventFr: "Évaluation de groupe",
+    },
+    {
+      time: "10h-12h30",
+      eventEn: "Engineering pitch competition (STEM 122)",
+      eventFr: "Concours de pitch entrepreneurial en génie (STEM 122)",
+    },
+    {
+      time: "10h30-13h30",
+      eventEn: "Career fair (STEM atrium)",
+      eventFr: "Foire aux carrières (atrium STEM)",
+    },
+    {
+      time: "11h-13h",
+      eventEn: "Headshots available (STEM atrium)",
+      eventFr: "Photos de tête disponibles (atrium STEM)",
     },
     {
       time: "12h-14h",
