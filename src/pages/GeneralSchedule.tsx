@@ -8,7 +8,7 @@ type TabType = "judges" | "students";
 // Component that displays a schedule with tabs for judges and students.
 const GeneralSchedule = () => {
   // State to keep track of the active tab
-  const [activeTab, setActiveTab] = useState<TabType>("judges");
+  const [activeTab, setActiveTab] = useState<TabType>("students");
   // Hook to access translation function
   const { t } = useTranslation();
 
@@ -21,13 +21,13 @@ const GeneralSchedule = () => {
         {/* Tab buttons for switching between judges and students */}
         <div className="flex justify-center mb-4">
           <div className="border-b border-gray-300">
-
             {/* Judges tab button */}
             <button
-              className={`px-6 py-2 inline-block ${activeTab === "judges"
+              className={`px-6 py-2 inline-block ${
+                activeTab === "judges"
                   ? "text-ceed border-ceed"
                   : "text-gray-500 border-transparent"
-                } border-b-2`}
+              } border-b-2`}
               onClick={() => setActiveTab("judges")}
             >
               {t("judges")}
@@ -35,15 +35,15 @@ const GeneralSchedule = () => {
 
             {/* Students tab button */}
             <button
-              className={`px-6 py-2 inline-block ${activeTab === "students"
+              className={`px-6 py-2 inline-block ${
+                activeTab === "students"
                   ? "text-orange-500 border-orange-500"
                   : "text-gray-500 border-transparent"
-                } border-b-2`}
+              } border-b-2`}
               onClick={() => setActiveTab("students")}
             >
               {t("students")}
             </button>
-            
           </div>
         </div>
 
