@@ -3,6 +3,8 @@ import sponsorNSERC from "../images/sponsors/NSERC.png";
 import sponsorResolute from "../images/sponsors/resolute-forest-products-transparent.png";
 import sponsorYear3000 from "../images/sponsors/Year3000GroupTransparentLogo.png";
 import sponsorUOttawa from "../images/sponsors/uOttawa_HOR_BLACK.png";
+import sponsorDesjardins from "../images/sponsors/d15-desjardins-logo-couleur.png";
+import sponsorCNL from "../images/sponsors/CNLLNC_LOGO_V_RGB.png";
 // Don't use one big image block
 //import sponsorImg from "../images/sponsors.png";
 
@@ -37,6 +39,9 @@ const Sponsors = () => {
               <img src={sponsor_img} alt="sponsorLogo" className="col-span-2" />
             )
           )}
+          {[sponsorDesjardins, sponsorCNL].map((sponsor_img) => (
+            <img src={sponsor_img} alt="sponsorLogo" className="col-span-3" />
+          ))}
         </div>
       </div>
     </div>
