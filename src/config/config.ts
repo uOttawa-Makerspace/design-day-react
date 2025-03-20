@@ -60,14 +60,14 @@ const config: Config = {
         "Installation de la table et inscription (près de l'entrée principale de STEM et des portes tournantes de SITE)",
     },
     {
+      time: "9h-11h30",
+      eventEn: "Engineering pitch competition (STEM 122)",
+      eventFr: "Concours de pitch entrepreneurial en génie (STEM 122)",
+    },
+    {
       time: "10h-12h",
       eventEn: "Group evaluation",
       eventFr: "Évaluation de groupe",
-    },
-    {
-      time: "10h-12h30",
-      eventEn: "Engineering pitch competition (STEM 122)",
-      eventFr: "Concours de pitch entrepreneurial en génie (STEM 122)",
     },
     {
       time: "10h30-13h30",
