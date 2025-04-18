@@ -28,6 +28,57 @@ interface Presentation {
   project_repo?: string;
 }
 
+function escapeRegExp(str: string) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function fuzzyMatch(pattern: string, str: string) {
+  pattern = pattern.normalize().toLowerCase();
+  str = str.normalize().toLowerCase();
+  pattern =
+    ".*" +
+    pattern
+      .split("")
+      .map((l) => `${escapeRegExp(l)}.*`)
+      .join("");
+  const re = new RegExp(pattern);
+  return re.test(str);
+}
+
+function filteredCategories(
+  categories: Category[],
+  search: string
+): Category[] {
+  // Output categories
+  let outCat: Category[] = [];
+  categories.forEach((cat) => {
+    // Sections underneath each category
+    let outSections: Record<string, Presentation[]> = {};
+    for (const [section, presentations] of Object.entries(cat.presentations)) {
+      // Groups presenting underneath each category
+      let newPresentations = presentations.filter((p: Presentation) =>
+        fuzzyMatch(search, p.group || "")
+      );
+
+      // If some presentations are hit insert filtered array
+      if (newPresentations.length > 0) {
+        outSections[section] = newPresentations;
+      }
+    }
+
+    // If section has any presentations left push to return
+    if (Object.entries(outSections).length > 0) {
+      outCat.push({
+        name: cat.name,
+        description: cat.description,
+        location: cat.location,
+        presentations: outSections,
+      });
+    }
+  });
+  return outCat;
+}
+
 const DisplayTh = ({
   category,
   presentationSection,
@@ -82,6 +133,193 @@ const DisplayTd = ({
   ) : null;
 };
 
+const PresentationDisclosure = ({
+  category,
+  presentationSection,
+  i,
+  openAll,
+}: {
+  category: Category;
+  presentationSection: string;
+  i: number;
+  openAll: boolean;
+}) => {
+  return (
+    <Disclosure
+      key={i}
+      defaultOpen={Object.keys(category.presentations).length === 1}
+    >
+      {({ open }) => (
+        <div>
+          <Disclosure.Button className="flex w-full bg-ceed-light text-white my-2 items-center justify-between rounded-lg px-4 py-3 text-left text-sm font-medium focus:outline-none">
+            <span>{presentationSection}</span>
+            <FontAwesomeIcon
+              icon={open ? solid("chevron-up") : solid("chevron-down")}
+            />
+          </Disclosure.Button>
+          <Transition
+            enter="transition duration-100 ease-out"
+            enterFrom="transform scale-95 opacity-0"
+            enterTo="transform scale-100 opacity-100"
+            leave="transition duration-75 ease-out"
+            leaveFrom="transform scale-100 opacity-100"
+            leaveTo="transform scale-95 opacity-0"
+          >
+            <Disclosure.Panel className="px-4 text-sm text-gray-500">
+              <div key={i} className="overflow-x-scroll">
+                <table className="min-w-full leading-normal">
+                  <thead>
+                    <tr>
+                      <DisplayTh
+                        category={category}
+                        presentationSection={presentationSection}
+                        cell="section"
+                      />
+                      <DisplayTh
+                        category={category}
+                        presentationSection={presentationSection}
+                        cell="group"
+                      />
+                      <DisplayTh
+                        category={category}
+                        presentationSection={presentationSection}
+                        cell="time"
+                      />
+                      <DisplayTh
+                        category={category}
+                        presentationSection={presentationSection}
+                        cell="project"
+                      />
+                      <DisplayTh
+                        category={category}
+                        presentationSection={presentationSection}
+                        cell="project_description"
+                      />
+                      <DisplayTh
+                        category={category}
+                        presentationSection={presentationSection}
+                        cell="project_repo"
+                      />
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {category.presentations[presentationSection].map(
+                      (presentation, i) => (
+                        <tr key={i}>
+                          <DisplayTd
+                            category={category}
+                            presentationSection={presentationSection}
+                            presentation={presentation}
+                            cell="section"
+                          />
+                          <DisplayTd
+                            category={category}
+                            presentationSection={presentationSection}
+                            presentation={presentation}
+                            cell="group"
+                          />
+                          <DisplayTd
+                            category={category}
+                            presentationSection={presentationSection}
+                            presentation={presentation}
+                            cell="time"
+                          />
+                          <DisplayTd
+                            category={category}
+                            presentationSection={presentationSection}
+                            presentation={presentation}
+                            cell="project"
+                          />
+                          <DisplayTd
+                            category={category}
+                            presentationSection={presentationSection}
+                            presentation={presentation}
+                            cell="project_description"
+                            with_link={true}
+                          />
+                          <DisplayTd
+                            category={category}
+                            presentationSection={presentationSection}
+                            presentation={presentation}
+                            cell="project_repo"
+                            with_link={true}
+                          />
+                        </tr>
+                      )
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </Disclosure.Panel>
+          </Transition>
+        </div>
+      )}
+    </Disclosure>
+  );
+};
+
+const CategoryDisclosure = ({
+  category,
+  openAll,
+}: {
+  category: Category;
+  openAll: boolean;
+}) => {
+  const { t } = useTranslation();
+  return (
+    <Disclosure key={category.name}>
+      {({ open }) => (
+        <>
+          <Disclosure.Button className="flex w-full bg-ceed text-white my-2 items-center justify-between rounded-lg px-4 py-3 text-left text-sm font-medium focus:outline-none">
+            <span>{category.name}</span>
+            <FontAwesomeIcon
+              icon={open ? solid("chevron-up") : solid("chevron-down")}
+            />
+          </Disclosure.Button>
+          <Transition
+            enter="transition duration-100 ease-out"
+            enterFrom="transform scale-95 opacity-0"
+            enterTo="transform scale-100 opacity-100"
+            leave="transition duration-75 ease-out"
+            leaveFrom="transform scale-100 opacity-100"
+            leaveTo="transform scale-95 opacity-0"
+          >
+            <Disclosure.Panel className="px-4 text-sm text-gray-500">
+              <div className="p-2 items-center w-full sm:flex sm:justify-between">
+                {category.description ? (
+                  <p className="mb-2 lg:mb-0">
+                    {t("description")}{" "}
+                    <a className="underline" href={category.description}>
+                      {category.description}
+                    </a>
+                  </p>
+                ) : (
+                  <div></div>
+                )}
+                <div className="px-2 py-1 bg-ceed text-white rounded-2xl flex justify-center">
+                  {category.location}
+                </div>
+              </div>
+
+              {Object.keys(category.presentations).map(
+                (presentationSection, i) => (
+                  <PresentationDisclosure
+                    key={i}
+                    category={category}
+                    presentationSection={presentationSection}
+                    i={i}
+                    openAll={openAll}
+                  />
+                )
+              )}
+            </Disclosure.Panel>
+          </Transition>
+        </>
+      )}
+    </Disclosure>
+  );
+};
+
 /**
  * Displays presentation schedules for different categories.
  *
@@ -93,6 +331,7 @@ const DisplayTd = ({
 const PresentationSchedules = () => {
   const { t } = useTranslation();
   const [categories, setCategories] = useState<Category[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const [isImgPopupOpen, setIsImgPopupOpen] = useState(false);
   const [imgIndex, setImgIndex] = useState(0);
   const images = [
@@ -151,194 +390,23 @@ const PresentationSchedules = () => {
   return (
     <div id="presentation" className="flex justify-center">
       <div className="w-full lg:w-1/2 pb-10 px-4 lg:px-0">
+        <input
+          name="presentationSearch"
+          placeholder={t("search_prompt") ?? ""}
+          className="shadow block appearance-none border rounded mb-3 px-4 py-2 w-full focus:shadow-outline"
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <hr />
         <div className="rounded-2xl pb-5">
-          {categories.map((category) => (
-            <Disclosure key={category.name}>
-              {({ open }) => (
-                <>
-                  <Disclosure.Button className="flex w-full bg-ceed text-white my-2 items-center justify-between rounded-lg px-4 py-3 text-left text-sm font-medium focus:outline-none">
-                    <span>{category.name}</span>
-                    <FontAwesomeIcon
-                      icon={open ? solid("chevron-up") : solid("chevron-down")}
-                    />
-                  </Disclosure.Button>
-                  <Transition
-                    enter="transition duration-100 ease-out"
-                    enterFrom="transform scale-95 opacity-0"
-                    enterTo="transform scale-100 opacity-100"
-                    leave="transition duration-75 ease-out"
-                    leaveFrom="transform scale-100 opacity-100"
-                    leaveTo="transform scale-95 opacity-0"
-                  >
-                    <Disclosure.Panel className="px-4 text-sm text-gray-500">
-                      <div className="p-2 items-center w-full sm:flex sm:justify-between">
-                        {category.description ? (
-                          <p className="mb-2 lg:mb-0">
-                            {t("description")}{" "}
-                            <a
-                              className="underline"
-                              href={category.description}
-                            >
-                              {category.description}
-                            </a>
-                          </p>
-                        ) : (
-                          <div></div>
-                        )}
-                        <div className="px-2 py-1 bg-ceed text-white rounded-2xl flex justify-center">
-                          {category.location}
-                        </div>
-                      </div>
-
-                      {Object.keys(category.presentations).map(
-                        (presentationSection, i) => (
-                          <Disclosure
-                            key={i}
-                            defaultOpen={
-                              Object.keys(category.presentations).length === 1
-                            }
-                          >
-                            {({ open }) => (
-                              <div>
-                                <Disclosure.Button className="flex w-full bg-ceed-light text-white my-2 items-center justify-between rounded-lg px-4 py-3 text-left text-sm font-medium focus:outline-none">
-                                  <span>{presentationSection}</span>
-                                  <FontAwesomeIcon
-                                    icon={
-                                      open
-                                        ? solid("chevron-up")
-                                        : solid("chevron-down")
-                                    }
-                                  />
-                                </Disclosure.Button>
-                                <Transition
-                                  enter="transition duration-100 ease-out"
-                                  enterFrom="transform scale-95 opacity-0"
-                                  enterTo="transform scale-100 opacity-100"
-                                  leave="transition duration-75 ease-out"
-                                  leaveFrom="transform scale-100 opacity-100"
-                                  leaveTo="transform scale-95 opacity-0"
-                                >
-                                  <Disclosure.Panel className="px-4 text-sm text-gray-500">
-                                    <div key={i} className="overflow-x-scroll">
-                                      <table className="min-w-full leading-normal">
-                                        <thead>
-                                          <tr>
-                                            <DisplayTh
-                                              category={category}
-                                              presentationSection={
-                                                presentationSection
-                                              }
-                                              cell="section"
-                                            />
-                                            <DisplayTh
-                                              category={category}
-                                              presentationSection={
-                                                presentationSection
-                                              }
-                                              cell="group"
-                                            />
-                                            <DisplayTh
-                                              category={category}
-                                              presentationSection={
-                                                presentationSection
-                                              }
-                                              cell="time"
-                                            />
-                                            <DisplayTh
-                                              category={category}
-                                              presentationSection={
-                                                presentationSection
-                                              }
-                                              cell="project"
-                                            />
-                                            <DisplayTh
-                                              category={category}
-                                              presentationSection={
-                                                presentationSection
-                                              }
-                                              cell="project_description"
-                                            />
-                                            <DisplayTh
-                                              category={category}
-                                              presentationSection={
-                                                presentationSection
-                                              }
-                                              cell="project_repo"
-                                            />
-                                          </tr>
-                                        </thead>
-                                        <tbody>
-                                          {category.presentations[
-                                            presentationSection
-                                          ].map((presentation, i) => (
-                                            <tr key={i}>
-                                              <DisplayTd
-                                                category={category}
-                                                presentationSection={
-                                                  presentationSection
-                                                }
-                                                presentation={presentation}
-                                                cell="section"
-                                              />
-                                              <DisplayTd
-                                                category={category}
-                                                presentationSection={
-                                                  presentationSection
-                                                }
-                                                presentation={presentation}
-                                                cell="group"
-                                              />
-                                              <DisplayTd
-                                                category={category}
-                                                presentationSection={
-                                                  presentationSection
-                                                }
-                                                presentation={presentation}
-                                                cell="time"
-                                              />
-                                              <DisplayTd
-                                                category={category}
-                                                presentationSection={
-                                                  presentationSection
-                                                }
-                                                presentation={presentation}
-                                                cell="project"
-                                              />
-                                              <DisplayTd
-                                                category={category}
-                                                presentationSection={
-                                                  presentationSection
-                                                }
-                                                presentation={presentation}
-                                                cell="project_description"
-                                                with_link={true}
-                                              />
-                                              <DisplayTd
-                                                category={category}
-                                                presentationSection={
-                                                  presentationSection
-                                                }
-                                                presentation={presentation}
-                                                cell="project_repo"
-                                                with_link={true}
-                                              />
-                                            </tr>
-                                          ))}
-                                        </tbody>
-                                      </table>
-                                    </div>
-                                  </Disclosure.Panel>
-                                </Transition>
-                              </div>
-                            )}
-                          </Disclosure>
-                        )
-                      )}
-                    </Disclosure.Panel>
-                  </Transition>
-                </>
-              )}
-            </Disclosure>
+          {(searchTerm
+            ? filteredCategories(categories, searchTerm)
+            : categories
+          ).map((category, i) => (
+            <CategoryDisclosure
+              key={i}
+              category={category}
+              openAll={searchTerm !== ""}
+            />
           ))}
         </div>
         <h4 className="text-xl font-normal mt-0 mb-2">{t("floor_plans")}</h4>
