@@ -56,11 +56,8 @@ function filteredCategories(
     let outSections: Record<string, Presentation[]> = {};
     for (const [section, presentations] of Object.entries(cat.presentations)) {
       // Groups presenting underneath each category
-      let newPresentations = presentations.filter(
-        //(p: Presentation) => levenshtein(p.group || "", search) <= 3
-        (p: Presentation) => fuzzyMatch(search, p.group || "")
-        // || levenshtein(p.project || "", search) <= 2
-        // || levenshtein(p.section || "", search) <= 2
+      let newPresentations = presentations.filter((p: Presentation) =>
+        fuzzyMatch(search, p.group || "")
       );
 
       // If some presentations are hit insert filtered array
@@ -395,7 +392,7 @@ const PresentationSchedules = () => {
       <div className="w-full lg:w-1/2 pb-10 px-4 lg:px-0">
         <input
           name="presentationSearch"
-          placeholder="Search for presentation..."
+          placeholder={t("search_prompt") ?? ""}
           className="shadow block appearance-none border rounded mb-3 px-4 py-2 w-full focus:shadow-outline"
           onChange={(e) => setSearchTerm(e.target.value)}
         />
