@@ -307,6 +307,7 @@ const CategoryDisclosure = ({
               {Object.keys(category.presentations).map(
                 (presentationSection, i) => (
                   <PresentationDisclosure
+                    key={i}
                     category={category}
                     presentationSection={presentationSection}
                     i={i}
@@ -403,8 +404,9 @@ const PresentationSchedules = () => {
           {(searchTerm
             ? filteredCategories(categories, searchTerm)
             : categories
-          ).map((category) => (
+          ).map((category, i) => (
             <CategoryDisclosure
+              key={i}
               category={category}
               openAll={searchTerm !== ""}
             />

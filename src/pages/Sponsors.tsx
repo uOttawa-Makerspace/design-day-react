@@ -35,12 +35,22 @@ const Sponsors = () => {
           />
           <img src={sponsorUOttawa} alt="sponsorLogo" className="col-span-3" />
           {[sponsorNSERC, sponsorResolute, sponsorYear3000].map(
-            (sponsor_img) => (
-              <img src={sponsor_img} alt="sponsorLogo" className="col-span-2" />
+            (sponsor_img, i) => (
+              <img
+                src={sponsor_img}
+                key={i}
+                alt="sponsorLogo"
+                className="col-span-2"
+              />
             )
           )}
-          {[sponsorDesjardins, sponsorCNL].map((sponsor_img) => (
-            <img src={sponsor_img} alt="sponsorLogo" className="col-span-3" />
+          {[sponsorDesjardins, sponsorCNL].map((sponsor_img, i) => (
+            <img
+              src={sponsor_img}
+              key={i}
+              alt="sponsorLogo"
+              className="col-span-3"
+            />
           ))}
         </div>
       </div>
