@@ -33,7 +33,7 @@ let config: Config = {
 };
 
 export async function fetchConfig() {
-  const response = await fetch("http://localhost:3000/admin/design_day/data");
+  const response = await fetch(`${process.env.REACT_APP_CONFIG_ENDPOINT}`);
   const j = await response.json();
 
   let judge_schedules: GeneralSchedule[] = [];
