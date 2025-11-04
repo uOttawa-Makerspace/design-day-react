@@ -1,12 +1,9 @@
-import sponsorGovernment from "../images/sponsors/3li_EnFr_Wordmark_C.png";
 import sponsorNSERC from "../images/sponsors/NSERC.png";
 import sponsorResolute from "../images/sponsors/resolute-forest-products-transparent.png";
 import sponsorYear3000 from "../images/sponsors/Year3000GroupTransparentLogo.png";
 import sponsorUOttawa from "../images/sponsors/uOttawa_HOR_BLACK.png";
-import sponsorDesjardins from "../images/sponsors/d15-desjardins-logo-couleur.png";
-import sponsorCNL from "../images/sponsors/CNLLNC_LOGO_V_RGB.png";
+import sponsorPEO from "../images/sponsors/PEO.png";
 // Don't use one big image block
-//import sponsorImg from "../images/sponsors.png";
 
 import { useTranslation } from "react-i18next";
 
@@ -28,11 +25,7 @@ const Sponsors = () => {
         {/* Sponsors image */}
         {/* <img src={sponsorImg} alt="sponsors" /> */}
         <div className="md:grid grid-cols-6 gap-4 items-center">
-          <img
-            src={sponsorGovernment}
-            alt="sponsorLogo"
-            className="col-span-3"
-          />
+          <img src={sponsorPEO} alt="sponsorLogo" className="col-span-3" />
           <img src={sponsorUOttawa} alt="sponsorLogo" className="col-span-3" />
           {[sponsorNSERC, sponsorResolute, sponsorYear3000].map(
             (sponsor_img, i) => (
@@ -44,14 +37,6 @@ const Sponsors = () => {
               />
             )
           )}
-          {[sponsorDesjardins, sponsorCNL].map((sponsor_img, i) => (
-            <img
-              src={sponsor_img}
-              key={i}
-              alt="sponsorLogo"
-              className="col-span-3"
-            />
-          ))}
         </div>
       </div>
     </div>
