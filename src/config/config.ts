@@ -21,76 +21,57 @@ interface Config {
   studentsSchedule: GeneralSchedule[]; // students schedule
 }
 
-const config: Config = {
+let config: Config = {
   year: 2025,
-  semester: Semesters.winter,
-  dateFr: "27/03/2025",
-  dateEn: "2025/03/27",
-  sheetId: process.env.REACT_APP_GOOGLE_SHEETS_ID || "",
+  sheetId: "",
+  semester: Semesters.fall,
+  dateFr: "",
+  dateEn: "",
   hideFloorPlan: false,
-  judgesSchedule: [
-    {
-      time: "9h15-9h45",
-      eventEn: "Judge orientation (STEM 464/664)",
-      eventFr: "Orientation des juges (STEM 464/664)",
-    },
-    {
-      time: "10h-12h",
-      eventEn: "Judging",
-      eventFr: "Évaluation",
-    },
-    {
-      time: "12h-13h15",
-      eventEn: "Lunch and Deliberation",
-      eventFr: "Diner et déliberation",
-    },
-    {
-      time: "14h-15h",
-      eventEn: "Closing remark and awards ceremony (STEM atrium)",
-      eventFr:
-        "Remarques de clôture et cérémonie de remise des prix (atrium STEM)",
-    },
-  ],
-  studentsSchedule: [
-    {
-      time: "9h15-9h45",
-      eventEn:
-        "Table setup and registration (near STEM front entrance and SITE spinning doors)",
-      eventFr:
-        "Installation de la table et inscription (près de l'entrée principale de STEM et des portes tournantes de SITE)",
-    },
-    {
-      time: "9h-11h30",
-      eventEn: "Engineering pitch competition (STEM 122)",
-      eventFr: "Concours de pitch entrepreneurial en génie (STEM 122)",
-    },
-    {
-      time: "10h-12h",
-      eventEn: "Group evaluation",
-      eventFr: "Évaluation de groupe",
-    },
-    {
-      time: "10h30-13h30",
-      eventEn: "Career fair (STEM atrium)",
-      eventFr: "Foire aux carrières (atrium STEM)",
-    },
-    {
-      time: "11h-13h",
-      eventEn: "Headshots available (STEM atrium)",
-      eventFr: "Photos de tête disponibles (atrium STEM)",
-    },
-    {
-      time: "12h-14h",
-      eventEn: "Event open to the public",
-      eventFr: "Événement ouvert au public",
-    },
-    {
-      time: "14h-15h",
-      eventEn: "Closing remark and awards ceremony (STEM atrium)",
-      eventFr:
-        "Remarques de clôture et cérémonie de remise des prix (atrium STEM)",
-    },
-  ],
+  judgesSchedule: [],
+  studentsSchedule: [],
 };
+
+export async function fetchConfig() {
+  const response = await fetch(`${process.env.REACT_APP_CONFIG_ENDPOINT}`);
+  const j = await response.json();
+
+  let judge_schedules: GeneralSchedule[] = [];
+  let student_schedules: GeneralSchedule[] = [];
+
+  j["design_day_schedules"].forEach((sched: any) => {
+    let start = new Date(sched["start"]);
+    let startH = start.getHours();
+    let startM = start.getMinutes();
+
+    let end = new Date(sched["end"]);
+    let endH = end.getHours();
+    let endM = end.getMinutes();
+
+    let item: GeneralSchedule = {
+      time: `${startH}h${startM == 0 ? "" : startM} - ${endH}h${
+        endM == 0 ? "" : endM
+      }`,
+      eventEn: sched["title_en"],
+      eventFr: sched["title_fr"],
+    };
+    if (sched["event_for"] == "student") {
+      student_schedules.push(item);
+    } else {
+      judge_schedules.push(item);
+    }
+  });
+
+  config["year"] = j["year"];
+  config["sheetId"] = j["sheet_key"];
+  config["semester"] = j["semester"];
+  // TODO localize time
+  config["dateFr"] = j["day"];
+  config["dateEn"] = j["day"];
+  config["sheetId"] = j["sheet_key"];
+  config["hideFloorPlan"] = false;
+  config["judgesSchedule"] = judge_schedules;
+  config["studentsSchedule"] = student_schedules;
+}
 
 export default config;
