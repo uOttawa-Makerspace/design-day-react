@@ -6,9 +6,9 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import config from "../config/config";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
-import siteFloorPlan from "../images/floorplans/Floorplan_SITEatrium.png";
-import siteRotundaFloorPlan from "../images/floorplans/Floorplan_SITErotunda.png";
-import stemFloorPlan from "../images/floorplans/Floorplan_STEM.png";
+// import siteFloorPlan from "../images/floorplans/Floorplan_SITEatrium.png";
+// import siteRotundaFloorPlan from "../images/floorplans/Floorplan_SITErotunda.png";
+// import stemFloorPlan from "../images/floorplans/Floorplan_STEM.png";
 import Captions from "yet-another-react-lightbox/plugins/captions";
 import "yet-another-react-lightbox/plugins/captions.css";
 
@@ -334,19 +334,9 @@ const PresentationSchedules = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isImgPopupOpen, setIsImgPopupOpen] = useState(false);
   const [imgIndex, setImgIndex] = useState(0);
-  const images = [
-    {
-      title: "SITE 1",
-      caption: "SITE 1",
-      src: siteFloorPlan,
-    },
-    {
-      title: "SITE 0",
-      caption: "SITE 0",
-      src: siteRotundaFloorPlan,
-    },
-    { title: "STEM", caption: "STEM", src: stemFloorPlan },
-  ];
+  const images = config.floorplans.map((floorplan_url) => {
+    return { src: floorplan_url };
+  });
 
   useEffect(() => {
     fetch(
@@ -411,7 +401,7 @@ const PresentationSchedules = () => {
         </div>
         <h4 className="text-xl font-normal mt-0 mb-2">{t("floor_plans")}</h4>
 
-        {config.hideFloorPlan ? (
+        {config.showFloorPlan == false ? (
           t("no_floor_plans")
         ) : (
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
@@ -422,13 +412,12 @@ const PresentationSchedules = () => {
                   setIsImgPopupOpen(true);
                 }}
                 className="flex flex-col items-center justify-center"
-                key={image.title}
+                key={i}
               >
-                <p className="text-sm font-semibold mb-2">{image.title}</p>
                 <img
                   className="w-auto h-auto max-h-full"
                   src={image.src}
-                  alt={image.caption}
+                  // alt={image.caption}
                 />
               </button>
             ))}
