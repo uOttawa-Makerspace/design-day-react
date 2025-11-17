@@ -401,7 +401,7 @@ const PresentationSchedules = () => {
         </div>
         <h4 className="text-xl font-normal mt-0 mb-2">{t("floor_plans")}</h4>
 
-        {config.showFloorPlan == false ? (
+        {config.showFloorPlan === false || images.length === 0 ? (
           t("no_floor_plans")
         ) : (
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4">

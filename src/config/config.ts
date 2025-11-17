@@ -74,7 +74,7 @@ export async function fetchConfig() {
   config["dateEn"] = j["day"];
   config["sheetId"] = j["sheet_key"];
   config["showFloorPlan"] = j["show_floorplans"];
-  config["floorplans"] = j["floorplan_urls"];
+  config["floorplans"] = j["floorplan_urls"] || [];
   config["judgesSchedule"] = judge_schedules;
   config["studentsSchedule"] = student_schedules;
 }
