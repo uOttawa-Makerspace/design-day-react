@@ -16,7 +16,8 @@ interface Config {
   dateFr: string; // date in DD/MM/YYYY format
   dateEn: string; // date in YYYY/MM/DD format
   sheetId: string;
-  hideFloorPlan: boolean;
+  showFloorPlan: boolean; // Admin want to hide old floorplans
+  floorplans: string[]; // URL to makerepo hosted images
   judgesSchedule: GeneralSchedule[]; // judges schedule
   studentsSchedule: GeneralSchedule[]; // students schedule
 }
@@ -27,7 +28,8 @@ let config: Config = {
   semester: Semesters.fall,
   dateFr: "",
   dateEn: "",
-  hideFloorPlan: false,
+  showFloorPlan: false,
+  floorplans: [],
   judgesSchedule: [],
   studentsSchedule: [],
 };
@@ -39,6 +41,7 @@ export async function fetchConfig() {
   let judge_schedules: GeneralSchedule[] = [];
   let student_schedules: GeneralSchedule[] = [];
 
+  // Push schedules
   j["design_day_schedules"].forEach((sched: any) => {
     let start = new Date(sched["start"]);
     let startH = start.getHours();
@@ -62,6 +65,7 @@ export async function fetchConfig() {
     }
   });
 
+  // Copy over simple structures
   config["year"] = j["year"];
   config["sheetId"] = j["sheet_key"];
   config["semester"] = j["semester"];
@@ -69,7 +73,8 @@ export async function fetchConfig() {
   config["dateFr"] = j["day"];
   config["dateEn"] = j["day"];
   config["sheetId"] = j["sheet_key"];
-  config["hideFloorPlan"] = true;
+  config["showFloorPlan"] = j["show_floorplans"];
+  config["floorplans"] = j["floorplan_urls"] || [];
   config["judgesSchedule"] = judge_schedules;
   config["studentsSchedule"] = student_schedules;
 }
