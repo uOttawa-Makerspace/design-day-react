@@ -3,6 +3,7 @@ import sponsorResolute from "../images/sponsors/resolute-forest-products-transpa
 import sponsorYear3000 from "../images/sponsors/Year3000GroupTransparentLogo.png";
 import sponsorUOttawa from "../images/sponsors/uOttawa_HOR_BLACK.png";
 import sponsorPEO from "../images/sponsors/PEO.png";
+import sponsorSSC from "../images/sponsors/SSC-edit.png";
 // Don't use one big image block
 
 import { useTranslation } from "react-i18next";
@@ -25,8 +26,18 @@ const Sponsors = () => {
         {/* Sponsors image */}
         {/* <img src={sponsorImg} alt="sponsors" /> */}
         <div className="md:grid grid-cols-6 gap-4 items-center">
+          <div className="col-span-1" />
+          <img
+            src={sponsorUOttawa}
+            alt="University of Ottawa"
+            className="col-span-4"
+          />
+          <img
+            src={sponsorSSC}
+            alt="Shared Services Canada"
+            className="col-span-3"
+          />
           <img src={sponsorPEO} alt="sponsorLogo" className="col-span-3" />
-          <img src={sponsorUOttawa} alt="sponsorLogo" className="col-span-3" />
           {[sponsorNSERC, sponsorResolute, sponsorYear3000].map(
             (sponsor_img, i) => (
               <img
