@@ -3,6 +3,7 @@ import sponsorResolute from "../images/sponsors/resolute-forest-products-transpa
 import sponsorYear3000 from "../images/sponsors/Year3000GroupTransparentLogo.png";
 import sponsorUOttawa from "../images/sponsors/uOttawa_HOR_BLACK.png";
 import sponsorPEO from "../images/sponsors/PEO.png";
+import sponsorCNL from "../images/sponsors/CNLLNC_LOGO_V_RGB.png";
 import sponsorSSC from "../images/sponsors/SSC-edit.png";
 // Don't use one big image block
 
@@ -37,7 +38,7 @@ const Sponsors = () => {
             alt="Shared Services Canada"
             className="col-span-3"
           />
-          <img src={sponsorPEO} alt="sponsorLogo" className="col-span-3" />
+          <img src={sponsorCNL} alt="sponsorLogo" className="col-span-3" />
           {[sponsorNSERC, sponsorResolute, sponsorYear3000].map(
             (sponsor_img, i) => (
               <img
