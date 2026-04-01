@@ -4,7 +4,7 @@ import sponsorYear3000 from "../images/sponsors/Year3000GroupTransparentLogo.png
 import sponsorUOttawa from "../images/sponsors/uOttawa_HOR_BLACK.png";
 import sponsorPEO from "../images/sponsors/PEO.png";
 import sponsorCNL from "../images/sponsors/CNLLNC_LOGO_V_RGB.png";
-import sponsorSSC from "../images/sponsors/SSC-edit.png";
+import sponsorSSC from "../images/sponsors/wordmark_C.png.png";
 // Don't use one big image block
 
 import { useTranslation } from "react-i18next";
