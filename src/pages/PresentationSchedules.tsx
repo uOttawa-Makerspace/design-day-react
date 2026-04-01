@@ -6,9 +6,6 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import config from "../config/config";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
-// import siteFloorPlan from "../images/floorplans/Floorplan_SITEatrium.png";
-// import siteRotundaFloorPlan from "../images/floorplans/Floorplan_SITErotunda.png";
-// import stemFloorPlan from "../images/floorplans/Floorplan_STEM.png";
 import Captions from "yet-another-react-lightbox/plugins/captions";
 import "yet-another-react-lightbox/plugins/captions.css";
 
@@ -414,6 +411,7 @@ const PresentationSchedules = () => {
                 className="flex flex-col items-center justify-center"
                 key={i}
               >
+                <p>{config.floorplan_titles[i]}</p>
                 <img
                   className="w-auto h-auto max-h-full"
                   src={image.src}

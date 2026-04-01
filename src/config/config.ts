@@ -18,6 +18,7 @@ interface Config {
   sheetId: string;
   showFloorPlan: boolean; // Admin want to hide old floorplans
   floorplans: string[]; // URL to makerepo hosted images
+  floorplan_titles: string[];
   judgesSchedule: GeneralSchedule[]; // judges schedule
   studentsSchedule: GeneralSchedule[]; // students schedule
 }
@@ -30,6 +31,7 @@ let config: Config = {
   dateEn: "",
   showFloorPlan: false,
   floorplans: [],
+  floorplan_titles: [],
   judgesSchedule: [],
   studentsSchedule: [],
 };
@@ -75,6 +77,8 @@ export async function fetchConfig() {
   config["sheetId"] = j["sheet_key"];
   config["showFloorPlan"] = j["show_floorplans"];
   config["floorplans"] = j["floorplan_urls"] || [];
+  config["floorplan_titles"] =
+    j["floorplan_titles"] || Array(config["floorplans"].length + 1).fill("");
   config["judgesSchedule"] = judge_schedules;
   config["studentsSchedule"] = student_schedules;
 }
