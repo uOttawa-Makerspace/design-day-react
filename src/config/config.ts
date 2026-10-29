@@ -18,9 +18,29 @@ interface Config {
   sheetId: string;
   showFloorPlan: boolean; // Admin want to hide old floorplans
   floorplans: string[]; // URL to makerepo hosted images
-  floorplan_titles: string[];
+  floorplan_titles: (string | null)[];
   judgesSchedule: GeneralSchedule[]; // judges schedule
   studentsSchedule: GeneralSchedule[]; // students schedule
+}
+
+// Response of GET /api/v1/design_day (see doc/api/v1/design_day.md in the Rails app).
+interface ApiSchedule {
+  start: string; // ISO 8601
+  end: string; // ISO 8601
+  title_en: string;
+  title_fr: string;
+  event_for: "student" | "judge";
+}
+
+interface ApiDesignDay {
+  year: number;
+  semester: Semesters;
+  day: string;
+  sheet_key: string;
+  show_floorplans: boolean;
+  floorplan_urls: string[];
+  floorplan_titles: (string | null)[];
+  schedules: ApiSchedule[];
 }
 
 let config: Config = {
@@ -37,14 +57,27 @@ let config: Config = {
 };
 
 export async function fetchConfig() {
-  const response = await fetch(`${process.env.REACT_APP_CONFIG_ENDPOINT}`);
-  const j = await response.json();
+  let j: ApiDesignDay;
+  try {
+    // Public endpoint: no cookies, no credentials.
+    const response = await fetch(`${process.env.REACT_APP_CONFIG_ENDPOINT}`, {
+      credentials: "omit",
+    });
+    if (!response.ok) {
+      throw new Error(`Design Day config responded ${response.status}`);
+    }
+    j = await response.json();
+  } catch (e) {
+    // Keep the built-in defaults above so the app still renders.
+    console.error("Could not load the Design Day config", e);
+    return;
+  }
 
   let judge_schedules: GeneralSchedule[] = [];
   let student_schedules: GeneralSchedule[] = [];
 
   // Push schedules
-  j["design_day_schedules"].forEach((sched: any) => {
+  j.schedules.forEach((sched) => {
     let start = new Date(sched["start"]);
     let startH = start.getHours();
     let startM = start.getMinutes();
@@ -76,9 +109,8 @@ export async function fetchConfig() {
   config["dateEn"] = j["day"];
   config["sheetId"] = j["sheet_key"];
   config["showFloorPlan"] = j["show_floorplans"];
-  config["floorplans"] = j["floorplan_urls"] || [];
-  config["floorplan_titles"] =
-    j["floorplan_titles"] || Array(config["floorplans"].length + 1).fill("");
+  config["floorplans"] = j["floorplan_urls"];
+  config["floorplan_titles"] = j["floorplan_titles"];
   config["judgesSchedule"] = judge_schedules;
   config["studentsSchedule"] = student_schedules;
 }
