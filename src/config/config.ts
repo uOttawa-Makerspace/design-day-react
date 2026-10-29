@@ -56,7 +56,20 @@ let config: Config = {
   studentsSchedule: [],
 };
 
-export async function fetchConfig() {
+let inFlight: Promise<boolean> | null = null;
+
+// Resolves true once the real config is loaded, false if the fetch or parse
+// failed (config is then left untouched). Concurrent calls share one request.
+export function fetchConfig(): Promise<boolean> {
+  if (!inFlight) {
+    inFlight = loadConfig().finally(() => {
+      inFlight = null;
+    });
+  }
+  return inFlight;
+}
+
+async function loadConfig(): Promise<boolean> {
   let j: ApiDesignDay;
   try {
     // Public endpoint: no cookies, no credentials.
@@ -68,37 +81,41 @@ export async function fetchConfig() {
     }
     j = await response.json();
   } catch (e) {
-    // Keep the built-in defaults above so the app still renders.
     console.error("Could not load the Design Day config", e);
-    return;
+    return false;
   }
 
   let judge_schedules: GeneralSchedule[] = [];
   let student_schedules: GeneralSchedule[] = [];
 
   // Push schedules
-  j.schedules.forEach((sched) => {
-    let start = new Date(sched["start"]);
-    let startH = start.getHours();
-    let startM = start.getMinutes();
+  try {
+    j.schedules.forEach((sched) => {
+      let start = new Date(sched["start"]);
+      let startH = start.getHours();
+      let startM = start.getMinutes();
 
-    let end = new Date(sched["end"]);
-    let endH = end.getHours();
-    let endM = end.getMinutes();
+      let end = new Date(sched["end"]);
+      let endH = end.getHours();
+      let endM = end.getMinutes();
 
-    let item: GeneralSchedule = {
-      time: `${startH}h${startM == 0 ? "" : startM} - ${endH}h${
-        endM == 0 ? "" : endM
-      }`,
-      eventEn: sched["title_en"],
-      eventFr: sched["title_fr"],
-    };
-    if (sched["event_for"] == "student") {
-      student_schedules.push(item);
-    } else {
-      judge_schedules.push(item);
-    }
-  });
+      let item: GeneralSchedule = {
+        time: `${startH}h${startM == 0 ? "" : startM} - ${endH}h${
+          endM == 0 ? "" : endM
+        }`,
+        eventEn: sched["title_en"],
+        eventFr: sched["title_fr"],
+      };
+      if (sched["event_for"] == "student") {
+        student_schedules.push(item);
+      } else {
+        judge_schedules.push(item);
+      }
+    });
+  } catch (e) {
+    console.error("Could not parse the Design Day config", e);
+    return false;
+  }
 
   // Copy over simple structures
   config["year"] = j["year"];
@@ -113,6 +130,7 @@ export async function fetchConfig() {
   config["floorplan_titles"] = j["floorplan_titles"];
   config["judgesSchedule"] = judge_schedules;
   config["studentsSchedule"] = student_schedules;
+  return true;
 }
 
 export default config;

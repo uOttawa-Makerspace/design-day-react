@@ -2,17 +2,17 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
-import { fetchConfig } from "./config/config";
+import ConfigGate from "./ConfigGate";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
-// Prefetch data before rendering
-fetchConfig().then(() => {
-  root.render(
-    <React.StrictMode>
+// Render the app only once the config has loaded (retries until then)
+root.render(
+  <React.StrictMode>
+    <ConfigGate>
       <App />
-    </React.StrictMode>
-  );
-});
+    </ConfigGate>
+  </React.StrictMode>
+);
