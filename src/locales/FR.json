@@ -32,5 +32,6 @@
   "github_contributors": "CONTRIBUTEURS GITHUB",
   "awards_ceremony_paragraph": "Rejoignez-nous dans l'atrium de STEM pour la cérémonie de remise des prix et les remarques de clôture à 13h15.",
   "floor_plans": "Plans des étages",
-  "no_floor_plans": "Les plans d'étage n'ont pas encore été annoncés"
+  "no_floor_plans": "Les plans d'étage n'ont pas encore été annoncés",
+  "schedule_unavailable": "Le programme des présentations est indisponible pour le moment. Veuillez réessayer plus tard."
 }
