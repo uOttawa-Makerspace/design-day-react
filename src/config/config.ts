@@ -54,13 +54,13 @@ export async function fetchConfig() {
     let endM = end.getMinutes();
 
     let item: GeneralSchedule = {
-      time: `${startH}h${startM == 0 ? "" : startM} - ${endH}h${
-        endM == 0 ? "" : endM
+      time: `${startH}h${startM === 0 ? "" : startM} - ${endH}h${
+        endM === 0 ? "" : endM
       }`,
       eventEn: sched["title_en"],
       eventFr: sched["title_fr"],
     };
-    if (sched["event_for"] == "student") {
+    if (sched["event_for"] === "student") {
       student_schedules.push(item);
     } else {
       judge_schedules.push(item);
