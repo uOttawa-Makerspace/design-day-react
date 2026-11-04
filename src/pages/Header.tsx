@@ -4,36 +4,32 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { useTranslation } from "react-i18next";
 import config from "../config/config";
 import i18n from "i18next";
+import useHideOnScroll from "../hooks/useHideOnScroll";
 
-/**
- * Utility function to combine CSS classes.
- */
 const classNames = (...classes: string[]) => {
   return classes.filter(Boolean).join(" ");
 };
 
-/**
- * Displays the navigation bar for the application.
- *
- * This component uses the Disclosure component from Headless UI to handle
- * the mobile menu toggle. It displays the application title and navigation
- * links for different sections. It also includes a button to switch between
- * languages (English and French).
- */
 const Header = () => {
   const { t } = useTranslation();
+  const visible = useHideOnScroll();
 
-  // Navigation links for the header
   const navigation = [
     { name: t("home"), href: "#home", current: true },
     { name: t("schedule"), href: "#schedule", current: false },
     { name: t("presentations"), href: "#presentation", current: false },
     { name: t("sponsors"), href: "#sponsors", current: false },
-    { name: t("makerepo"), href: "https://makerepo.com", current: false },
   ];
 
   return (
-    <Disclosure as="nav" className="bg-gray-800">
+    <Disclosure
+      as="nav"
+      className={classNames(
+        "fixed top-0 left-0 w-full z-50 bg-[#1a2332]/90 backdrop-blur",
+        "transition-transform duration-300",
+        visible ? "translate-y-0" : "-translate-y-full"
+      )}
+    >
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -44,15 +40,24 @@ const Header = () => {
                   <FontAwesomeIcon icon={solid("bars")} size="lg" />
                 </Disclosure.Button>
               </div>
-              {/* Application title */}
+
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                <div className="flex flex-shrink-0 items-center text-white">
+                <div className="flex flex-shrink-0 items-center mr-4">
+                  <a
+                    href="https://makerepo.com"
+                    className="text-white font-bold text-lg hover:text-gray-300 transition-colors"
+                  >
+                    MakerRepo
+                  </a>
+                </div>
+
+                <div className="flex flex-shrink-0 items-center text-gray-400 text-sm sm:text-base mr-6">
                   {t("design_day", {
                     year: config.year,
                     semester: t(`semesters.${config.semester}`),
                   })}
                 </div>
-                {/* Desktop navigation links */}
+
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
@@ -73,7 +78,7 @@ const Header = () => {
                   </div>
                 </div>
               </div>
-              {/* Language switch button */}
+
               <button
                 onClick={() =>
                   i18n.changeLanguage(
@@ -89,7 +94,7 @@ const Header = () => {
               </button>
             </div>
           </div>
-          {/* Mobile navigation menu */}
+
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 px-2 pt-2 pb-3">
               {navigation.map((item) => (
@@ -108,6 +113,13 @@ const Header = () => {
                   {item.name}
                 </Disclosure.Button>
               ))}
+              <Disclosure.Button
+                as="a"
+                href="https://makerepo.com"
+                className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+              >
+                MakerRepo
+              </Disclosure.Button>
             </div>
           </Disclosure.Panel>
         </>
