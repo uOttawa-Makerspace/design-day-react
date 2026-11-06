@@ -32,5 +32,14 @@
   "github_contributors": "GITHUB CONTRIBUTORS",
   "awards_ceremony_paragraph": "Please join us in the STEM atrium for the award ceremony and closing remarks at 1:15 PM.",
   "floor_plans": "Floor Plans",
-  "no_floor_plans": "Floor plans not announced yet..."
+  "no_floor_plans": "Floor plans not announced yet...",
+
+  "selectRole": "Select your role",
+  "selectRoleSubtitle": "Please select your role to access your schedule and other relevant information.",
+  "imJudge": "I am a judge",
+  "imStudent": "I am a student",
+  "judgeView": "Judge View",
+  "studentView": "Student View",
+  "switchRole": "Switch Role",
+  "presentation_schedule": "Presentation Schedule"
 }

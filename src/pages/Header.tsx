@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import { Disclosure } from "@headlessui/react";
+import { Link, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { useTranslation } from "react-i18next";
@@ -13,13 +15,40 @@ const classNames = (...classes: string[]) => {
 const Header = () => {
   const { t } = useTranslation();
   const visible = useHideOnScroll();
+  const { pathname, hash } = useLocation();
+
+  // Scroll to the sponsors section (or the top) after navigation
+  useEffect(() => {
+    if (pathname === "/" && hash === "#sponsors") {
+      setTimeout(() => {
+        document
+          .getElementById("sponsors")
+          ?.scrollIntoView({ behavior: "smooth" });
+      }, 0);
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [pathname, hash]);
 
   const navigation = [
-    { name: t("home"), href: "#home", current: true },
-    { name: t("schedule"), href: "#schedule", current: false },
-    { name: t("presentations"), href: "#presentation", current: false },
-    { name: t("sponsors"), href: "#sponsors", current: false },
+    {
+      name: t("home"),
+      to: "/",
+      current: pathname === "/" && hash !== "#sponsors",
+    },
+    {
+      name: t("sponsors"),
+      to: "/#sponsors",
+      current: pathname === "/" && hash === "#sponsors",
+    },
+    { name: t("judges"), to: "/judges", current: pathname === "/judges" },
+    { name: t("students"), to: "/students", current: pathname === "/students" },
   ];
+
+  const toggleLanguage = () =>
+    i18n.changeLanguage(i18n.language === "fr" ? "en" : "fr", () => {
+      localStorage.setItem("defaultLang", i18n.language);
+    });
 
   return (
     <Disclosure
@@ -30,7 +59,7 @@ const Header = () => {
         visible ? "translate-y-0" : "-translate-y-full"
       )}
     >
-      {({ open }) => (
+      {() => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div className="relative flex h-16 items-center justify-between">
@@ -45,7 +74,7 @@ const Header = () => {
                 <div className="flex flex-shrink-0 items-center mr-4">
                   <a
                     href="https://makerepo.com"
-                    className="text-white font-bold text-lg hover:text-gray-300 transition-colors"
+                    className="text-orange-500 font-bold text-lg hover:text-orange-400 transition-colors"
                   >
                     MakerRepo
                   </a>
@@ -58,12 +87,13 @@ const Header = () => {
                   })}
                 </div>
 
+                {/* Desktop links */}
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
-                      <a
+                      <Link
                         key={item.name}
-                        href={item.href}
+                        to={item.to}
                         className={classNames(
                           item.current
                             ? "bg-gray-900 text-white"
@@ -73,21 +103,15 @@ const Header = () => {
                         aria-current={item.current ? "page" : undefined}
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>
               </div>
 
+              {/* Language toggle */}
               <button
-                onClick={() =>
-                  i18n.changeLanguage(
-                    i18n.language === "fr" ? "en" : "fr",
-                    () => {
-                      localStorage.setItem("defaultLang", i18n.language);
-                    }
-                  )
-                }
+                onClick={toggleLanguage}
                 className="flex items-center justify-center sm:justify-end text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
               >
                 {i18n.language === "fr" ? "EN" : "FR"}
@@ -95,13 +119,14 @@ const Header = () => {
             </div>
           </div>
 
+          {/* Mobile menu */}
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 px-2 pt-2 pb-3">
               {navigation.map((item) => (
                 <Disclosure.Button
                   key={item.name}
-                  as="a"
-                  href={item.href}
+                  as={Link}
+                  to={item.to}
                   className={classNames(
                     item.current
                       ? "bg-gray-900 text-white"
@@ -116,7 +141,7 @@ const Header = () => {
               <Disclosure.Button
                 as="a"
                 href="https://makerepo.com"
-                className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                className="block px-3 py-2 rounded-md text-base font-medium text-orange-500 hover:bg-gray-700 hover:text-orange-400"
               >
                 MakerRepo
               </Disclosure.Button>
