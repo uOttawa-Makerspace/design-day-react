@@ -32,5 +32,15 @@
   "github_contributors": "CONTRIBUTEURS GITHUB",
   "awards_ceremony_paragraph": "Rejoignez-nous dans l'atrium de STEM pour la cérémonie de remise des prix et les remarques de clôture à 13h15.",
   "floor_plans": "Plans des étages",
-  "no_floor_plans": "Les plans d'étage n'ont pas encore été annoncés"
+  "no_floor_plans": "Les plans d'étage n'ont pas encore été annoncés",
+
+  "selectRole": "Sélectionnez votre rôle",
+  "selectRoleSubtitle": "Veuillez sélectionner votre rôle pour accéder à votre horaire et à d'autres informations pertinentes.",
+  "imJudge": "Je suis un(e) juge",
+  "imStudent": "Je suis un(e) étudiant(e)",
+  "judgeView": "Vue des juges",
+  "studentView": "Vue des étudiants",
+  "switchRole": "Changer de rôle",
+
+  "presentation_schedule": "Horaire des présentations"
 }
