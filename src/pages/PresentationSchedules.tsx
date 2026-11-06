@@ -33,7 +33,7 @@ function fuzzyMatch(pattern: string, str: string) {
   pattern = pattern.normalize().toLowerCase();
   str = str.normalize().toLowerCase();
   pattern =
-    ".*" +
+    <span>.*</span> +
     pattern
       .split("")
       .map((l) => `${escapeRegExp(l)}.*`)
@@ -317,14 +317,6 @@ const CategoryDisclosure = ({
   );
 };
 
-/**
- * Displays presentation schedules for different categories.
- *
- * This component fetches presentation data from a Google Sheets spreadsheet and displays it
- * in a series of collapsible sections. Each section contains a table with presentation details
- * such as section, group, time, project, project description, and project repository. It also
- * includes a lightbox for viewing floor plans.
- */
 const PresentationSchedules = () => {
   const { t } = useTranslation();
   const [categories, setCategories] = useState<Category[]>([]);
@@ -375,8 +367,21 @@ const PresentationSchedules = () => {
   }, []);
 
   return (
-    <div id="presentation" className="flex justify-center">
-      <div className="w-full lg:w-1/2 pb-10 px-4 lg:px-0">
+    <div id="presentation" className="flex justify-center py-12">
+      <div className="w-full lg:w-1/2 pb-10 px-4 lg:px-0 text-left">
+        <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-slate-900 mb-6 text-left">
+          {t("presentation_schedule")}
+        </h2>
+        <div className="text-lg sm:text-xl text-slate-600 mb-6 text-left">
+          <p className="mb-2">{t("presentation_paragraph")}</p>
+          {t("presentation_li_1") && (
+            <ul className="list-disc list-inside inline-block text-left mt-2">
+              <li>{t("presentation_li_1")}</li>
+              {t("presentation_li_2") && <li>{t("presentation_li_2")}</li>}
+            </ul>
+          )}
+        </div>
+
         <input
           name="presentationSearch"
           placeholder={t("search_prompt") ?? ""}
@@ -396,10 +401,14 @@ const PresentationSchedules = () => {
             />
           ))}
         </div>
-        <h4 className="text-xl font-normal mt-0 mb-2">{t("floor_plans")}</h4>
+
+        {/* Floor Plans Header left-aligned */}
+        <h3 className="text-3xl sm:text-4xl font-semibold tracking-tight text-slate-900 mt-10 mb-6 text-left">
+          {t("floor_plans")}
+        </h3>
 
         {config.showFloorPlan === false || images.length === 0 ? (
-          t("no_floor_plans")
+          <p className="text-center text-slate-500">{t("no_floor_plans")}</p>
         ) : (
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
             {images.map((image, i) => (
@@ -411,11 +420,11 @@ const PresentationSchedules = () => {
                 className="flex flex-col items-center justify-center"
                 key={i}
               >
-                <p>{config.floorplan_titles[i]}</p>
+                <p className="mb-2 font-medium">{config.floorplan_titles[i]}</p>
                 <img
-                  className="w-auto h-auto max-h-full"
+                  className="w-auto h-auto max-h-full rounded-lg shadow-sm hover:shadow-md transition-shadow"
                   src={image.src}
-                  // alt={image.caption}
+                  alt="Floor Plan"
                 />
               </button>
             ))}

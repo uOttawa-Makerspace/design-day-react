@@ -1,71 +1,61 @@
-import React from 'react';
+import React from "react";
 import { useTranslation } from "react-i18next";
 import i18n from "i18next";
 import config from "../config/config";
 
 interface ScheduleTableProps {
-  type: 'judges' | 'students';
+  type: "judges" | "students";
 }
 
-/**
- * Displays a table for the schedule of judges or students.
- *
- * This component receives a prop `type` to determine whether to display the schedule for
- * judges or students. It then renders a table with time slots and events, which are
- * localized based on the selected language.
- */
 const ScheduleTable: React.FC<ScheduleTableProps> = ({ type }) => {
   const { t } = useTranslation();
 
-  const scheduleData = type === 'judges' ? config.judgesSchedule : config.studentsSchedule;
-  const title = type === 'judges' ? t("judges") : t("students");
+  const scheduleData =
+    type === "judges" ? config.judgesSchedule : config.studentsSchedule;
+  const title = type === "judges" ? t("judges") : t("students");
 
   return (
-    <div className="container mx-auto px-4 sm:px-8 max-w-3xl">
-      {/* Schedule title */}
-      <h3 className="text-2xl font-normal mt-1 mb-0">{title}</h3> 
-      <div className="py-4 pt-1">
-        <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-          <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
-            <table className="min-w-full leading-normal bg-gray-50">
-              <thead>
-                <tr>
-                  {/* Time column header */}
-                  <th
-                    scope="col"
-                    className="px-5 py-3 border-b border-gray-300 text-gray-800 text-left text-sm uppercase font-semibold"
-                  >
-                    {t("time")}
-                  </th>
-                  {/* Event column header */}
-                  <th
-                    scope="col"
-                    className="px-5 py-3 border-b border-gray-300 text-gray-800 text-left text-sm uppercase font-semibold"
-                  >
-                    {t("event")}
-                  </th>
+    <div id="schedule" className="flex justify-center py-2">
+      <div className="w-full lg:w-1/2 px-4 lg:px-0 text-left">
+        <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-slate-900 mb-3 text-left">
+          {title}
+        </h2>
+
+        <div className="overflow-x-auto shadow-sm border border-gray-200 rounded-lg">
+          <table className="min-w-full bg-white leading-normal text-left">
+            <thead>
+              <tr>
+                <th
+                  scope="col"
+                  className="px-4 py-2 border-b border-gray-300 text-gray-800 text-left text-sm uppercase font-semibold"
+                >
+                  {t("time")}
+                </th>
+                <th
+                  scope="col"
+                  className="px-4 py-2 border-b border-gray-300 text-gray-800 text-left text-sm uppercase font-semibold"
+                >
+                  {t("event")}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {scheduleData.map((sched) => (
+                <tr key={sched.eventEn}>
+                  <td className="px-4 py-2 border-b border-gray-200 text-sm">
+                    <p className="text-gray-900 whitespace-nowrap">
+                      {sched.time}
+                    </p>
+                  </td>
+                  <td className="px-4 py-2 border-b border-gray-200 text-sm">
+                    <p className="text-gray-900">
+                      {i18n.language === "fr" ? sched.eventFr : sched.eventEn}
+                    </p>
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {scheduleData.map((sched) => (
-                  <tr key={sched.eventEn}>
-                    {/* Time slot */}
-                    <td className="px-5 py-5 border-b border-gray-300 text-sm">
-                      <p className="text-gray-900 whitespace-no-wrap">
-                        {sched.time}
-                      </p>
-                    </td>
-                    {/* Event name */}
-                    <td className="px-5 py-5 border-b border-gray-300 text-sm">
-                      <p className="text-gray-900 whitespace-no-wrap">
-                        {i18n.language === "fr" ? sched.eventFr : sched.eventEn}
-                      </p>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

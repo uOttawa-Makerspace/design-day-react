@@ -1,40 +1,65 @@
+import { useEffect } from "react";
 import { Disclosure } from "@headlessui/react";
+import { Link, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { useTranslation } from "react-i18next";
 import config from "../config/config";
 import i18n from "i18next";
+import useHideOnScroll from "../hooks/useHideOnScroll";
 
-/**
- * Utility function to combine CSS classes.
- */
 const classNames = (...classes: string[]) => {
   return classes.filter(Boolean).join(" ");
 };
 
-/**
- * Displays the navigation bar for the application.
- *
- * This component uses the Disclosure component from Headless UI to handle
- * the mobile menu toggle. It displays the application title and navigation
- * links for different sections. It also includes a button to switch between
- * languages (English and French).
- */
 const Header = () => {
   const { t } = useTranslation();
+  const visible = useHideOnScroll();
+  const { pathname, hash } = useLocation();
 
-  // Navigation links for the header
+  // Scroll to the sponsors section (or the top) after navigation
+  useEffect(() => {
+    if (pathname === "/" && hash === "#sponsors") {
+      setTimeout(() => {
+        document
+          .getElementById("sponsors")
+          ?.scrollIntoView({ behavior: "smooth" });
+      }, 0);
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [pathname, hash]);
+
   const navigation = [
-    { name: t("home"), href: "#home", current: true },
-    { name: t("schedule"), href: "#schedule", current: false },
-    { name: t("presentations"), href: "#presentation", current: false },
-    { name: t("sponsors"), href: "#sponsors", current: false },
-    { name: t("makerepo"), href: "https://makerepo.com", current: false },
+    {
+      name: t("home"),
+      to: "/",
+      current: pathname === "/" && hash !== "#sponsors",
+    },
+    {
+      name: t("sponsors"),
+      to: "/#sponsors",
+      current: pathname === "/" && hash === "#sponsors",
+    },
+    { name: t("judges"), to: "/judges", current: pathname === "/judges" },
+    { name: t("students"), to: "/students", current: pathname === "/students" },
   ];
 
+  const toggleLanguage = () =>
+    i18n.changeLanguage(i18n.language === "fr" ? "en" : "fr", () => {
+      localStorage.setItem("defaultLang", i18n.language);
+    });
+
   return (
-    <Disclosure as="nav" className="bg-gray-800">
-      {({ open }) => (
+    <Disclosure
+      as="nav"
+      className={classNames(
+        "fixed top-0 left-0 w-full z-50 bg-[#1a2332]/90 backdrop-blur",
+        "transition-transform duration-300",
+        visible ? "translate-y-0" : "-translate-y-full"
+      )}
+    >
+      {() => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div className="relative flex h-16 items-center justify-between">
@@ -44,21 +69,31 @@ const Header = () => {
                   <FontAwesomeIcon icon={solid("bars")} size="lg" />
                 </Disclosure.Button>
               </div>
-              {/* Application title */}
+
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                <div className="flex flex-shrink-0 items-center text-white">
+                <div className="flex flex-shrink-0 items-center mr-4">
+                  <a
+                    href="https://makerepo.com"
+                    className="text-orange-500 font-bold text-lg hover:text-orange-400 transition-colors"
+                  >
+                    MakerRepo
+                  </a>
+                </div>
+
+                <div className="flex flex-shrink-0 items-center text-gray-400 text-sm sm:text-base mr-6">
                   {t("design_day", {
                     year: config.year,
                     semester: t(`semesters.${config.semester}`),
                   })}
                 </div>
-                {/* Desktop navigation links */}
+
+                {/* Desktop links */}
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
-                      <a
+                      <Link
                         key={item.name}
-                        href={item.href}
+                        to={item.to}
                         className={classNames(
                           item.current
                             ? "bg-gray-900 text-white"
@@ -68,35 +103,30 @@ const Header = () => {
                         aria-current={item.current ? "page" : undefined}
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>
               </div>
-              {/* Language switch button */}
+
+              {/* Language toggle */}
               <button
-                onClick={() =>
-                  i18n.changeLanguage(
-                    i18n.language === "fr" ? "en" : "fr",
-                    () => {
-                      localStorage.setItem("defaultLang", i18n.language);
-                    }
-                  )
-                }
+                onClick={toggleLanguage}
                 className="flex items-center justify-center sm:justify-end text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
               >
                 {i18n.language === "fr" ? "EN" : "FR"}
               </button>
             </div>
           </div>
-          {/* Mobile navigation menu */}
+
+          {/* Mobile menu */}
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 px-2 pt-2 pb-3">
               {navigation.map((item) => (
                 <Disclosure.Button
                   key={item.name}
-                  as="a"
-                  href={item.href}
+                  as={Link}
+                  to={item.to}
                   className={classNames(
                     item.current
                       ? "bg-gray-900 text-white"
@@ -108,6 +138,13 @@ const Header = () => {
                   {item.name}
                 </Disclosure.Button>
               ))}
+              <Disclosure.Button
+                as="a"
+                href="https://makerepo.com"
+                className="block px-3 py-2 rounded-md text-base font-medium text-orange-500 hover:bg-gray-700 hover:text-orange-400"
+              >
+                MakerRepo
+              </Disclosure.Button>
             </div>
           </Disclosure.Panel>
         </>
