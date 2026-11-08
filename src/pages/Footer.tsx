@@ -1,8 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  brands,
-  regular,
-} from "@fortawesome/fontawesome-svg-core/import.macro";
+  faFacebook,
+  faInstagram,
+  faTwitter,
+} from "@fortawesome/free-brands-svg-icons";
+import { faCopyright } from "@fortawesome/free-regular-svg-icons";
 import { useTranslation } from "react-i18next";
 
 /**
@@ -18,24 +20,16 @@ const Footer = () => {
       <div className="justify-center flex gap-10 mb-10">
         {/* Facebook */}
         <a href="https://www.facebook.com/uOCEED/">
-          <FontAwesomeIcon
-            icon={brands("facebook")}
-            size="xl"
-            className="text-white"
-          />
+          <FontAwesomeIcon icon={faFacebook} size="xl" className="text-white" />
         </a>
         {/* Twitter */}
         <a href="https://twitter.com/uOCEED">
-          <FontAwesomeIcon
-            icon={brands("twitter")}
-            size="xl"
-            className="text-white"
-          />
+          <FontAwesomeIcon icon={faTwitter} size="xl" className="text-white" />
         </a>
         {/* Instagram */}
         <a href="https://www.instagram.com/cgec.uottawa.ceed">
           <FontAwesomeIcon
-            icon={brands("instagram")}
+            icon={faInstagram}
             size="xl"
             className="text-white"
           />
@@ -43,8 +37,8 @@ const Footer = () => {
       </div>
       <p className="text-white text-center text-sm font-light leading-relaxed">
         {/* Copyright */}
-        <FontAwesomeIcon icon={regular("copyright")} />{" "}
-        {new Date().getFullYear()} — {/* CEED */}
+        <FontAwesomeIcon icon={faCopyright} /> {new Date().getFullYear()} —{" "}
+        {/* CEED */}
         <a className="underline" href="https://engineering.uottawa.ca/CEED">
           {t("centre_for_entrepreneurship_and_engineering_design")}
         </a>{" "}

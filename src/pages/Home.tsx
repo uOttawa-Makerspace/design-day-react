@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
+import { faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import config from "../config/config";
 import homeImgOne from "../images/home-1.jpg";
 import homeImgTwo from "../images/home-2.jpg";
@@ -38,7 +38,7 @@ const Home = () => {
             className="inline-block rounded-xl px-4 py-3 bg-ceed text-white"
           >
             {t("schedule")}
-            <FontAwesomeIcon className="ml-2" icon={solid("arrow-down")} />
+            <FontAwesomeIcon className="ml-2" icon={faArrowDown} />
           </a>
         </div>
 

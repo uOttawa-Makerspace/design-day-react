@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import { Disclosure, Transition } from "@headlessui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
+import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import config from "../config/config";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
@@ -150,9 +150,7 @@ const PresentationDisclosure = ({
         <div>
           <Disclosure.Button className="flex w-full bg-ceed-light text-white my-2 items-center justify-between rounded-lg px-4 py-3 text-left text-sm font-medium focus:outline-none">
             <span>{presentationSection}</span>
-            <FontAwesomeIcon
-              icon={open ? solid("chevron-up") : solid("chevron-down")}
-            />
+            <FontAwesomeIcon icon={open ? faChevronUp : faChevronDown} />
           </Disclosure.Button>
           <Transition
             enter="transition duration-100 ease-out"
@@ -269,9 +267,7 @@ const CategoryDisclosure = ({
         <>
           <Disclosure.Button className="flex w-full bg-ceed text-white my-2 items-center justify-between rounded-lg px-4 py-3 text-left text-sm font-medium focus:outline-none">
             <span>{category.name}</span>
-            <FontAwesomeIcon
-              icon={open ? solid("chevron-up") : solid("chevron-down")}
-            />
+            <FontAwesomeIcon icon={open ? faChevronUp : faChevronDown} />
           </Disclosure.Button>
           <Transition
             enter="transition duration-100 ease-out"
@@ -320,6 +316,7 @@ const CategoryDisclosure = ({
 const PresentationSchedules = () => {
   const { t } = useTranslation();
   const [categories, setCategories] = useState<Category[]>([]);
+  const [loadFailed, setLoadFailed] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [isImgPopupOpen, setIsImgPopupOpen] = useState(false);
   const [imgIndex, setImgIndex] = useState(0);
@@ -329,10 +326,24 @@ const PresentationSchedules = () => {
 
   useEffect(() => {
     fetch(
-      `https://sheets.googleapis.com/v4/spreadsheets/${config.sheetId}/values/1st-year?key=${process.env.REACT_APP_GOOGLE_API_KEY}&range=!A2:ZZZ1000`
+      `https://sheets.googleapis.com/v4/spreadsheets/${
+        config.sheetId
+      }/values/1st-year?key=${
+        import.meta.env.REACT_APP_GOOGLE_API_KEY
+      }&range=!A2:ZZZ1000`
     )
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error(`Sheets request failed (${res.status})`);
+        return res.json();
+      })
       .then((data) => {
+        if (
+          !Array.isArray(data?.values) ||
+          !Array.isArray(data.values[0]) ||
+          data.values[0].length === 0
+        ) {
+          throw new Error("Sheets response has no values");
+        }
         const categories: Category[] = [];
         for (let i = 0; i < data.values[0].length; i += 7) {
           categories.push({
@@ -363,6 +374,12 @@ const PresentationSchedules = () => {
         }
 
         setCategories(categories);
+        setLoadFailed(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setCategories([]);
+        setLoadFailed(true);
       });
   }, []);
 
@@ -389,6 +406,11 @@ const PresentationSchedules = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         <hr />
+        {loadFailed && (
+          <p className="my-4 text-sm text-gray-500" role="status">
+            {t("schedule_unavailable")}
+          </p>
+        )}
         <div className="rounded-2xl pb-5">
           {(searchTerm
             ? filteredCategories(categories, searchTerm)
@@ -424,7 +446,7 @@ const PresentationSchedules = () => {
                 <img
                   className="w-auto h-auto max-h-full rounded-lg shadow-sm hover:shadow-md transition-shadow"
                   src={image.src}
-                  alt="Floor Plan"
+                  alt={config.floorplan_titles[i] || "Floor Plan"}
                 />
               </button>
             ))}

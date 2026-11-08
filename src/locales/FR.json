@@ -42,5 +42,6 @@
   "studentView": "Vue des étudiants",
   "switchRole": "Changer de rôle",
 
-  "presentation_schedule": "Horaire des présentations"
+  "presentation_schedule": "Horaire des présentations",
+  "schedule_unavailable": "Le programme des présentations est indisponible pour le moment. Veuillez réessayer plus tard."
 }

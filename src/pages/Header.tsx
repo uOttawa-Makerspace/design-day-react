@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Disclosure } from "@headlessui/react";
 import { Link, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
 import config from "../config/config";
 import i18n from "i18next";
@@ -66,7 +66,7 @@ const Header = () => {
               {/* Mobile menu button */}
               <div className="inset-y-0 left-0 flex items-center sm:hidden">
                 <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-                  <FontAwesomeIcon icon={solid("bars")} size="lg" />
+                  <FontAwesomeIcon icon={faBars} size="lg" />
                 </Disclosure.Button>
               </div>
 

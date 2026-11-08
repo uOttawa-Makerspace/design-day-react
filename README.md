@@ -29,11 +29,11 @@ To run and test the Design Day website locally, it's necessary to set up the env
    ```
    REACT_APP_GOOGLE_API_KEY=your_google_api_key
    REACT_APP_GOOGLE_SHEETS_ID=your_google_sheets_id
-   REACT_APP_CONFIG_ENDPOINT=localhost:3000/admin/design_day/data
+   REACT_APP_CONFIG_ENDPOINT=http://localhost:3000/api/v1/design_day
    ```
 
    Replace `your_google_api_key` and `your_google_sheets_id` with your actual Google API key and Google Sheets ID, respectively. Both can be found on Cloudflare.
-   Replace `REACT_APP_CONFIG_ENDPOINT` with the URL to fetch for JSON data. This should be pointed towards your local Makerepo instance. Preview instances point to staging. Production points to production.
+   Replace `REACT_APP_CONFIG_ENDPOINT` with the full URL (including `http://` or `https://`) of the Makerepo `GET /api/v1/design_day` endpoint. It is public: the app sends no cookies or credentials. The API only allows CORS from `https://designday.makerepo.com` and `https://<preview>.design-day-react.pages.dev`, so `localhost` dev servers can not read it from a browser unless the Rails CORS config is changed. This should be pointed towards your local Makerepo instance. Preview instances point to staging. Production points to production.
 
 3. **Updating Environment Variables for Production**
 
