@@ -1,6 +1,6 @@
 import backgroundImg from "../images/home-bg.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
+import { faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import config from "../config/config";
 import { useTranslation } from "react-i18next";
 
@@ -45,7 +45,7 @@ const Home = () => {
               className="rounded-xl px-4 py-3 bg-ceed text-white"
             >
               {t("schedule")}
-              <FontAwesomeIcon className="ml-2" icon={solid("arrow-down")} />
+              <FontAwesomeIcon className="ml-2" icon={faArrowDown} />
             </button>
           </a>
         </div>

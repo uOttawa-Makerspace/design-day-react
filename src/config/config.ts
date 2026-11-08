@@ -73,9 +73,12 @@ async function loadConfig(): Promise<boolean> {
   let j: ApiDesignDay;
   try {
     // Public endpoint: no cookies, no credentials.
-    const response = await fetch(`${process.env.REACT_APP_CONFIG_ENDPOINT}`, {
-      credentials: "omit",
-    });
+    const response = await fetch(
+      `${import.meta.env.REACT_APP_CONFIG_ENDPOINT}`,
+      {
+        credentials: "omit",
+      }
+    );
     if (!response.ok) {
       throw new Error(`Design Day config responded ${response.status}`);
     }
