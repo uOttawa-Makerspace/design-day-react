@@ -437,7 +437,7 @@ const PresentationSchedules = () => {
                 <img
                   className="w-auto h-auto max-h-full"
                   src={image.src}
-                  // alt={image.caption}
+                  alt={config.floorplan_titles[i] || "Floorplan"}
                 />
               </button>
             ))}
