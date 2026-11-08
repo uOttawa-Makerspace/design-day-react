@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import { Disclosure, Transition } from "@headlessui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
+import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import config from "../config/config";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
@@ -150,9 +150,7 @@ const PresentationDisclosure = ({
         <div>
           <Disclosure.Button className="flex w-full bg-ceed-light text-white my-2 items-center justify-between rounded-lg px-4 py-3 text-left text-sm font-medium focus:outline-none">
             <span>{presentationSection}</span>
-            <FontAwesomeIcon
-              icon={open ? solid("chevron-up") : solid("chevron-down")}
-            />
+            <FontAwesomeIcon icon={open ? faChevronUp : faChevronDown} />
           </Disclosure.Button>
           <Transition
             enter="transition duration-100 ease-out"
@@ -269,9 +267,7 @@ const CategoryDisclosure = ({
         <>
           <Disclosure.Button className="flex w-full bg-ceed text-white my-2 items-center justify-between rounded-lg px-4 py-3 text-left text-sm font-medium focus:outline-none">
             <span>{category.name}</span>
-            <FontAwesomeIcon
-              icon={open ? solid("chevron-up") : solid("chevron-down")}
-            />
+            <FontAwesomeIcon icon={open ? faChevronUp : faChevronDown} />
           </Disclosure.Button>
           <Transition
             enter="transition duration-100 ease-out"
@@ -338,7 +334,11 @@ const PresentationSchedules = () => {
 
   useEffect(() => {
     fetch(
-      `https://sheets.googleapis.com/v4/spreadsheets/${config.sheetId}/values/1st-year?key=${process.env.REACT_APP_GOOGLE_API_KEY}&range=!A2:ZZZ1000`
+      `https://sheets.googleapis.com/v4/spreadsheets/${
+        config.sheetId
+      }/values/1st-year?key=${
+        import.meta.env.REACT_APP_GOOGLE_API_KEY
+      }&range=!A2:ZZZ1000`
     )
       .then((res) => {
         if (!res.ok) throw new Error(`Sheets request failed (${res.status})`);
