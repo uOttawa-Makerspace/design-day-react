@@ -1,11 +1,12 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import winnersImgOne from "../images/winners-1.jpg";
 
 const PAST_WINNERS_URL =
   "https://www.uottawa.ca/faculty-engineering/centre-entrepreneurship-engineering-design/past-winners";
+
+const PAST_PICTURES_URL =
+  "https://www.flickr.com/photos/uottawa-genie-engineering/albums/";
 
 const Winners: React.FC = () => {
   const { t } = useTranslation();
@@ -16,42 +17,34 @@ const Winners: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-center">
           {/* Left Column: Text & Content */}
           <div className="text-center md:text-left">
-            <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
-              {/* Trophy */}
-              <div className="flex h-20 w-20 flex-shrink-0 items-center justify-center rounded-full bg-ceed/15 ring-2 ring-ceed/40">
-                <FontAwesomeIcon
-                  icon={solid("trophy")}
-                  size="2x"
-                  className="text-ceed"
-                />
-              </div>
+            <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-white mb-3">
+              {t("winners", { defaultValue: "Winners" })}
+            </h2>
+            <p className="text-base sm:text-lg leading-relaxed text-gray-300 mb-6">
+              {t("winnersSubtitle", {
+                defaultValue:
+                  "See the teams who took home top prizes in past years.",
+              })}
+            </p>
 
-              {/* Text & Button Block */}
-              <div>
-                <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-white mb-3">
-                  {t("winners", { defaultValue: "Winners" })}
-                </h2>
-                <p className="text-base sm:text-lg leading-relaxed text-gray-300 mb-6">
-                  {t("winnersSubtitle", {
-                    defaultValue:
-                      "See the teams who took home top prizes in past years.",
-                  })}
-                </p>
-
-                {/* Button (Aligned with text) */}
-                <a
-                  href={PAST_WINNERS_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block rounded-xl px-6 py-4 bg-ceed text-white text-lg font-medium transition-opacity hover:opacity-90"
-                >
-                  {t("viewPastWinners", { defaultValue: "View past winners" })}
-                  <FontAwesomeIcon
-                    className="ml-3"
-                    icon={solid("arrow-up-right-from-square")}
-                  />
-                </a>
-              </div>
+            {/* Buttons */}
+            <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center md:justify-start gap-4">
+              <a
+                href={PAST_WINNERS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block rounded-xl px-6 py-4 bg-ceed text-white text-lg font-medium transition-opacity hover:opacity-90"
+              >
+                {t("viewPastWinners", { defaultValue: "View past winners" })}
+              </a>
+              <a
+                href={PAST_PICTURES_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block rounded-xl px-6 py-4 bg-ceed text-white text-lg font-medium transition-opacity hover:opacity-90"
+              >
+                {t("viewPastPictures", { defaultValue: "View past pictures" })}
+              </a>
             </div>
           </div>
 

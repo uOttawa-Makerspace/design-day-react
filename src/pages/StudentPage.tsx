@@ -8,8 +8,8 @@ const StudentPage: React.FC = () => {
     <DayScheduleLayout>
       {(day) => (
         <>
-          <ScheduleTable type="students" day={day} />
-          <PresentationSchedules day={day} />
+          <ScheduleTable type="students" />
+          <PresentationSchedules />
         </>
       )}
     </DayScheduleLayout>
