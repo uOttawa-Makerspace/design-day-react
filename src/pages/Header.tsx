@@ -17,7 +17,6 @@ const Header = () => {
   const visible = useHideOnScroll();
   const { pathname, hash } = useLocation();
 
-  // Scroll to the sponsors section (or the top) after navigation
   useEffect(() => {
     if (pathname === "/" && hash === "#sponsors") {
       setTimeout(() => {
@@ -61,26 +60,28 @@ const Header = () => {
     >
       {() => (
         <>
-          <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+          {/* Matched padding: px-4 sm:px-6 lg:px-8 */}
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="relative flex h-16 items-center justify-between">
               {/* Mobile menu button */}
-              <div className="inset-y-0 left-0 flex items-center sm:hidden">
+              <div className="inset-y-0 left-0 flex items-center sm:hidden mr-2">
                 <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                   <FontAwesomeIcon icon={faBars} size="lg" />
                 </Disclosure.Button>
               </div>
 
-              <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                <div className="flex flex-shrink-0 items-center mr-4">
+              {/* Header content starting flush on the left */}
+              <div className="flex flex-1 items-center justify-start">
+                <div className="flex-shrink-0 mr-6">
                   <a
                     href="https://makerepo.com"
-                    className="text-orange-500 font-bold text-lg hover:text-orange-400 transition-colors"
+                    className="text-ceed font-bold text-lg hover:opacity-80 transition-opacity"
                   >
                     MakerRepo
                   </a>
                 </div>
 
-                <div className="flex flex-shrink-0 items-center text-gray-400 text-sm sm:text-base mr-6">
+                <div className="flex-shrink-0 text-gray-400 text-sm sm:text-base mr-6 hidden sm:block">
                   {t("design_day", {
                     year: config.year,
                     semester: t(`semesters.${config.semester}`),
@@ -88,7 +89,7 @@ const Header = () => {
                 </div>
 
                 {/* Desktop links */}
-                <div className="hidden sm:ml-6 sm:block">
+                <div className="hidden sm:block">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
                       <Link
@@ -112,7 +113,7 @@ const Header = () => {
               {/* Language toggle */}
               <button
                 onClick={toggleLanguage}
-                className="flex items-center justify-center sm:justify-end text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                className="flex items-center text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
               >
                 {i18n.language === "fr" ? "EN" : "FR"}
               </button>
@@ -141,7 +142,7 @@ const Header = () => {
               <Disclosure.Button
                 as="a"
                 href="https://makerepo.com"
-                className="block px-3 py-2 rounded-md text-base font-medium text-orange-500 hover:bg-gray-700 hover:text-orange-400"
+                className="block px-3 py-2 rounded-md text-base font-medium text-ceed hover:bg-gray-700"
               >
                 MakerRepo
               </Disclosure.Button>

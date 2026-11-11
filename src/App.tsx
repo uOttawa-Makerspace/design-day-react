@@ -7,6 +7,7 @@ import Sponsors from "./pages/Sponsors";
 import JudgePage from "./pages/JudgePage";
 import StudentPage from "./pages/StudentPage";
 import Footer from "./pages/Footer";
+import Winners from "./pages/Winners";
 import "./i18n";
 import PresentationSchedules from "./pages/PresentationSchedules";
 import ScheduleHeader from "./pages/ScheduleHeader";

@@ -2,55 +2,69 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFacebook,
   faInstagram,
-  faTwitter,
+  faLinkedin,
 } from "@fortawesome/free-brands-svg-icons";
 import { faCopyright } from "@fortawesome/free-regular-svg-icons";
 import { useTranslation } from "react-i18next";
 
 /**
- * Displays social media icons and copyright information.
- * This component uses FontAwesome icons to display links to social media platforms.
+- Displays social media icons, CEED copyright info, and contributor link.
  */
 const Footer = () => {
-  // Hook to access translation function
   const { t } = useTranslation();
 
   return (
-    <div className="bg-ceed py-5">
-      <div className="justify-center flex gap-10 mb-10">
-        {/* Facebook */}
-        <a href="https://www.facebook.com/uOCEED/">
-          <FontAwesomeIcon icon={faFacebook} size="xl" className="text-white" />
+    <footer className="bg-ceed py-8 text-white text-center">
+      {/* 1. Social Media Logos */}
+      <div className="justify-center flex gap-8 mb-4">
+        <a
+          href="https://www.facebook.com/uOCEED/"
+          aria-label="Facebook"
+          className="hover:opacity-80 transition-opacity"
+        >
+          <FontAwesomeIcon icon={faFacebook} size="xl" />
         </a>
-        {/* Twitter */}
-        <a href="https://twitter.com/uOCEED">
-          <FontAwesomeIcon icon={faTwitter} size="xl" className="text-white" />
+        <a
+          href="https://www.instagram.com/cgec.uottawa.ceed"
+          aria-label="Instagram"
+          className="hover:opacity-80 transition-opacity"
+        >
+          <FontAwesomeIcon icon={faInstagram} size="xl" />
         </a>
-        {/* Instagram */}
-        <a href="https://www.instagram.com/cgec.uottawa.ceed">
-          <FontAwesomeIcon
-            icon={faInstagram}
-            size="xl"
-            className="text-white"
-          />
+        <a
+          href="https://www.linkedin.com/company/the-centre-for-entrepreneurship-and-engineering-design/posts/?feedView=all"
+          aria-label="LinkedIn"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:opacity-80 transition-opacity"
+        >
+          <FontAwesomeIcon icon={faLinkedin} size="xl" />
         </a>
       </div>
-      <p className="text-white text-center text-sm font-light leading-relaxed">
-        {/* Copyright */}
-        <FontAwesomeIcon icon={faCopyright} /> {new Date().getFullYear()} —{" "}
-        {/* CEED */}
-        <a className="underline" href="https://engineering.uottawa.ca/CEED">
+
+      {/* 2. Copyright © 2026 Centre for Entrepreneurship and Engineering Design and MakerRepo Contributors */}
+      <p className="text-sm sm:text-base font-medium leading-relaxed">
+        Copyright <FontAwesomeIcon icon={faCopyright} className="mx-1" />{" "}
+        {new Date().getFullYear()}{" "}
+        <a
+          className="underline hover:opacity-80 transition-opacity"
+          href="https://engineering.uottawa.ca/CEED"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           {t("centre_for_entrepreneurship_and_engineering_design")}
         </a>{" "}
-        AND {/* GitHub contributors */}
+        and{" "}
         <a
-          className="underline"
+          className="underline hover:opacity-80 transition-opacity"
           href="https://github.com/uOttawa-Makerspace/design-day-react/graphs/contributors"
+          target="_blank"
+          rel="noopener noreferrer"
         >
           {t("github_contributors")}
         </a>
       </p>
-    </div>
+    </footer>
   );
 };
 
