@@ -11,7 +11,7 @@
   "home_paragraph": "Ingéniosité et créativité en valeur! La Journée du design saura vous épater par notre innovation et inspiration étudiante! En collaboration avec des partenaires de l'industrie et de la communauté, nos étudiants ont développé des solutions concrètes pour leurs clients. Cet événement offre l'opportunité aux étudiants de présenter leurs projets de conception, de célébrer leur réussite et de gagner des prix.",
   "what_is_design_day": "Pour plus d'informations sur la Journée du design, cliquez ici",
   "what_is_design_day_url": "https://www.uottawa.ca/faculte-genie/centre-genie-entrepreneurial-conception/journee-design",
-  "schedule_paragraph": "Bienvenue à la journée de design de l'{{ semester }} {{ year }}. Ce programme vous permettra de vous orienter durant toutes les présentations. Rejoignez-nous dans l'édifice STEM et SITE pour voir les projets.",
+  "schedule_paragraph": "Bienvenue à la journée de design de l'{{ semester }} {{ year }}.",
   "semesters": {
     "fall": "Automne",
     "winter": "Hiver",
@@ -34,8 +34,7 @@
   "floor_plans": "Plans des étages",
   "no_floor_plans": "Les plans d'étage n'ont pas encore été annoncés",
 
-  "selectRole": "Sélectionnez votre rôle",
-  "selectRoleSubtitle": "Veuillez sélectionner votre rôle pour accéder à votre horaire et à d'autres informations pertinentes.",
+  "selectRoleSubtitle": "Ce programme vous permettra de vous orienter durant toutes les présentations. Veuillez sélectionner votre rôle pour accéder à votre horaire et à d'autres informations pertinentes.",
   "imJudge": "Je suis un(e) juge",
   "imStudent": "Je suis un(e) étudiant(e)",
   "judgeView": "Vue des juges",
@@ -49,5 +48,21 @@
   "viewPastWinners": "Voir les gagnants passés",
   "winners": "Gagnants",
 
-  "sponsorsThanks": "Merci à nos commanditaires de rendre possible la journée du design."
+  "sponsorsThanks": "Merci à nos commanditaires de rendre possible la journée du design.",
+
+  "scheduleDays": {
+    "selectDayTitle": "Sélectionnez une journée",
+    "selectDaySubtitle": "Choisissez la Journée 1 ou la Journée 2 ci-dessous pour consulter l'horaire.",
+    "ariaTablistLabel": "Journée de l'événement",
+    "day1": {
+      "label": "Journée 1",
+      "date": "Mer. 2 déc.",
+      "longDate": "Mercredi 2 décembre"
+    },
+    "day2": {
+      "label": "Journée 2",
+      "date": "Jeu. 3 déc.",
+      "longDate": "Jeudi 3 décembre"
+    }
+  }
 }

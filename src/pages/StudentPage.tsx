@@ -1,13 +1,18 @@
 import React from "react";
+import DayScheduleLayout from "./ScheduleLayout";
 import ScheduleTable from "./ScheduleTable";
 import PresentationSchedules from "./PresentationSchedules";
 
 const StudentPage: React.FC = () => {
   return (
-    <main className="pt-16">
-      <ScheduleTable type="students" />
-      <PresentationSchedules />
-    </main>
+    <DayScheduleLayout>
+      {(day) => (
+        <>
+          <ScheduleTable type="students" day={day} />
+          <PresentationSchedules day={day} />
+        </>
+      )}
+    </DayScheduleLayout>
   );
 };
 
