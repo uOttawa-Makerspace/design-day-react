@@ -48,7 +48,7 @@ const ScheduleLayout: React.FC<ScheduleLayoutProps> = ({ children }) => {
       <div className={`flex justify-center ${current ? "mb-6" : "mb-16"}`}>
         <div
           role="tablist"
-          aria-label={t("scheduleDays.ariaTablistLabel")}
+          aria-label={t("scheduleDays.ariaTablistLabel") as string}
           className="inline-flex rounded-xl bg-slate-100 p-1.5 border border-slate-200"
         >
           {days.map((day) => {
