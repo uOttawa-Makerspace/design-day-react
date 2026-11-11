@@ -43,5 +43,11 @@
   "switchRole": "Changer de rôle",
 
   "presentation_schedule": "Horaire des présentations",
-  "schedule_unavailable": "Le programme des présentations est indisponible pour le moment. Veuillez réessayer plus tard."
+  "schedule_unavailable": "Le programme des présentations est indisponible pour le moment. Veuillez réessayer plus tard.",
+
+  "winnersSubtitle": "Félicitations à tous les participants pour leur travail acharné et leur dévouement! Découvrez les équipes qui ont remporté les principaux prix au cours des années passées.",
+  "viewPastWinners": "Voir les gagnants passés",
+  "winners": "Gagnants",
+
+  "sponsorsThanks": "Merci à nos commanditaires de rendre possible la journée du design."
 }

@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./pages/Header";
 import Home from "./pages/Home";
+import Winners from "./pages/Winners";
 import RoleSelect from "./pages/RoleSelect";
 import Sponsors from "./pages/Sponsors";
 import JudgePage from "./pages/JudgePage";
@@ -21,6 +22,7 @@ function App() {
             <>
               <Home />
               <RoleSelect />
+              <Winners />
               <Sponsors />
             </>
           }
@@ -30,6 +32,7 @@ function App() {
           element={
             <>
               <JudgePage />
+              <Sponsors />
             </>
           }
         />
@@ -38,6 +41,7 @@ function App() {
           element={
             <>
               <StudentPage />
+              <Sponsors />
             </>
           }
         />

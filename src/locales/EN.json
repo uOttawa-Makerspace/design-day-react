@@ -35,12 +35,18 @@
   "no_floor_plans": "Floor plans not announced yet...",
 
   "selectRole": "Select your role",
-  "selectRoleSubtitle": "Please select your role to access your schedule and other relevant information.",
+  "selectRoleSubtitle": "This program will allow you to orient yourself during all the presentations. Please select your role to access your schedule and other relevant information.",
   "imJudge": "I am a judge",
   "imStudent": "I am a student",
   "judgeView": "Judge View",
   "studentView": "Student View",
   "switchRole": "Switch Role",
   "presentation_schedule": "Presentation Schedule",
-  "schedule_unavailable": "The presentation schedule is unavailable right now. Please try again later."
+  "schedule_unavailable": "The presentation schedule is unavailable right now. Please try again later.",
+
+  "winnersSubtitle": "Congratulations to all the participants for their hard work and dedication! See the teams who took home top prizes in past years.",
+  "viewPastWinners": "View Past Winners",
+  "winners": "Winners",
+
+  "sponsorsThanks": "Thank you to our sponsors for making design day possible."
 }
