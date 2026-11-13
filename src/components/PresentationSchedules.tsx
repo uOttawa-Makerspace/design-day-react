@@ -4,10 +4,7 @@ import { Disclosure, Transition } from "@headlessui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import config from "../config/config";
-import Lightbox from "yet-another-react-lightbox";
-import "yet-another-react-lightbox/styles.css";
-import Captions from "yet-another-react-lightbox/plugins/captions";
-import "yet-another-react-lightbox/plugins/captions.css";
+import FloorPlans from "./FloorPlans";
 
 interface Category {
   name: string;
@@ -46,24 +43,19 @@ function filteredCategories(
   categories: Category[],
   search: string
 ): Category[] {
-  // Output categories
   let outCat: Category[] = [];
   categories.forEach((cat) => {
-    // Sections underneath each category
     let outSections: Record<string, Presentation[]> = {};
     for (const [section, presentations] of Object.entries(cat.presentations)) {
-      // Groups presenting underneath each category
       let newPresentations = presentations.filter((p: Presentation) =>
         fuzzyMatch(search, p.group || "")
       );
 
-      // If some presentations are hit insert filtered array
       if (newPresentations.length > 0) {
         outSections[section] = newPresentations;
       }
     }
 
-    // If section has any presentations left push to return
     if (Object.entries(outSections).length > 0) {
       outCat.push({
         name: cat.name,
@@ -318,11 +310,6 @@ const PresentationSchedules = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loadFailed, setLoadFailed] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [isImgPopupOpen, setIsImgPopupOpen] = useState(false);
-  const [imgIndex, setImgIndex] = useState(0);
-  const images = config.floorplans.map((floorplan_url) => {
-    return { src: floorplan_url };
-  });
 
   useEffect(() => {
     fetch(
@@ -423,43 +410,6 @@ const PresentationSchedules = () => {
             />
           ))}
         </div>
-
-        {/* Floor Plans Header left-aligned */}
-        <h3 className="text-3xl sm:text-4xl font-semibold tracking-tight text-slate-900 mt-10 mb-6 text-left">
-          {t("floor_plans")}
-        </h3>
-
-        {config.showFloorPlan === false || images.length === 0 ? (
-          <p className="text-center text-slate-500">{t("no_floor_plans")}</p>
-        ) : (
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
-            {images.map((image, i) => (
-              <button
-                onClick={() => {
-                  setImgIndex(i);
-                  setIsImgPopupOpen(true);
-                }}
-                className="flex flex-col items-center justify-center"
-                key={i}
-              >
-                <p className="mb-2 font-medium">{config.floorplan_titles[i]}</p>
-                <img
-                  className="w-auto h-auto max-h-full rounded-lg shadow-sm hover:shadow-md transition-shadow"
-                  src={image.src}
-                  alt={config.floorplan_titles[i] || "Floor Plan"}
-                />
-              </button>
-            ))}
-          </div>
-        )}
-
-        <Lightbox
-          open={isImgPopupOpen}
-          index={imgIndex}
-          slides={images}
-          close={() => setIsImgPopupOpen(false)}
-          plugins={[Captions]}
-        />
       </div>
     </div>
   );

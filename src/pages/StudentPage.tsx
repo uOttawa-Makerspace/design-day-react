@@ -1,21 +1,26 @@
 import React from "react";
-import DayScheduleLayout from "./ScheduleLayout";
-import ScheduleTable from "./ScheduleTable";
-import PresentationSchedules from "./PresentationSchedules";
-import Food from "./Food";
+import ScheduleLayout from "../components/ScheduleLayout";
+import ScheduleTable from "../components/ScheduleTable";
+import PresentationSchedules from "../components/PresentationSchedules";
+import Food from "../components/Food";
+import FloorPlans from "../components/FloorPlans";
+import Sponsors from "../components/Sponsors";
 
 const StudentPage: React.FC = () => {
   return (
-    <DayScheduleLayout>
-      {(day) => (
-        <>
-          <ScheduleTable type="students" />
-          <Food type="students" />
-          <PresentationSchedules />
-        </>
-      )}
-    </DayScheduleLayout>
+    <>
+      <ScheduleLayout>
+        {(day) => (
+          <>
+            <ScheduleTable type="students" />
+            <Food type="students" />
+            <PresentationSchedules />
+            <FloorPlans />
+          </>
+        )}
+      </ScheduleLayout>
+      <Sponsors />
+    </>
   );
 };
-
 export default StudentPage;

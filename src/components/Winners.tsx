@@ -2,6 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import winnersImgOne from "../images/winners-1.jpg";
 
+// Constants for external URLs. Have this in Makerepo in the future instead.
 const PAST_WINNERS_URL =
   "https://www.uottawa.ca/faculty-engineering/centre-entrepreneurship-engineering-design/past-winners";
 
