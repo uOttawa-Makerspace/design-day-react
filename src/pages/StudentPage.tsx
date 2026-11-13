@@ -2,6 +2,7 @@ import React from "react";
 import DayScheduleLayout from "./ScheduleLayout";
 import ScheduleTable from "./ScheduleTable";
 import PresentationSchedules from "./PresentationSchedules";
+import Food from "./Food";
 
 const StudentPage: React.FC = () => {
   return (
@@ -9,6 +10,7 @@ const StudentPage: React.FC = () => {
       {(day) => (
         <>
           <ScheduleTable type="students" />
+          <Food type="students" />
           <PresentationSchedules />
         </>
       )}

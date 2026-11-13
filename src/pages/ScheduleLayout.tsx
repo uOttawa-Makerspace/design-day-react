@@ -3,6 +3,8 @@ import { useTranslation } from "react-i18next";
 
 export type Day = "1" | "2";
 
+//to handle the layout of the schedule page, including the day toggle switch and the display of the schedule content for the selected day.
+
 interface ScheduleLayoutProps {
   children: (day: Day) => React.ReactNode;
 }

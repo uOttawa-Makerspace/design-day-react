@@ -63,5 +63,12 @@
       "date": "Thu, Dec 3",
       "longDate": "Thursday, December 3"
     }
+  },
+
+  "food": {
+    "title": "Food",
+    "subtitle_placeholder": "Meal and refreshment details will be announced soon.",
+    "judges_subtitle": "",
+    "students_subtitle": ""
   }
 }

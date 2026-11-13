@@ -64,5 +64,12 @@
       "date": "Jeu. 3 déc.",
       "longDate": "Jeudi 3 décembre"
     }
+  },
+
+  "food": {
+    "title": "Nourriture",
+    "subtitle_placeholder": "Les détails concernant les repas et rafraîchissements seront annoncés bientôt.",
+    "judges_subtitle": "",
+    "students_subtitle": ""
   }
 }

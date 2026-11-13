@@ -1,18 +1,20 @@
 import React from "react";
-import DayScheduleLayout from "./ScheduleLayout";
+import ScheduleLayout from "./ScheduleLayout";
 import ScheduleTable from "./ScheduleTable";
 import PresentationSchedules from "./PresentationSchedules";
+import Food from "./Food";
 
 const JudgePage: React.FC = () => {
   return (
-    <DayScheduleLayout>
+    <ScheduleLayout>
       {(day) => (
         <>
           <ScheduleTable type="judges" />
+          <Food type="judges" />
           <PresentationSchedules />
         </>
       )}
-    </DayScheduleLayout>
+    </ScheduleLayout>
   );
 };
 
