@@ -4,10 +4,7 @@ import { Disclosure, Transition } from "@headlessui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import config from "../config/config";
-import Lightbox from "yet-another-react-lightbox";
-import "yet-another-react-lightbox/styles.css";
-import Captions from "yet-another-react-lightbox/plugins/captions";
-import "yet-another-react-lightbox/plugins/captions.css";
+import FloorPlans from "./FloorPlans";
 
 interface Category {
   name: string;
@@ -33,7 +30,7 @@ function fuzzyMatch(pattern: string, str: string) {
   pattern = pattern.normalize().toLowerCase();
   str = str.normalize().toLowerCase();
   pattern =
-    ".*" +
+    <span>.*</span> +
     pattern
       .split("")
       .map((l) => `${escapeRegExp(l)}.*`)
@@ -46,24 +43,19 @@ function filteredCategories(
   categories: Category[],
   search: string
 ): Category[] {
-  // Output categories
   let outCat: Category[] = [];
   categories.forEach((cat) => {
-    // Sections underneath each category
     let outSections: Record<string, Presentation[]> = {};
     for (const [section, presentations] of Object.entries(cat.presentations)) {
-      // Groups presenting underneath each category
       let newPresentations = presentations.filter((p: Presentation) =>
         fuzzyMatch(search, p.group || "")
       );
 
-      // If some presentations are hit insert filtered array
       if (newPresentations.length > 0) {
         outSections[section] = newPresentations;
       }
     }
 
-    // If section has any presentations left push to return
     if (Object.entries(outSections).length > 0) {
       outCat.push({
         name: cat.name,
@@ -313,24 +305,11 @@ const CategoryDisclosure = ({
   );
 };
 
-/**
- * Displays presentation schedules for different categories.
- *
- * This component fetches presentation data from a Google Sheets spreadsheet and displays it
- * in a series of collapsible sections. Each section contains a table with presentation details
- * such as section, group, time, project, project description, and project repository. It also
- * includes a lightbox for viewing floor plans.
- */
 const PresentationSchedules = () => {
   const { t } = useTranslation();
   const [categories, setCategories] = useState<Category[]>([]);
   const [loadFailed, setLoadFailed] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [isImgPopupOpen, setIsImgPopupOpen] = useState(false);
-  const [imgIndex, setImgIndex] = useState(0);
-  const images = config.floorplans.map((floorplan_url) => {
-    return { src: floorplan_url };
-  });
 
   useEffect(() => {
     fetch(
@@ -392,8 +371,21 @@ const PresentationSchedules = () => {
   }, []);
 
   return (
-    <div id="presentation" className="flex justify-center">
-      <div className="w-full lg:w-1/2 pb-10 px-4 lg:px-0">
+    <div id="presentation" className="flex justify-center py-12">
+      <div className="w-full lg:w-1/2 pb-10 px-4 lg:px-0 text-left">
+        <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-slate-900 mb-6 text-left">
+          {t("presentation_schedule")}
+        </h2>
+        <div className="text-lg sm:text-xl text-slate-600 mb-6 text-left">
+          <p className="mb-2">{t("presentation_paragraph")}</p>
+          {t("presentation_li_1") && (
+            <ul className="list-disc list-inside inline-block text-left mt-2">
+              <li>{t("presentation_li_1")}</li>
+              {t("presentation_li_2") && <li>{t("presentation_li_2")}</li>}
+            </ul>
+          )}
+        </div>
+
         <input
           name="presentationSearch"
           placeholder={t("search_prompt") ?? ""}
@@ -418,39 +410,6 @@ const PresentationSchedules = () => {
             />
           ))}
         </div>
-        <h4 className="text-xl font-normal mt-0 mb-2">{t("floor_plans")}</h4>
-
-        {config.showFloorPlan === false || images.length === 0 ? (
-          t("no_floor_plans")
-        ) : (
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
-            {images.map((image, i) => (
-              <button
-                onClick={() => {
-                  setImgIndex(i);
-                  setIsImgPopupOpen(true);
-                }}
-                className="flex flex-col items-center justify-center"
-                key={i}
-              >
-                <p>{config.floorplan_titles[i]}</p>
-                <img
-                  className="w-auto h-auto max-h-full"
-                  src={image.src}
-                  alt={config.floorplan_titles[i] || "Floorplan"}
-                />
-              </button>
-            ))}
-          </div>
-        )}
-
-        <Lightbox
-          open={isImgPopupOpen}
-          index={imgIndex}
-          slides={images}
-          close={() => setIsImgPopupOpen(false)}
-          plugins={[Captions]}
-        />
       </div>
     </div>
   );
