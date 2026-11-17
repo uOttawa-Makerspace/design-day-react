@@ -50,11 +50,11 @@ const Winners: React.FC = () => {
           </div>
 
           {/* Right Column: Picture */}
-          <div className="w-full max-w-md md:max-w-none mx-auto">
+          <div className="w-full max-w-sm md:max-w-md mx-auto">
             <img
               src={winnersImgOne}
               alt="Past Design Day winners"
-              className="w-full h-auto max-h-[400px] object-cover rounded-2xl shadow-xl"
+              className="w-full h-auto max-h-[280px] object-cover rounded-2xl shadow-xl"
             />
           </div>
         </div>
