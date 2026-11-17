@@ -5,6 +5,7 @@ import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import Captions from "yet-another-react-lightbox/plugins/captions";
 import "yet-another-react-lightbox/plugins/captions.css";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
 
 const FloorPlans = () => {
   const { t } = useTranslation();
@@ -18,6 +19,12 @@ const FloorPlans = () => {
   const handleSelect = (i: number) => {
     setImgIndex(i);
     setIsImgPopupOpen(true);
+  };
+
+  const handleClose = () => {
+    setIsImgPopupOpen(false);
+    // Drop focus so the overlay isn't left hidden after closing
+    (document.activeElement as HTMLElement | null)?.blur();
   };
 
   return (
@@ -72,12 +79,36 @@ const FloorPlans = () => {
         open={isImgPopupOpen}
         index={imgIndex}
         slides={images}
-        close={() => {
-          setIsImgPopupOpen(false);
-          // Drop focus so the overlay isn't left hidden after closing
-          (document.activeElement as HTMLElement | null)?.blur();
+        close={handleClose}
+        plugins={[Captions, Zoom]}
+        controller={{
+          closeOnBackdropClick: true,
         }}
-        plugins={[Captions]}
+        render={{
+          buttonClose: () => (
+            <button
+              type="button"
+              onClick={handleClose}
+              aria-label={t("close", "Close")}
+              className="yarl__button flex items-center gap-1.5 rounded-full bg-slate-900/90 px-4 py-2 text-sm font-semibold text-white border border-white/30 shadow-lg backdrop-blur-sm hover:bg-slate-800 active:scale-95 transition m-2"
+            >
+              <span>{t("close", "Close")}</span>
+              <svg
+                className="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2.5}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          ),
+        }}
       />
     </div>
   );
