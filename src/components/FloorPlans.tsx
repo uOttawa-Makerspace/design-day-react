@@ -89,7 +89,7 @@ const FloorPlans = () => {
             <button
               type="button"
               onClick={handleClose}
-              aria-label={t("close", "Close")}
+              aria-label={t("close", "Close") || "Close"}
               className="yarl__button flex items-center gap-1.5 rounded-full bg-slate-900/90 px-4 py-2 text-sm font-semibold text-white border border-white/30 shadow-lg backdrop-blur-sm hover:bg-slate-800 active:scale-95 transition m-2"
             >
               <span>{t("close", "Close")}</span>
