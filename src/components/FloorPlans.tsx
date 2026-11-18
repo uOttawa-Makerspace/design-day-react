@@ -6,15 +6,25 @@ import "yet-another-react-lightbox/styles.css";
 import Captions from "yet-another-react-lightbox/plugins/captions";
 import "yet-another-react-lightbox/plugins/captions.css";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
+import { Day } from "./ScheduleLayout";
 
-const FloorPlans = () => {
+const FloorPlans = ({ day }: { day: Day }) => {
   const { t } = useTranslation();
   const [isImgPopupOpen, setIsImgPopupOpen] = useState(false);
   const [imgIndex, setImgIndex] = useState(0);
 
-  const images = config.floorplans.map((floorplan_url: string) => {
-    return { src: floorplan_url };
-  });
+  const showForDay =
+    day === "1" ? config.showFloorPlan : config.showFloorPlanDay2;
+
+  const plans = config.floorplans
+    .map((url, i) => ({
+      src: url,
+      title: config.floorplan_titles[i],
+      day: config.floorplanDays[i],
+    }))
+    .filter((plan) => plan.day == null || String(plan.day) === day);
+
+  const images = plans.map((plan) => ({ src: plan.src }));
 
   const handleSelect = (i: number) => {
     setImgIndex(i);
@@ -33,7 +43,7 @@ const FloorPlans = () => {
         {t("floor_plans")}
       </h3>
 
-      {config.showFloorPlan === false || images.length === 0 ? (
+      {showForDay === false || images.length === 0 ? (
         <p className="text-center text-slate-500">{t("no_floor_plans")}</p>
       ) : (
         // Bigger tiles: 1 column on mobile, 2 on tablet/desktop
@@ -41,7 +51,7 @@ const FloorPlans = () => {
           {images.map((image: { src: string }, i: number) => {
             // Overlay clears only while this plan is open in the lightbox
             const isSelected = isImgPopupOpen && imgIndex === i;
-            const title = config.floorplan_titles[i] || t("floor_plans");
+            const title = plans[i].title || t("floor_plans");
 
             return (
               <button

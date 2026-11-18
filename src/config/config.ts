@@ -10,9 +10,12 @@ interface Config {
   dateFr: string; // date in DD/MM/YYYY format
   dateEn: string; // date in YYYY/MM/DD format
   sheetId: string;
-  showFloorPlan: boolean; // Admin want to hide old floorplans
+  showFloorPlan: boolean; // Day 1 switch: admin want to hide old floorplans
+  showFloorPlanDay2: boolean; // Day 2 switch
   floorplans: string[]; // URL to makerepo hosted images
   floorplan_titles: (string | null)[];
+  // Day (1 or 2) of floorplans[i]; null when the API doesn't send days (all days)
+  floorplanDays: (number | null)[];
   // Student/judge schedules and food blurbs come from the Google Sheet, see services/googleSheets.ts
 }
 
@@ -25,6 +28,8 @@ interface ApiDesignDay {
   show_floorplans: boolean;
   floorplan_urls: string[];
   floorplan_titles: (string | null)[];
+  show_floorplans_day2?: boolean;
+  floorplan_days?: number[];
 }
 
 let config: Config = {
@@ -34,8 +39,10 @@ let config: Config = {
   dateFr: "",
   dateEn: "",
   showFloorPlan: false,
+  showFloorPlanDay2: false,
   floorplans: [],
   floorplan_titles: [],
+  floorplanDays: [],
 };
 
 let inFlight: Promise<boolean> | null = null;
@@ -81,6 +88,12 @@ async function loadConfig(): Promise<boolean> {
   config["showFloorPlan"] = j["show_floorplans"];
   config["floorplans"] = j["floorplan_urls"];
   config["floorplan_titles"] = j["floorplan_titles"];
+  // Older APIs have no per-day fields
+  config["showFloorPlanDay2"] =
+    j["show_floorplans_day2"] ?? j["show_floorplans"];
+  config["floorplanDays"] = j["floorplan_urls"].map(
+    (_, i) => j["floorplan_days"]?.[i] ?? null
+  );
   return true;
 }
 

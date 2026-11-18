@@ -24,7 +24,7 @@ const DayContent: React.FC<DayContentProps> = ({ role, day }) => {
       />
       <Food type={role} blurb={data?.[role].food} />
       <PresentationSchedules day={day} />
-      <FloorPlans />
+      <FloorPlans day={day} />
     </>
   );
 };
