@@ -17,7 +17,7 @@ const Home = () => {
         <div className="text-center md:text-left">
           <h1 className="mt-0 mb-4 flex flex-col">
             <span className="text-ceed uppercase font-black tracking-tight text-6xl sm:text-7xl lg:text-8xl leading-none mb-3">
-              Design Day
+              {t("design_day")}
             </span>
             <span className="text-white font-semibold text-3xl sm:text-4xl lg:text-5xl tracking-tight">
               {t(`semesters.${config.semester}`)} {config.year}

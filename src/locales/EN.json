@@ -7,7 +7,7 @@
   "makerepo": "MakerRepo",
   "students": "Students",
   "judges": "Judges",
-  "design_day": "{{ semester }} {{ year }} Design Day",
+  "design_day": "Design Day",
   "home_paragraph": "Creativity and ingenuity on display! Design Day promises to amaze you with our students' innovation and inspiration! Students have worked closely with external partners of the Faculty to develop solutions for real clients. This event showcases engineering design projects, and celebrates the achievements of our students.",
   "what_is_design_day": "For more information on Design Day, click here.",
   "what_is_design_day_url": "https://www.uottawa.ca/faculty-engineering/centre-entrepreneurship-engineering-design/design-day",
@@ -46,6 +46,7 @@
 
   "winnersSubtitle": "Congratulations to all the participants for their hard work and dedication! See the teams who took home top prizes in past years.",
   "viewPastWinners": "View past winners",
+  "viewPastPictures": "View past years' pictures",
   "winners": "Winners",
 
   "sponsorsThanks": "Thank you to our sponsors for making design day possible.",
