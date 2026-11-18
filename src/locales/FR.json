@@ -27,6 +27,8 @@
   "project_description": "Description du projet",
   "project_repo": "Repertoire du projet",
   "event": "Événement",
+  "location": "Lieu",
+  "day_schedule_unavailable": "L'horaire n'est pas disponible pour le moment. Veuillez réessayer plus tard.",
   "description": "Description :",
   "presentation_paragraph": "Les séries de présentations suivantes auront lieu en parallèle. Le format des présentations aux juges est le suivant :",
   "presentation_li_1": "Chaque groupe présentera pendant 3 minutes",

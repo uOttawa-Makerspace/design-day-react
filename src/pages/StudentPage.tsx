@@ -1,23 +1,13 @@
 import React from "react";
 import ScheduleLayout from "../components/ScheduleLayout";
-import ScheduleTable from "../components/ScheduleTable";
-import PresentationSchedules from "../components/PresentationSchedules";
-import Food from "../components/Food";
-import FloorPlans from "../components/FloorPlans";
+import DayContent from "../components/DayContent";
 import Sponsors from "../components/Sponsors";
 
 const StudentPage: React.FC = () => {
   return (
     <>
       <ScheduleLayout>
-        {(day) => (
-          <>
-            <ScheduleTable type="students" />
-            <Food type="students" />
-            <PresentationSchedules day={day} />
-            <FloorPlans />
-          </>
-        )}
+        {(day) => <DayContent role="students" day={day} />}
       </ScheduleLayout>
       <Sponsors />
     </>
