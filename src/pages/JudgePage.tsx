@@ -14,7 +14,7 @@ const JudgePage: React.FC = () => {
           <>
             <ScheduleTable type="judges" />
             <Food type="judges" />
-            <PresentationSchedules />
+            <PresentationSchedules day={day} />
             <FloorPlans />
           </>
         )}

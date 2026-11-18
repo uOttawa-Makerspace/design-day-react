@@ -14,7 +14,7 @@ const StudentPage: React.FC = () => {
           <>
             <ScheduleTable type="students" />
             <Food type="students" />
-            <PresentationSchedules />
+            <PresentationSchedules day={day} />
             <FloorPlans />
           </>
         )}
