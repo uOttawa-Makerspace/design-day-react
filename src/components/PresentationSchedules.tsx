@@ -3,24 +3,13 @@ import { useEffect, useState } from "react";
 import { Disclosure, Transition } from "@headlessui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
-import config from "../config/config";
-import FloorPlans from "./FloorPlans";
-
-interface Category {
-  name: string;
-  description?: string;
-  location: string;
-  presentations: Record<string, Presentation[]>;
-}
-
-interface Presentation {
-  section?: string;
-  group?: string;
-  time?: string;
-  project?: string;
-  project_description?: string;
-  project_repo?: string;
-}
+import {
+  Category,
+  Presentation,
+  fetchTab,
+  parsePresentations,
+} from "../services/googleSheets";
+import { Day } from "./ScheduleLayout";
 
 function escapeRegExp(str: string) {
   return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -305,70 +294,30 @@ const CategoryDisclosure = ({
   );
 };
 
-const PresentationSchedules = () => {
+const PresentationSchedules = ({ day }: { day: Day }) => {
   const { t } = useTranslation();
   const [categories, setCategories] = useState<Category[]>([]);
   const [loadFailed, setLoadFailed] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    fetch(
-      `https://sheets.googleapis.com/v4/spreadsheets/${
-        config.sheetId
-      }/values/1st-year?key=${
-        import.meta.env.REACT_APP_GOOGLE_API_KEY
-      }&range=!A2:ZZZ1000`
-    )
-      .then((res) => {
-        if (!res.ok) throw new Error(`Sheets request failed (${res.status})`);
-        return res.json();
-      })
-      .then((data) => {
-        if (
-          !Array.isArray(data?.values) ||
-          !Array.isArray(data.values[0]) ||
-          data.values[0].length === 0
-        ) {
-          throw new Error("Sheets response has no values");
-        }
-        const categories: Category[] = [];
-        for (let i = 0; i < data.values[0].length; i += 7) {
-          categories.push({
-            name: data.values[0][i],
-            description: data.values[0][i + 1],
-            location: data.values[0][i + 2],
-            presentations: {},
-          });
-        }
-
-        const presentationData = data.values.slice(3);
-        for (let i = 0; i < presentationData.length; i++) {
-          for (let j = 0; j < presentationData[i].length; j += 7) {
-            if (presentationData[i].slice(j, j + 6).some((el: string) => el)) {
-              if (!categories[j / 7].presentations[presentationData[i][j]]) {
-                categories[j / 7].presentations[presentationData[i][j]] = [];
-              }
-              categories[j / 7].presentations[presentationData[i][j]].push({
-                section: presentationData[i][j],
-                group: presentationData[i][j + 1],
-                time: presentationData[i][j + 2],
-                project: presentationData[i][j + 3],
-                project_description: presentationData[i][j + 4],
-                project_repo: presentationData[i][j + 5],
-              });
-            }
-          }
-        }
-
-        setCategories(categories);
+    let cancelled = false;
+    fetchTab(`DD${day}`, "A2:ZZZ1000")
+      .then((values) => {
+        if (cancelled) return;
+        setCategories(parsePresentations(values));
         setLoadFailed(false);
       })
       .catch((err) => {
+        if (cancelled) return;
         console.error(err);
         setCategories([]);
         setLoadFailed(true);
       });
-  }, []);
+    return () => {
+      cancelled = true;
+    };
+  }, [day]);
 
   return (
     <div id="presentation" className="flex justify-center py-12">

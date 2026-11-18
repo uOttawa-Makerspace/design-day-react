@@ -19,19 +19,13 @@ interface Config {
   showFloorPlan: boolean; // Admin want to hide old floorplans
   floorplans: string[]; // URL to makerepo hosted images
   floorplan_titles: (string | null)[];
-  judgesSchedule: GeneralSchedule[]; // judges schedule
-  studentsSchedule: GeneralSchedule[]; // students schedule
+  // Judge and student schedules. The API no longer sends them: they will be
+  // read from the Google Sheet (sheetId). Empty until that is implemented.
+  judgesSchedule: GeneralSchedule[];
+  studentsSchedule: GeneralSchedule[];
 }
 
 // Response of GET /api/v1/design_day (see doc/api/v1/design_day.md in the Rails app).
-interface ApiSchedule {
-  start: string; // ISO 8601
-  end: string; // ISO 8601
-  title_en: string;
-  title_fr: string;
-  event_for: "student" | "judge";
-}
-
 interface ApiDesignDay {
   year: number;
   semester: Semesters;
@@ -40,7 +34,6 @@ interface ApiDesignDay {
   show_floorplans: boolean;
   floorplan_urls: string[];
   floorplan_titles: (string | null)[];
-  schedules: ApiSchedule[];
 }
 
 let config: Config = {
@@ -88,38 +81,6 @@ async function loadConfig(): Promise<boolean> {
     return false;
   }
 
-  let judge_schedules: GeneralSchedule[] = [];
-  let student_schedules: GeneralSchedule[] = [];
-
-  // Push schedules
-  try {
-    j.schedules.forEach((sched) => {
-      let start = new Date(sched["start"]);
-      let startH = start.getHours();
-      let startM = start.getMinutes();
-
-      let end = new Date(sched["end"]);
-      let endH = end.getHours();
-      let endM = end.getMinutes();
-
-      let item: GeneralSchedule = {
-        time: `${startH}h${startM === 0 ? "" : startM} - ${endH}h${
-          endM === 0 ? "" : endM
-        }`,
-        eventEn: sched["title_en"],
-        eventFr: sched["title_fr"],
-      };
-      if (sched["event_for"] === "student") {
-        student_schedules.push(item);
-      } else {
-        judge_schedules.push(item);
-      }
-    });
-  } catch (e) {
-    console.error("Could not parse the Design Day config", e);
-    return false;
-  }
-
   // Copy over simple structures
   config["year"] = j["year"];
   config["sheetId"] = j["sheet_key"];
@@ -131,8 +92,6 @@ async function loadConfig(): Promise<boolean> {
   config["showFloorPlan"] = j["show_floorplans"];
   config["floorplans"] = j["floorplan_urls"];
   config["floorplan_titles"] = j["floorplan_titles"];
-  config["judgesSchedule"] = judge_schedules;
-  config["studentsSchedule"] = student_schedules;
   return true;
 }
 
