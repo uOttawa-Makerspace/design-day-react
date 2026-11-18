@@ -32,6 +32,7 @@ const Home = () => {
             >
               {t("what_is_design_day")}
             </a>
+            .
           </p>
         </div>
 
