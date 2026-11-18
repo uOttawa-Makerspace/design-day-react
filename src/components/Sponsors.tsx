@@ -28,7 +28,8 @@ const Sponsors = () => {
         <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-slate-900 mb-3">
           {t("sponsors")}
         </h2>
-        <p className="text-slate-600 text-sm sm:text-lg leading-relaxed mb-12 whitespace-nowrap">
+        <p className="text-slate-600 text-sm sm:text-lg leading-relaxed mb-12 max-w-2xl mx-auto">
+          {" "}
           {t("sponsorsThanks", {
             defaultValue:
               "Thank you to our sponsors for making design day possible!",
