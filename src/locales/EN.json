@@ -39,6 +39,7 @@
   "floorplan_overlay_instruction": "Click or hover to view",
 
   "selectRoleSubtitle": "This program will allow you to orient yourself during all the presentations. Please select your role to access your schedule and other relevant information.",
+  "selectYourRole": "Select your role",
   "imJudge": "I am a judge",
   "imStudent": "I am a student",
   "judgeView": "Judge View",
