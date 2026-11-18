@@ -57,7 +57,7 @@
 
   "scheduleDays": {
     "selectDayTitle": "Select a day",
-    "selectDaySubtitle": "Choose Day 1 or Day 2 below to view the schedule.",
+    "selectDaySubtitle": "Choose Day 1 or Day 2 below to view the schedule, food information, all presentation details and floor plans.",
     "ariaTablistLabel": "Event day",
     "day1": {
       "label": "Day 1",

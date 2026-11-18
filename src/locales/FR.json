@@ -58,7 +58,7 @@
 
   "scheduleDays": {
     "selectDayTitle": "Sélectionnez une journée",
-    "selectDaySubtitle": "Choisissez la Journée 1 ou la Journée 2 ci-dessous pour consulter l'horaire.",
+    "selectDaySubtitle": "Choisissez la Journée 1 ou la Journée 2 ci-dessous pour consulter l'horaire, les informations sur la nourriture, tous les détails des présentations et les plans des étages.",
     "ariaTablistLabel": "Journée de l'événement",
     "day1": {
       "label": "Journée 1",
