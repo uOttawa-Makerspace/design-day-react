@@ -42,9 +42,9 @@ const Footer = () => {
         </a>
       </div>
 
-      {/* 2. Copyright © 2026 Centre for Entrepreneurship and Engineering Design and MakerRepo Contributors */}
+      {/* © 2026 Centre for Entrepreneurship and Engineering Design and MakerRepo Contributors */}
       <p className="text-sm sm:text-base font-medium leading-relaxed">
-        Copyright <FontAwesomeIcon icon={faCopyright} className="mx-1" />{" "}
+        <FontAwesomeIcon icon={faCopyright} className="mx-1" />{" "}
         {new Date().getFullYear()}{" "}
         <a
           className="underline hover:opacity-80 transition-opacity"
@@ -54,7 +54,7 @@ const Footer = () => {
         >
           {t("centre_for_entrepreneurship_and_engineering_design")}
         </a>{" "}
-        and{" "}
+        {t("and")}{" "}
         <a
           className="underline hover:opacity-80 transition-opacity"
           href="https://github.com/uOttawa-Makerspace/design-day-react/graphs/contributors"
@@ -63,6 +63,7 @@ const Footer = () => {
         >
           {t("github_contributors")}
         </a>
+        .
       </p>
     </footer>
   );

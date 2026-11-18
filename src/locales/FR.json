@@ -17,6 +17,9 @@
     "winter": "Hiver",
     "summer": "Été"
   },
+
+  "and": "et",
+
   "section": "Section",
   "group": "Groupe",
   "time": "Heure",
@@ -28,8 +31,8 @@
   "presentation_paragraph": "Les séries de présentations suivantes auront lieu en parallèle. Le format des présentations aux juges est le suivant :",
   "presentation_li_1": "Chaque groupe présentera pendant 3 minutes",
   "presentation_li_2": "Il y aura 5 minutes de question par groupe",
-  "centre_for_entrepreneurship_and_engineering_design": "CENTRE EN GÉNIE ENTREPRENEURIAL DE LA CONCEPTION",
-  "github_contributors": "CONTRIBUTEURS GITHUB",
+  "centre_for_entrepreneurship_and_engineering_design": "Centre en génie entrepreneurial de la conception",
+  "github_contributors": "Contributeurs GitHub",
   "awards_ceremony_paragraph": "Rejoignez-nous dans l'atrium de STEM pour la cérémonie de remise des prix et les remarques de clôture à 13h15.",
   "floor_plans": "Plans des étages",
   "no_floor_plans": "Les plans d'étage n'ont pas encore été annoncés",
