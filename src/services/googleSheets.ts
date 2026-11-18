@@ -35,7 +35,6 @@ export async function fetchTab(
   return Array.isArray(data?.values) ? data.values : [];
 }
 
-// Expects values starting at row 2 (fetch with range "A2:ZZZ1000").
 export function parsePresentations(values: string[][]): Category[] {
   if (!Array.isArray(values[0]) || values[0].length === 0) {
     throw new Error("Presentation tab has no values");
@@ -71,4 +70,79 @@ export function parsePresentations(values: string[][]): Category[] {
   }
 
   return categories;
+}
+
+// "Other DD1" / "Other DD2" tabs: food blurbs and the student/judge schedules
+export type Role = "students" | "judges";
+
+export interface FoodBlurb {
+  fr: string;
+  en: string;
+}
+
+export interface ScheduleRow {
+  time: string;
+  detailsFr: string;
+  detailsEn: string;
+  location: string;
+}
+
+export type OtherTab = Record<
+  Role,
+  { food: FoodBlurb; schedule: ScheduleRow[] }
+>;
+
+// "Student", "students ", "Étudiant" -> "students"; unknown -> null
+function toRole(cell: string | undefined): Role | null {
+  const value = (cell ?? "").trim().toLowerCase();
+  if (
+    value.startsWith("student") ||
+    value.startsWith("étudiant") ||
+    value.startsWith("etudiant")
+  ) {
+    return "students";
+  }
+  if (value.startsWith("judge") || value.startsWith("juge")) {
+    return "judges";
+  }
+  return null;
+}
+
+export function parseOtherTab(values: string[][]): OtherTab {
+  const result: OtherTab = {
+    students: { food: { fr: "", en: "" }, schedule: [] },
+    judges: { food: { fr: "", en: "" }, schedule: [] },
+  };
+
+  for (let i = 1; i < values.length && values[i].some((el) => el); i++) {
+    const role = toRole(values[i][0]);
+    if (!role) {
+      console.warn(`Unknown role "${values[i][0]}" in food row ${i + 1}`);
+      continue;
+    }
+    result[role].food = { fr: values[i][1] ?? "", en: values[i][2] ?? "" };
+  }
+
+  const scheduleData = values.slice(5);
+  for (let i = 0; i < scheduleData.length; i++) {
+    for (let j = 0; j < scheduleData[i].length; j += 6) {
+      if (scheduleData[i].slice(j, j + 5).some((el: string) => el)) {
+        const role = toRole(scheduleData[i][j]);
+        if (!role) {
+          console.warn(
+            `Unknown role "${scheduleData[i][j]}" in schedule row ${i + 6}`
+          );
+          continue;
+        }
+        result[role].schedule.push({
+          time: scheduleData[i][j + 1] ?? "",
+          detailsFr: scheduleData[i][j + 2] ?? "",
+          detailsEn: scheduleData[i][j + 3] ?? "",
+          location: scheduleData[i][j + 4] ?? "",
+        });
+      }
+    }
+  }
+
+  return result;
 }

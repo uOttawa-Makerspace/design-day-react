@@ -1,9 +1,3 @@
-interface GeneralSchedule {
-  time: string;
-  eventEn: string;
-  eventFr: string;
-}
-
 enum Semesters {
   fall = "fall",
   winter = "winter",
@@ -19,10 +13,7 @@ interface Config {
   showFloorPlan: boolean; // Admin want to hide old floorplans
   floorplans: string[]; // URL to makerepo hosted images
   floorplan_titles: (string | null)[];
-  // Judge and student schedules. The API no longer sends them: they will be
-  // read from the Google Sheet (sheetId). Empty until that is implemented.
-  judgesSchedule: GeneralSchedule[];
-  studentsSchedule: GeneralSchedule[];
+  // Student/judge schedules and food blurbs come from the Google Sheet, see services/googleSheets.ts
 }
 
 // Response of GET /api/v1/design_day (see doc/api/v1/design_day.md in the Rails app).
@@ -45,8 +36,6 @@ let config: Config = {
   showFloorPlan: false,
   floorplans: [],
   floorplan_titles: [],
-  judgesSchedule: [],
-  studentsSchedule: [],
 };
 
 let inFlight: Promise<boolean> | null = null;

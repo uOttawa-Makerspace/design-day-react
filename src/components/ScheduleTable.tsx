@@ -1,17 +1,25 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import i18n from "i18next";
-import config from "../config/config";
+import { Role, ScheduleRow } from "../services/googleSheets";
 
 interface ScheduleTableProps {
-  type: "judges" | "students";
+  type: Role;
+  rows: ScheduleRow[];
+  failed?: boolean;
 }
 
-const ScheduleTable: React.FC<ScheduleTableProps> = ({ type }) => {
+const headerClass =
+  "px-4 py-2 border-b border-gray-300 text-gray-800 text-left text-sm uppercase font-semibold";
+const cellClass = "px-4 py-2 border-b border-gray-200 text-sm";
+
+const ScheduleTable: React.FC<ScheduleTableProps> = ({
+  type,
+  rows,
+  failed = false,
+}) => {
   const { t } = useTranslation();
 
-  const scheduleData =
-    type === "judges" ? config.judgesSchedule : config.studentsSchedule;
   const title = type === "judges" ? t("judges") : t("students");
 
   return (
@@ -21,42 +29,50 @@ const ScheduleTable: React.FC<ScheduleTableProps> = ({ type }) => {
           {title}
         </h2>
 
-        <div className="overflow-x-auto shadow-sm border border-gray-200 rounded-lg">
-          <table className="min-w-full bg-white leading-normal text-left">
-            <thead>
-              <tr>
-                <th
-                  scope="col"
-                  className="px-4 py-2 border-b border-gray-300 text-gray-800 text-left text-sm uppercase font-semibold"
-                >
-                  {t("time")}
-                </th>
-                <th
-                  scope="col"
-                  className="px-4 py-2 border-b border-gray-300 text-gray-800 text-left text-sm uppercase font-semibold"
-                >
-                  {t("event")}
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {scheduleData.map((sched) => (
-                <tr key={sched.eventEn}>
-                  <td className="px-4 py-2 border-b border-gray-200 text-sm">
-                    <p className="text-gray-900 whitespace-nowrap">
-                      {sched.time}
-                    </p>
-                  </td>
-                  <td className="px-4 py-2 border-b border-gray-200 text-sm">
-                    <p className="text-gray-900">
-                      {i18n.language === "fr" ? sched.eventFr : sched.eventEn}
-                    </p>
-                  </td>
+        {failed ? (
+          <p className="text-sm text-gray-500" role="status">
+            {t("day_schedule_unavailable")}
+          </p>
+        ) : (
+          <div className="overflow-x-auto shadow-sm border border-gray-200 rounded-lg">
+            <table className="min-w-full bg-white leading-normal text-left">
+              <thead>
+                <tr>
+                  <th scope="col" className={headerClass}>
+                    {t("time")}
+                  </th>
+                  <th scope="col" className={headerClass}>
+                    {t("event")}
+                  </th>
+                  <th scope="col" className={headerClass}>
+                    {t("location")}
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {rows.map((row, i) => (
+                  <tr key={i}>
+                    <td className={cellClass}>
+                      <p className="text-gray-900 whitespace-nowrap">
+                        {row.time}
+                      </p>
+                    </td>
+                    <td className={cellClass}>
+                      <p className="text-gray-900">
+                        {i18n.language === "fr" ? row.detailsFr : row.detailsEn}
+                      </p>
+                    </td>
+                    <td className={cellClass}>
+                      <p className="text-gray-900 whitespace-nowrap">
+                        {row.location}
+                      </p>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </div>
   );

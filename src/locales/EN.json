@@ -27,6 +27,8 @@
   "project_description": "Project Description",
   "project_repo": "Project Repository",
   "event": "Event",
+  "location": "Location",
+  "day_schedule_unavailable": "The schedule is unavailable right now. Please try again later.",
   "description": "Description:",
   "presentation_paragraph": "The following sets of presentations will happen in parallel. The format of the presentations to the judges is the following:",
   "presentation_li_1": "Each group will present for 3 minutes",

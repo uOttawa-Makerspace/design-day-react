@@ -1,17 +1,21 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { FoodBlurb, Role } from "../services/googleSheets";
 
 interface FoodProps {
-  type: "judges" | "students";
-  subtitle?: string;
+  type: Role;
+  blurb?: FoodBlurb; // from the "Other DD{day}" tab
 }
 
-const Food: React.FC<FoodProps> = ({ type, subtitle }) => {
-  const { t } = useTranslation();
+const Food: React.FC<FoodProps> = ({ type, blurb }) => {
+  const { t, i18n } = useTranslation();
 
+  const sheetSubtitle = i18n.language === "fr" ? blurb?.fr : blurb?.en;
   const roleSubtitle = t(`food.${type}_subtitle`, { defaultValue: "" });
   const displaySubtitle =
-    subtitle?.trim() || roleSubtitle.trim() || t("food.subtitle_placeholder");
+    sheetSubtitle?.trim() ||
+    roleSubtitle.trim() ||
+    t("food.subtitle_placeholder");
 
   return (
     <div id="food" className="flex justify-center py-2">
