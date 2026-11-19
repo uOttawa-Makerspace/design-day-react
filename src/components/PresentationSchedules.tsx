@@ -6,7 +6,7 @@ import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import {
   Category,
   Presentation,
-  fetchTab,
+  fetchDayTabs,
   parsePresentations,
 } from "../services/googleSheets";
 import { Day } from "./ScheduleLayout";
@@ -302,8 +302,8 @@ const PresentationSchedules = ({ day }: { day: Day }) => {
 
   useEffect(() => {
     let cancelled = false;
-    fetchTab(`DD${day}`)
-      .then((values) => {
+    fetchDayTabs(day)
+      .presentations.then((values) => {
         if (cancelled) return;
         // The parser reads the tab from row 2 down, as the old A2 range did.
         setCategories(parsePresentations(values.slice(1)));

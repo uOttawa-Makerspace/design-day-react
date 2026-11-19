@@ -27,30 +27,100 @@ export function resetTabCache(): void {
 // Fetches the tab's used range: Sheets returns rows from A1 down to the last
 // row and column that hold a value, so nothing past the data is scanned or sent.
 export function fetchTab(tabName: string): Promise<string[][]> {
-  const sheetId = config.sheetId;
-  if (!sheetId) return requestTab(sheetId, tabName);
+  return fetchTabs([tabName])[0];
+}
 
-  const key = JSON.stringify([sheetId, tabName]);
-  let request = tabCache.get(key);
-  if (!request) {
-    request = requestTab(sheetId, tabName);
-    tabCache.set(key, request);
-    // A failed request is dropped so the next call tries again.
-    request.catch(() => {
-      if (tabCache.get(key) === request) tabCache.delete(key);
-    });
+// A day's presentation tab and its "Other" tab (schedules and food), loaded
+// together in one request.
+export function fetchDayTabs(day: string): {
+  presentations: Promise<string[][]>;
+  other: Promise<string[][]>;
+} {
+  const [presentations, other] = fetchTabs([`DD${day}`, `Other DD${day}`]);
+  return { presentations, other };
+}
+
+// Returns one promise per tab, in order. Tabs not yet cached are fetched in a
+// single request, and each tab keeps its own cache entry.
+export function fetchTabs(tabNames: string[]): Promise<string[][]>[] {
+  const sheetId = config.sheetId;
+  if (!sheetId) return requestTabs(sheetId, tabNames);
+
+  const key = (tabName: string) => JSON.stringify([sheetId, tabName]);
+  const missing = Array.from(new Set(tabNames)).filter(
+    (tabName) => !tabCache.has(key(tabName))
+  );
+  requestTabs(sheetId, missing).forEach((request, i) =>
+    remember(key(missing[i]), request)
+  );
+  return tabNames.map((tabName) => tabCache.get(key(tabName))!);
+}
+
+function remember(key: string, request: Promise<string[][]>): void {
+  tabCache.set(key, request);
+  // A failed request is dropped so the next call tries again.
+  request.catch(() => {
+    if (tabCache.get(key) === request) tabCache.delete(key);
+  });
+}
+
+function requestTabs(
+  sheetId: string,
+  tabNames: string[]
+): Promise<string[][]>[] {
+  if (tabNames.length < 2) {
+    return tabNames.map((tabName) => requestTab(sheetId, tabName));
   }
-  return request;
+  const batch = requestBatch(sheetId, tabNames);
+  // batchGet fails as a whole when any one tab is missing. Fall back to one
+  // request per tab so a missing tab does not hide the others.
+  return tabNames.map((tabName, i) =>
+    batch.then(
+      (tabs) => tabs[i] ?? [],
+      () => requestTab(sheetId, tabName)
+    )
+  );
+}
+
+function a1Range(tabName: string): string {
+  return `'${tabName.replace(/'/g, "''")}'`;
+}
+
+async function requestBatch(
+  sheetId: string,
+  tabNames: string[]
+): Promise<string[][][]> {
+  const ranges = tabNames
+    .map((tabName) => `ranges=${encodeURIComponent(a1Range(tabName))}`)
+    .join("&");
+  const res = await fetch(
+    `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values:batchGet?${ranges}&key=${
+      import.meta.env.REACT_APP_GOOGLE_API_KEY
+    }`
+  );
+  if (!res.ok) {
+    throw new Error(
+      `Sheets request for ${tabNames.join(", ")} failed (${res.status})`
+    );
+  }
+  const data = await res.json();
+  const valueRanges: { values?: string[][] }[] = Array.isArray(
+    data?.valueRanges
+  )
+    ? data.valueRanges
+    : [];
+  return valueRanges.map((range) =>
+    Array.isArray(range?.values) ? range.values : []
+  );
 }
 
 async function requestTab(
   sheetId: string,
   tabName: string
 ): Promise<string[][]> {
-  const a1 = `'${tabName.replace(/'/g, "''")}'`;
   const res = await fetch(
     `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${encodeURIComponent(
-      a1
+      a1Range(tabName)
     )}?key=${import.meta.env.REACT_APP_GOOGLE_API_KEY}`
   );
   if (!res.ok) {

@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { Day } from "../components/ScheduleLayout";
-import { OtherTab, fetchTab, parseOtherTab } from "../services/googleSheets";
+import {
+  OtherTab,
+  fetchDayTabs,
+  parseOtherTab,
+} from "../services/googleSheets";
 
 export function useOtherTab(day: Day) {
   const [data, setData] = useState<OtherTab | null>(null);
@@ -10,8 +14,8 @@ export function useOtherTab(day: Day) {
     let cancelled = false;
     setData(null);
     setFailed(false);
-    fetchTab(`Other DD${day}`)
-      .then((values) => {
+    fetchDayTabs(day)
+      .other.then((values) => {
         if (cancelled) return;
         setData(parseOtherTab(values));
       })
