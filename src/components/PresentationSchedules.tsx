@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Disclosure, Transition } from "@headlessui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
@@ -15,29 +15,24 @@ function escapeRegExp(str: string) {
   return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-function fuzzyMatch(pattern: string, str: string) {
-  pattern = pattern.normalize().toLowerCase();
-  str = str.normalize().toLowerCase();
-  pattern =
-    <span>.*</span> +
-    pattern
-      .split("")
-      .map((l) => `${escapeRegExp(l)}.*`)
-      .join("");
-  const re = new RegExp(pattern);
-  return re.test(str);
+// "abc" -> /a.*b.*c/: the search letters in order, anywhere in the text.
+function fuzzyPattern(search: string): RegExp {
+  return new RegExp(
+    search.normalize().toLowerCase().split("").map(escapeRegExp).join(".*")
+  );
 }
 
 function filteredCategories(
   categories: Category[],
   search: string
 ): Category[] {
+  const pattern = fuzzyPattern(search);
   let outCat: Category[] = [];
   categories.forEach((cat) => {
     let outSections: Record<string, Presentation[]> = {};
     for (const [section, presentations] of Object.entries(cat.presentations)) {
       let newPresentations = presentations.filter((p: Presentation) =>
-        fuzzyMatch(search, p.group || "")
+        pattern.test((p.group || "").normalize().toLowerCase())
       );
 
       if (newPresentations.length > 0) {
@@ -320,6 +315,12 @@ const PresentationSchedules = ({ day }: { day: Day }) => {
     };
   }, [day]);
 
+  const shownCategories = useMemo(
+    () =>
+      searchTerm ? filteredCategories(categories, searchTerm) : categories,
+    [categories, searchTerm]
+  );
+
   return (
     <div id="presentation" className="flex justify-center py-12">
       <div className="w-full lg:w-1/2 pb-10 px-4 lg:px-0 text-left">
@@ -349,10 +350,7 @@ const PresentationSchedules = ({ day }: { day: Day }) => {
           </p>
         )}
         <div className="rounded-2xl pb-5">
-          {(searchTerm
-            ? filteredCategories(categories, searchTerm)
-            : categories
-          ).map((category, i) => (
+          {shownCategories.map((category, i) => (
             <CategoryDisclosure
               key={i}
               category={category}
