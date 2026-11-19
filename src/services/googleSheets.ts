@@ -40,6 +40,13 @@ export function fetchDayTabs(day: string): {
   return { presentations, other };
 }
 
+// Starts loading both days' tabs in one request so the judge and student
+// pages find them cached. Results land in the cache; nothing to await here.
+export function prefetchScheduleTabs(): void {
+  if (!config.sheetId) return;
+  fetchTabs(["DD1", "Other DD1", "DD2", "Other DD2"]);
+}
+
 // Returns one promise per tab, in order. Tabs not yet cached are fetched in a
 // single request, and each tab keeps its own cache entry.
 export function fetchTabs(tabNames: string[]): Promise<string[][]>[] {
