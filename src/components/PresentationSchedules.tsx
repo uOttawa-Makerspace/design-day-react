@@ -7,6 +7,7 @@ import {
   Category,
   Presentation,
   fetchDayTabs,
+  followTab,
   parsePresentations,
 } from "../services/googleSheets";
 import { Day } from "./ScheduleLayout";
@@ -296,23 +297,19 @@ const PresentationSchedules = ({ day }: { day: Day }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    let cancelled = false;
-    fetchDayTabs(day)
-      .presentations.then((values) => {
-        if (cancelled) return;
+    return followTab(
+      fetchDayTabs(day).presentations,
+      (values) => {
         // The parser reads the tab from row 2 down, as the old A2 range did.
         setCategories(parsePresentations(values.slice(1)));
         setLoadFailed(false);
-      })
-      .catch((err) => {
-        if (cancelled) return;
+      },
+      (err) => {
         console.error(err);
         setCategories([]);
         setLoadFailed(true);
-      });
-    return () => {
-      cancelled = true;
-    };
+      }
+    );
   }, [day]);
 
   const shownCategories = useMemo(

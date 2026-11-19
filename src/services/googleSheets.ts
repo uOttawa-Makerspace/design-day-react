@@ -16,9 +16,26 @@ export interface Presentation {
   project_repo?: string;
 }
 
-// Tabs already requested this session, keyed by sheet id and tab, so
-// switching between pages or days reuses the first request.
-const tabCache = new Map<string, Promise<string[][]>>();
+// Fetched tabs older than this are requested again on the next load.
+export const TAB_CACHE_TTL_MS = 5 * 60 * 1000;
+
+interface TabEntry {
+  values?: string[][]; // last good data, if any
+  fetchedAt: number; // when `values` arrived
+  pending?: Promise<string[][]>; // request in flight
+}
+
+// What a caller gets for one tab: data it can show now (`cached`), and a
+// request whose result should replace it (`pending`). A fresh tab has only
+// `cached`; a stale one has both; a tab never loaded has only `pending`.
+export interface TabLoad {
+  cached?: string[][];
+  pending?: Promise<string[][]>;
+}
+
+// Tabs requested this session, keyed by sheet id and tab, so switching
+// between pages or days reuses them.
+const tabCache = new Map<string, TabEntry>();
 
 export function resetTabCache(): void {
   tabCache.clear();
@@ -27,8 +44,8 @@ export function resetTabCache(): void {
 // A day's presentation tab and its "Other" tab (schedules and food), loaded
 // together in one request.
 export function fetchDayTabs(day: string): {
-  presentations: Promise<string[][]>;
-  other: Promise<string[][]>;
+  presentations: TabLoad;
+  other: TabLoad;
 } {
   const [presentations, other] = fetchTabs([`DD${day}`, `Other DD${day}`]);
   return { presentations, other };
@@ -41,30 +58,81 @@ export function prefetchScheduleTabs(): void {
   fetchTabs(["DD1", "Other DD1", "DD2", "Other DD2"]);
 }
 
-// Returns one promise per tab, in order. Tabs not yet cached are fetched in a
-// single request, and each tab keeps its own cache entry.
+// Returns one load per tab, in order. Tabs never loaded, or loaded more than
+// TAB_CACHE_TTL_MS ago, are fetched in a single request, and each tab keeps its
+// own cache entry.
 // Each tab is requested as its used range: Sheets returns rows from A1 down to
 // the last row and column that hold a value, so nothing past the data is sent.
-export function fetchTabs(tabNames: string[]): Promise<string[][]>[] {
+export function fetchTabs(tabNames: string[]): TabLoad[] {
   const sheetId = config.sheetId;
-  if (!sheetId) return requestTabs(sheetId, tabNames);
+  if (!sheetId) {
+    return requestTabs(sheetId, tabNames).map((pending) => ({ pending }));
+  }
 
   const key = (tabName: string) => JSON.stringify([sheetId, tabName]);
-  const missing = Array.from(new Set(tabNames)).filter(
-    (tabName) => !tabCache.has(key(tabName))
+  const due = Array.from(new Set(tabNames)).filter((tabName) =>
+    isDue(tabCache.get(key(tabName)))
   );
-  requestTabs(sheetId, missing).forEach((request, i) =>
-    remember(key(missing[i]), request)
+  requestTabs(sheetId, due).forEach((request, i) =>
+    track(key(due[i]), request)
   );
-  return tabNames.map((tabName) => tabCache.get(key(tabName))!);
+  return tabNames.map((tabName) => {
+    const entry = tabCache.get(key(tabName))!;
+    return { cached: entry.values, pending: entry.pending };
+  });
 }
 
-function remember(key: string, request: Promise<string[][]>): void {
-  tabCache.set(key, request);
-  // A failed request is dropped so the next call tries again.
-  request.catch(() => {
-    if (tabCache.get(key) === request) tabCache.delete(key);
-  });
+function isDue(entry: TabEntry | undefined): boolean {
+  if (!entry) return true;
+  return !entry.pending && Date.now() - entry.fetchedAt >= TAB_CACHE_TTL_MS;
+}
+
+function track(key: string, request: Promise<string[][]>): void {
+  const entry: TabEntry = tabCache.get(key) ?? { fetchedAt: 0 };
+  entry.pending = request;
+  tabCache.set(key, entry);
+  request.then(
+    (values) => {
+      entry.values = values;
+      entry.fetchedAt = Date.now();
+      entry.pending = undefined;
+    },
+    () => {
+      entry.pending = undefined;
+      // Old data stays (and is retried next load); with none, the entry goes.
+      if (!entry.values && tabCache.get(key) === entry) tabCache.delete(key);
+    }
+  );
+}
+
+// Passes a tab's data to `onValues`: the cached data at once, then the result
+// of a request in flight. A failed refresh keeps the cached data on screen;
+// `onError` runs only when there is no data to show. Returns a cancel function.
+export function followTab(
+  load: TabLoad,
+  onValues: (values: string[][]) => void,
+  onError: (error: unknown) => void
+): () => void {
+  let active = true;
+  if (load.cached) {
+    try {
+      onValues(load.cached);
+    } catch (error) {
+      onError(error);
+    }
+  }
+  load.pending
+    ?.then((values) => {
+      if (active) onValues(values);
+    })
+    .catch((error) => {
+      if (!active) return;
+      if (load.cached) console.warn("Keeping the cached sheet data", error);
+      else onError(error);
+    });
+  return () => {
+    active = false;
+  };
 }
 
 function requestTabs(

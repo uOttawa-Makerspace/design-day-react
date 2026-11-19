@@ -3,6 +3,7 @@ import { Day } from "../components/ScheduleLayout";
 import {
   OtherTab,
   fetchDayTabs,
+  followTab,
   parseOtherTab,
 } from "../services/googleSheets";
 
@@ -11,22 +12,19 @@ export function useOtherTab(day: Day) {
   const [failed, setFailed] = useState(false);
 
   useEffect(() => {
-    let cancelled = false;
     setData(null);
     setFailed(false);
-    fetchDayTabs(day)
-      .other.then((values) => {
-        if (cancelled) return;
+    return followTab(
+      fetchDayTabs(day).other,
+      (values) => {
         setData(parseOtherTab(values));
-      })
-      .catch((err) => {
-        if (cancelled) return;
+        setFailed(false);
+      },
+      (err) => {
         console.error(err);
         setFailed(true);
-      });
-    return () => {
-      cancelled = true;
-    };
+      }
+    );
   }, [day]);
 
   return { data, failed };
