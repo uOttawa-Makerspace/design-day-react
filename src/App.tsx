@@ -1,21 +1,23 @@
-import Header from "./pages/Header";
-import Home from "./pages/Home";
-import GeneralSchedule from "./pages/GeneralSchedule";
-import Sponsors from "./pages/Sponsors";
-import Footer from "./pages/Footer";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import HomePage from "./pages/HomePage";
+import JudgePage from "./pages/JudgePage";
+import StudentPage from "./pages/StudentPage";
 import "./i18n";
-import PresentationSchedules from "./pages/PresentationSchedules";
 
 function App() {
   return (
-    <div>
+    <Router>
       <Header />
-      <Home />
-      <GeneralSchedule />
-      <PresentationSchedules />
-      <Sponsors />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/judges" element={<JudgePage />} />
+        <Route path="/students" element={<StudentPage />} />
+      </Routes>
       <Footer />
-    </div>
+    </Router>
   );
 }
+
 export default App;
