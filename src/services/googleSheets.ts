@@ -24,12 +24,6 @@ export function resetTabCache(): void {
   tabCache.clear();
 }
 
-// Fetches the tab's used range: Sheets returns rows from A1 down to the last
-// row and column that hold a value, so nothing past the data is scanned or sent.
-export function fetchTab(tabName: string): Promise<string[][]> {
-  return fetchTabs([tabName])[0];
-}
-
 // A day's presentation tab and its "Other" tab (schedules and food), loaded
 // together in one request.
 export function fetchDayTabs(day: string): {
@@ -49,6 +43,8 @@ export function prefetchScheduleTabs(): void {
 
 // Returns one promise per tab, in order. Tabs not yet cached are fetched in a
 // single request, and each tab keeps its own cache entry.
+// Each tab is requested as its used range: Sheets returns rows from A1 down to
+// the last row and column that hold a value, so nothing past the data is sent.
 export function fetchTabs(tabNames: string[]): Promise<string[][]>[] {
   const sheetId = config.sheetId;
   if (!sheetId) return requestTabs(sheetId, tabNames);
