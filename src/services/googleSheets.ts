@@ -16,7 +16,7 @@ export interface Presentation {
   project_repo?: string;
 }
 
-// Tabs already requested this session, keyed by sheet id, tab and range, so
+// Tabs already requested this session, keyed by sheet id and tab, so
 // switching between pages or days reuses the first request.
 const tabCache = new Map<string, Promise<string[][]>>();
 
@@ -24,17 +24,16 @@ export function resetTabCache(): void {
   tabCache.clear();
 }
 
-export function fetchTab(
-  tabName: string,
-  range = "A1:ZZZ1000"
-): Promise<string[][]> {
+// Fetches the tab's used range: Sheets returns rows from A1 down to the last
+// row and column that hold a value, so nothing past the data is scanned or sent.
+export function fetchTab(tabName: string): Promise<string[][]> {
   const sheetId = config.sheetId;
-  if (!sheetId) return requestTab(sheetId, tabName, range);
+  if (!sheetId) return requestTab(sheetId, tabName);
 
-  const key = JSON.stringify([sheetId, tabName, range]);
+  const key = JSON.stringify([sheetId, tabName]);
   let request = tabCache.get(key);
   if (!request) {
-    request = requestTab(sheetId, tabName, range);
+    request = requestTab(sheetId, tabName);
     tabCache.set(key, request);
     // A failed request is dropped so the next call tries again.
     request.catch(() => {
@@ -46,10 +45,9 @@ export function fetchTab(
 
 async function requestTab(
   sheetId: string,
-  tabName: string,
-  range: string
+  tabName: string
 ): Promise<string[][]> {
-  const a1 = `'${tabName.replace(/'/g, "''")}'!${range}`;
+  const a1 = `'${tabName.replace(/'/g, "''")}'`;
   const res = await fetch(
     `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${encodeURIComponent(
       a1

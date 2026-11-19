@@ -302,10 +302,11 @@ const PresentationSchedules = ({ day }: { day: Day }) => {
 
   useEffect(() => {
     let cancelled = false;
-    fetchTab(`DD${day}`, "A2:ZZZ1000")
+    fetchTab(`DD${day}`)
       .then((values) => {
         if (cancelled) return;
-        setCategories(parsePresentations(values));
+        // The parser reads the tab from row 2 down, as the old A2 range did.
+        setCategories(parsePresentations(values.slice(1)));
         setLoadFailed(false);
       })
       .catch((err) => {
