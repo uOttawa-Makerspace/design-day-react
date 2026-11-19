@@ -36,7 +36,7 @@ const ScheduleLayout: React.FC<ScheduleLayoutProps> = ({ children }) => {
   return (
     <main className="pt-32">
       {/* Prompt */}
-      <div className="max-w-5xl mx-auto px-4 mb-6 text-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6 text-center">
         <p className="text-2xl font-semibold text-slate-700">
           {t("scheduleDays.selectDayTitle")}
         </p>
@@ -86,15 +86,19 @@ const ScheduleLayout: React.FC<ScheduleLayoutProps> = ({ children }) => {
       {current && (
         <>
           {/* Day Banner */}
-          <div className="max-w-5xl mx-auto px-4 mb-8">
-            <div className="flex items-center gap-3">
-              <span className="rounded-full bg-[#F84A32] px-3 py-1 text-xs font-bold uppercase tracking-wide text-white">
-                {t(`scheduleDays.${current.key}.label`)}
-              </span>
+          <div className="flex justify-center mb-8">
+            <div className="w-full lg:w-1/2 px-4 lg:px-0">
+              <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-5 py-3.5 shadow-sm">
+                <span className="text-lg font-bold text-[#F84A32]">
+                  {t(`scheduleDays.${current.key}.label`)}
+                </span>
 
-              <span className="text-lg font-semibold text-slate-700">
-                {t(`scheduleDays.${current.key}.longDate`)}
-              </span>
+                <span className="text-slate-300">—</span>
+
+                <span className="text-lg font-semibold text-slate-700">
+                  {t(`scheduleDays.${current.key}.longDate`)}
+                </span>
+              </div>
             </div>
           </div>
 
