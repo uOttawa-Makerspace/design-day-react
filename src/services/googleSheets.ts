@@ -79,13 +79,29 @@ function requestTabs(
     return tabNames.map((tabName) => requestTab(sheetId, tabName));
   }
   const batch = requestBatch(sheetId, tabNames);
-  // batchGet fails as a whole when any one tab is missing. Fall back to one
-  // request per tab so a missing tab does not hide the others.
+  // batchGet fails as a whole when any one range is bad, such as a missing
+  // tab (400 or 404). Only then fall back to one request per tab, so a missing
+  // tab does not hide the others. Other failures (429, 5xx, network) reject
+  // every tab: retrying them would only add to quota pressure.
   return tabNames.map((tabName, i) =>
     batch.then(
       (tabs) => tabs[i] ?? [],
-      () => requestTab(sheetId, tabName)
+      (error) =>
+        isBadRange(error) ? requestTab(sheetId, tabName) : Promise.reject(error)
     )
+  );
+}
+
+class SheetsRequestError extends Error {
+  constructor(what: string, readonly status: number) {
+    super(`Sheets request for ${what} failed (${status})`);
+  }
+}
+
+function isBadRange(error: unknown): boolean {
+  return (
+    error instanceof SheetsRequestError &&
+    (error.status === 400 || error.status === 404)
   );
 }
 
@@ -106,9 +122,7 @@ async function requestBatch(
     }`
   );
   if (!res.ok) {
-    throw new Error(
-      `Sheets request for ${tabNames.join(", ")} failed (${res.status})`
-    );
+    throw new SheetsRequestError(tabNames.join(", "), res.status);
   }
   const data = await res.json();
   const valueRanges: { values?: string[][] }[] = Array.isArray(
@@ -131,7 +145,7 @@ async function requestTab(
     )}?key=${import.meta.env.REACT_APP_GOOGLE_API_KEY}`
   );
   if (!res.ok) {
-    throw new Error(`Sheets request for "${tabName}" failed (${res.status})`);
+    throw new SheetsRequestError(`"${tabName}"`, res.status);
   }
   const data = await res.json();
   return Array.isArray(data?.values) ? data.values : [];
