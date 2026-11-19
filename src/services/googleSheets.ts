@@ -16,17 +16,44 @@ export interface Presentation {
   project_repo?: string;
 }
 
-export async function fetchTab(
+// Tabs already requested this session, keyed by sheet id, tab and range, so
+// switching between pages or days reuses the first request.
+const tabCache = new Map<string, Promise<string[][]>>();
+
+export function resetTabCache(): void {
+  tabCache.clear();
+}
+
+export function fetchTab(
   tabName: string,
   range = "A1:ZZZ1000"
 ): Promise<string[][]> {
+  const sheetId = config.sheetId;
+  if (!sheetId) return requestTab(sheetId, tabName, range);
+
+  const key = JSON.stringify([sheetId, tabName, range]);
+  let request = tabCache.get(key);
+  if (!request) {
+    request = requestTab(sheetId, tabName, range);
+    tabCache.set(key, request);
+    // A failed request is dropped so the next call tries again.
+    request.catch(() => {
+      if (tabCache.get(key) === request) tabCache.delete(key);
+    });
+  }
+  return request;
+}
+
+async function requestTab(
+  sheetId: string,
+  tabName: string,
+  range: string
+): Promise<string[][]> {
   const a1 = `'${tabName.replace(/'/g, "''")}'!${range}`;
   const res = await fetch(
-    `https://sheets.googleapis.com/v4/spreadsheets/${
-      config.sheetId
-    }/values/${encodeURIComponent(a1)}?key=${
-      import.meta.env.REACT_APP_GOOGLE_API_KEY
-    }`
+    `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${encodeURIComponent(
+      a1
+    )}?key=${import.meta.env.REACT_APP_GOOGLE_API_KEY}`
   );
   if (!res.ok) {
     throw new Error(`Sheets request for "${tabName}" failed (${res.status})`);
