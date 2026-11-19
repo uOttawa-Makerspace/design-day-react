@@ -85,7 +85,7 @@ function requestTabs(
   // every tab: retrying them would only add to quota pressure.
   return tabNames.map((tabName, i) =>
     batch.then(
-      (tabs) => tabs[i] ?? [],
+      (tabs) => tabs[i],
       (error) =>
         isBadRange(error) ? requestTab(sheetId, tabName) : Promise.reject(error)
     )
@@ -125,13 +125,32 @@ async function requestBatch(
     throw new SheetsRequestError(tabNames.join(", "), res.status);
   }
   const data = await res.json();
-  const valueRanges: { values?: string[][] }[] = Array.isArray(
+  const valueRanges: { range?: string; values?: string[][] }[] = Array.isArray(
     data?.valueRanges
   )
     ? data.valueRanges
     : [];
+  // One range per requested tab, in order. Anything else is a failure rather
+  // than an empty tab, so it is not cached.
+  if (
+    valueRanges.length !== tabNames.length ||
+    !valueRanges.every((range, i) => rangeIsTab(range?.range, tabNames[i]))
+  ) {
+    throw new Error(
+      `Sheets batch for ${tabNames.join(", ")} did not match the request`
+    );
+  }
   return valueRanges.map((range) =>
-    Array.isArray(range?.values) ? range.values : []
+    Array.isArray(range.values) ? range.values : []
+  );
+}
+
+// Sheets echoes each range as "Tab!A1:Z9", quoting the tab name when needed.
+function rangeIsTab(range: string | undefined, tabName: string): boolean {
+  return (
+    typeof range === "string" &&
+    (range.startsWith(`${a1Range(tabName)}!`) ||
+      range.startsWith(`${tabName}!`))
   );
 }
 
