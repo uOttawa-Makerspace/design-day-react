@@ -12,7 +12,7 @@ const Home = () => {
       className="md:min-h-[650px] bg-[#1a2332] text-white flex items-center overflow-hidden"
     >
       {/* Standardized container: px-4 sm:px-6 lg:px-8 */}
-      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20 lg:pt-24 pb-12 md:pb-16 lg:pb-24 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-8 lg:gap-12 items-center">
+      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 lg:pt-32 pb-12 md:pb-16 lg:pb-24 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-8 lg:gap-12 items-center">
         {/* Left text block: zero internal margins/padding */}
         <div className="text-center md:text-left">
           <h1 className="mt-0 mb-4 flex flex-col">
