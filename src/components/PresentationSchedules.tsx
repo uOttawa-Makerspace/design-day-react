@@ -78,32 +78,86 @@ const DisplayTd = ({
   presentationSection,
   presentation,
   cell,
-  with_link = false,
 }: {
   category: Category;
   presentationSection: string;
   presentation: Presentation;
   cell: keyof Presentation;
-  with_link?: boolean;
 }) => {
   return category.presentations[presentationSection].some((el) => el[cell]) ? (
-    with_link ? (
-      <td className="px-5 py-5 border-b border-gray-300 text-sm">
-        <p className="text-gray-900 whitespace-no-wrap">
-          {presentation[cell]?.includes("https://") ? (
-            <a className="underline" href={presentation[cell]}>
-              {presentation[cell]}
-            </a>
-          ) : (
-            presentation[cell]
-          )}
-        </p>
-      </td>
-    ) : (
-      <td className="px-5 py-5 border-b border-gray-300 text-sm">
-        <p className="text-gray-900 whitespace-no-wrap">{presentation[cell]}</p>
-      </td>
-    )
+    <td className="px-5 py-5 border-b border-gray-300 text-sm">
+      <p className="text-gray-900 whitespace-no-wrap">{presentation[cell]}</p>
+    </td>
+  ) : null;
+};
+
+const PROJECT_CELLS = [
+  "project",
+  "project_description",
+  "project_repo",
+] as const;
+
+const sectionHasProject = (category: Category, presentationSection: string) =>
+  category.presentations[presentationSection].some((p) =>
+    PROJECT_CELLS.some((cell) => p[cell])
+  );
+
+const ProjectTh = ({
+  category,
+  presentationSection,
+}: {
+  category: Category;
+  presentationSection: string;
+}) => {
+  const { t } = useTranslation();
+  return sectionHasProject(category, presentationSection) ? (
+    <th
+      scope="col"
+      className="px-5 py-3 border-b border-gray-300 text-gray-800 text-left text-sm uppercase font-semibold"
+    >
+      {t("project")}
+    </th>
+  ) : null;
+};
+
+const LinkButton = ({ href, label }: { href?: string; label: string }) =>
+  href?.includes("https://") ? (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="block w-full rounded-lg bg-ceed px-3 py-1.5 text-center text-sm font-medium text-white hover:opacity-90 whitespace-nowrap"
+    >
+      {label}
+    </a>
+  ) : null;
+
+const ProjectTd = ({
+  category,
+  presentationSection,
+  presentation,
+}: {
+  category: Category;
+  presentationSection: string;
+  presentation: Presentation;
+}) => {
+  const { t } = useTranslation();
+  return sectionHasProject(category, presentationSection) ? (
+    <td className="px-5 py-5 border-b border-gray-300 text-sm align-top">
+      <div className="flex items-center justify-between gap-4">
+        <p className="text-gray-900">{presentation.project}</p>
+        <div className="flex flex-col gap-2 shrink-0">
+          <LinkButton
+            href={presentation.project_description}
+            label={t("description_button")}
+          />
+          <LinkButton
+            href={presentation.project_repo}
+            label={t("repository_button")}
+          />
+        </div>
+      </div>
+    </td>
   ) : null;
 };
 
@@ -138,7 +192,7 @@ const PresentationDisclosure = ({
             leaveTo="transform scale-95 opacity-0"
           >
             <Disclosure.Panel className="px-4 text-sm text-gray-500">
-              <div key={i} className="overflow-x-scroll">
+              <div key={i} className="overflow-x-auto">
                 <table className="min-w-full leading-normal">
                   <thead>
                     <tr>
@@ -157,20 +211,9 @@ const PresentationDisclosure = ({
                         presentationSection={presentationSection}
                         cell="time"
                       />
-                      <DisplayTh
+                      <ProjectTh
                         category={category}
                         presentationSection={presentationSection}
-                        cell="project"
-                      />
-                      <DisplayTh
-                        category={category}
-                        presentationSection={presentationSection}
-                        cell="project_description"
-                      />
-                      <DisplayTh
-                        category={category}
-                        presentationSection={presentationSection}
-                        cell="project_repo"
                       />
                     </tr>
                   </thead>
@@ -196,25 +239,10 @@ const PresentationDisclosure = ({
                             presentation={presentation}
                             cell="time"
                           />
-                          <DisplayTd
+                          <ProjectTd
                             category={category}
                             presentationSection={presentationSection}
                             presentation={presentation}
-                            cell="project"
-                          />
-                          <DisplayTd
-                            category={category}
-                            presentationSection={presentationSection}
-                            presentation={presentation}
-                            cell="project_description"
-                            with_link={true}
-                          />
-                          <DisplayTd
-                            category={category}
-                            presentationSection={presentationSection}
-                            presentation={presentation}
-                            cell="project_repo"
-                            with_link={true}
                           />
                         </tr>
                       )
