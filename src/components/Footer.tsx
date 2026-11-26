@@ -48,7 +48,7 @@ const Footer = () => {
         {new Date().getFullYear()}{" "}
         <a
           className="underline hover:opacity-80 transition-opacity"
-          href="https://engineering.uottawa.ca/CEED"
+          href="https://www.uottawa.ca/faculty-engineering/centre-entrepreneurship-engineering-design"
           target="_blank"
           rel="noopener noreferrer"
         >

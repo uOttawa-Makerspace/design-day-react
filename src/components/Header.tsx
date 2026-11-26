@@ -7,6 +7,8 @@ import { useTranslation } from "react-i18next";
 import config from "../config/config";
 import i18n from "i18next";
 import useHideOnScroll from "../hooks/useHideOnScroll";
+import ceedLogo from "../images/logos/CEED_white.png";
+import cgecLogo from "../images/logos/CGEC_white.png";
 
 const classNames = (...classes: string[]) => {
   return classes.filter(Boolean).join(" ");
@@ -16,6 +18,10 @@ const Header = () => {
   const { t } = useTranslation();
   const visible = useHideOnScroll();
   const { pathname, hash } = useLocation();
+
+  const isFrench = i18n.language?.startsWith("fr");
+  const logoSrc = isFrench ? cgecLogo : ceedLogo;
+  const logoAlt = isFrench ? "CGEC" : "CEED";
 
   useEffect(() => {
     if (pathname === "/" && hash === "#sponsors") {
@@ -45,7 +51,7 @@ const Header = () => {
   ];
 
   const toggleLanguage = () =>
-    i18n.changeLanguage(i18n.language === "fr" ? "en" : "fr", () => {
+    i18n.changeLanguage(isFrench ? "en" : "fr", () => {
       localStorage.setItem("defaultLang", i18n.language);
     });
 
@@ -74,10 +80,10 @@ const Header = () => {
               <div className="flex flex-1 items-center justify-start">
                 <div className="flex-shrink-0 mr-6">
                   <a
-                    href="https://makerepo.com"
-                    className="text-ceed font-bold text-lg hover:opacity-80 transition-opacity"
+                    href="https://www.uottawa.ca/faculty-engineering/centre-entrepreneurship-engineering-design"
+                    className="flex items-center hover:opacity-80 transition-opacity"
                   >
-                    MakerRepo
+                    <img src={logoSrc} alt={logoAlt} className="h-6 w-auto" />
                   </a>
                 </div>
 
@@ -115,7 +121,7 @@ const Header = () => {
                 onClick={toggleLanguage}
                 className="flex items-center text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
               >
-                {i18n.language === "fr" ? "EN" : "FR"}
+                {isFrench ? "EN" : "FR"}
               </button>
             </div>
           </div>
@@ -141,10 +147,10 @@ const Header = () => {
               ))}
               <Disclosure.Button
                 as="a"
-                href="https://makerepo.com"
-                className="block px-3 py-2 rounded-md text-base font-medium text-ceed hover:bg-gray-700"
+                href="https://www.uottawa.ca/faculty-engineering/centre-entrepreneurship-engineering-design"
+                className="block px-3 py-2 rounded-md hover:bg-gray-700"
               >
-                MakerRepo
+                <img src={logoSrc} alt={logoAlt} className="h-5 w-auto" />
               </Disclosure.Button>
             </div>
           </Disclosure.Panel>
