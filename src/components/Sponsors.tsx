@@ -1,6 +1,6 @@
 import sponsorNSERC from "../images/sponsors/NSERC.png";
 import sponsorResolute from "../images/sponsors/resolute-forest-products-transparent.png";
-import sponsorYear3000 from "../images/sponsors/Year3000GroupTransparentLogo.png";
+import peo from "../images/sponsors/PEO.png";
 import sponsorUOttawa from "../images/sponsors/uOttawa_HOR_BLACK.png";
 import sponsorCNL from "../images/sponsors/CNLLNC_LOGO_V_RGB.png";
 import sponsorSSC from "../images/sponsors/wordmark_C.png.png";
@@ -37,15 +37,15 @@ const Sponsors = () => {
         </p>
 
         {/* Logos */}
-        <div className="mx-auto max-w-5xl flex flex-wrap items-center justify-center gap-x-12 gap-y-12">
+        <div className="mx-auto max-w-3xl flex flex-wrap items-center justify-center gap-x-12 gap-y-12">
           <img
             src={sponsorUOttawa}
             alt="University of Ottawa"
             className="h-20 sm:h-24 w-auto max-w-[80%] sm:max-w-[360px] object-contain"
           />
           <img
-            src={sponsorSSC}
-            alt="Shared Services Canada"
+            src={peo}
+            alt="Professional Engineers Ontario"
             className={logoClasses}
           />
           <img
@@ -57,11 +57,6 @@ const Sponsors = () => {
           <img
             src={sponsorResolute}
             alt="Resolute Forest Products"
-            className={logoClasses}
-          />
-          <img
-            src={sponsorYear3000}
-            alt="Year 3000 Group"
             className={logoClasses}
           />
         </div>

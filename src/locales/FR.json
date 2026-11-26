@@ -3,15 +3,16 @@
   "schedule": "Horaire",
   "presentations": "Présentations",
   "search_prompt": "Rechercher des présentations...",
-  "sponsors": "Partenaires",
+  "sponsors": "Commenditaires",
   "makerepo": "MakerRepo",
   "students": "Étudiants",
   "judges": "Juges",
   "design_day": "Journée du design",
-  "home_paragraph": "Ingéniosité et créativité en valeur! La Journée du design saura vous épater par notre innovation et inspiration étudiante! En collaboration avec des partenaires de l'industrie et de la communauté, nos étudiants ont développé des solutions concrètes pour leurs clients. Cet événement offre l'opportunité aux étudiants de présenter leurs projets de conception, de célébrer leur réussite et de gagner des prix. Pour plus d'informations sur la Journée du design, ",
-  "what_is_design_day": "cliquez ici",
-  "what_is_design_day_url": "https://www.uottawa.ca/faculte-genie/centre-genie-entrepreneurial-conception/journee-design",
+  "home_paragraph": "La créativité et l’ingéniosité en vedette! La Journée du design promet de vous émerveiller par l’innovation et l’inspiration dont font preuve nos étudiantes et étudiants. Par l’entremise du <ceedLink>Centre en génie entrepreneurial de la conception (CGEC)</ceedLink>, ils travaillent en étroite collaboration avec des partenaires externes de la Faculté de génie pour concevoir des solutions destinées à de véritables clients. L’événement met de l’avant les projets de conception en ingénierie et célèbre les réalisations étudiantes. Pour en savoir plus sur la Journée du design, <designDayLink>cliquez ici</designDayLink>.",
+  "ceed_url": "https://www.uottawa.ca/faculty-engineering/centre-entrepreneurship-engineering-design",
+  "what_is_design_day_url": "https://www.uottawa.ca/faculte-genie/centre-genie-entrepreneurial-conception/journee-conception",
   "schedule_paragraph": "Bienvenue à la journée de design de l'{{ semester }} {{ year }}.",
+  "presented_by": "par",
   "semesters": {
     "fall": "Automne",
     "winter": "Hiver",
@@ -53,17 +54,19 @@
   "presentation_schedule": "Horaire des présentations",
   "schedule_unavailable": "Le programme des présentations est indisponible pour le moment. Veuillez réessayer plus tard.",
 
-  "winnersSubtitle": "Félicitations à tous les participants pour leur travail acharné et leur dévouement! Découvrez les équipes qui ont remporté les principaux prix au cours des années passées.",
+  "winnersSubtitle": "Félicitations à tous les participants pour leur travail acharné et leur dévouement! Découvrez les équipes qui ont remporté les prix au cours des années passées.",
   "viewPastWinners": "Voir les gagnants passés",
   "viewPastPictures": "Voir les images des années passées",
   "winners": "Gagnants",
 
-  "sponsorsThanks": "Merci à nos commanditaires de rendre possible la journée du design.",
+  "sponsorsThanks": "Merci à nos commanditaires pour avoir fait de Design Day un succès.",
 
   "scheduleDays": {
     "selectDayTitle": "Sélectionnez une journée",
-    "selectDaySubtitle": "Choisissez la Journée 1 ou la Journée 2 ci-dessous pour consulter l'horaire, les informations sur la nourriture, tous les détails des présentations et les plans des étages.",
+    "selectDaySubtitle": "Choisissez une journée ci-dessous pour consulter l'horaire, les informations sur la nourriture, tous les détails des présentations et les plans des étages.",
     "ariaTablistLabel": "Journée de l'événement",
+    "viewSchedule": "Voir l'horaire",
+    "viewing": "Affichage en cours",
     "day1": {
       "label": "Journée 1",
       "date": "Mer. 2 déc.",

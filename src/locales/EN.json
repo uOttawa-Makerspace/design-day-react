@@ -8,10 +8,11 @@
   "students": "Students",
   "judges": "Judges",
   "design_day": "Design Day",
-  "home_paragraph": "Creativity and ingenuity on display! Design Day promises to amaze you with our students' innovation and inspiration! Students have worked closely with external partners of the Faculty to develop solutions for real clients. This event showcases engineering design projects, and celebrates the achievements of our students. For more information on Design Day,",
-  "what_is_design_day": "click here",
+  "home_paragraph": "Creativity and ingenuity on display! Design Day promises to amaze you with our students' innovation and inspiration! Through the <ceedLink>Centre for Entrepreneurship and Engineering Design (CEED)</ceedLink>, students have worked closely with external partners of the Faculty of Engineering to develop solutions for real clients. This event showcases engineering design projects, and celebrates the achievements of our students. For more information on Design Day, <designDayLink>click here</designDayLink>.",
+  "ceed_url": "https://www.uottawa.ca/faculty-engineering/centre-entrepreneurship-engineering-design",
   "what_is_design_day_url": "https://www.uottawa.ca/faculty-engineering/centre-entrepreneurship-engineering-design/design-day",
   "schedule_paragraph": "Welcome to the {{ semester }} {{ year }} Design day.",
+  "presented_by": "by",
   "semesters": {
     "fall": "Fall",
     "winter": "Winter",
@@ -52,7 +53,7 @@
   "presentation_schedule": "Presentation Schedule",
   "schedule_unavailable": "The presentation schedule is unavailable right now. Please try again later.",
 
-  "winnersSubtitle": "Congratulations to all the participants for their hard work and dedication! See the teams who took home top prizes in past years.",
+  "winnersSubtitle": "Congratulations to all the participants for their hard work and dedication! See the teams who took home prizes in past years.",
   "viewPastWinners": "View past winners",
   "viewPastPictures": "View past years' pictures",
   "winners": "Winners",
@@ -61,8 +62,10 @@
 
   "scheduleDays": {
     "selectDayTitle": "Select a day",
-    "selectDaySubtitle": "Choose Day 1 or Day 2 below to view the schedule, food information, all presentation details and floor plans.",
+    "selectDaySubtitle": "Pick a day to view the schedule, food information, all presentation details and floor plans.",
     "ariaTablistLabel": "Event day",
+    "viewSchedule": "View schedule",
+    "viewing": "Viewing",
     "day1": {
       "label": "Day 1",
       "date": "Wed, Dec 2",

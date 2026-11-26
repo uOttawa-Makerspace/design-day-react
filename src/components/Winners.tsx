@@ -9,6 +9,23 @@ const PAST_WINNERS_URL =
 const PAST_PICTURES_URL =
   "https://www.flickr.com/photos/uottawa-genie-engineering/albums/";
 
+const ArrowIcon: React.FC = () => (
+  <svg
+    className="h-5 w-5 shrink-0 transition-transform duration-300 group-hover:translate-x-1.5"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    strokeWidth={2.5}
+    aria-hidden="true"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M5 12h14m-6-6 6 6-6 6"
+    />
+  </svg>
+);
+
 const Winners: React.FC = () => {
   const { t } = useTranslation();
 
@@ -34,17 +51,25 @@ const Winners: React.FC = () => {
                 href={PAST_WINNERS_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block rounded-xl px-6 py-4 bg-ceed text-white text-lg font-medium transition-opacity hover:opacity-90"
+                className="group inline-flex items-center justify-between gap-3 rounded-xl px-6 py-4 bg-ceed text-white text-lg font-medium shadow-lg shadow-ceed/20 transition-all duration-300 hover:opacity-95 hover:scale-[1.02] hover:shadow-ceed/40 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ceed/50"
               >
-                {t("viewPastWinners", { defaultValue: "View past winners" })}
+                <span>
+                  {t("viewPastWinners", { defaultValue: "View past winners" })}
+                </span>
+                <ArrowIcon />
               </a>
               <a
                 href={PAST_PICTURES_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block rounded-xl px-6 py-4 bg-ceed text-white text-lg font-medium transition-opacity hover:opacity-90"
+                className="group inline-flex items-center justify-between gap-3 rounded-xl px-6 py-4 bg-ceed text-white text-lg font-medium shadow-lg shadow-ceed/20 transition-all duration-300 hover:opacity-95 hover:scale-[1.02] hover:shadow-ceed/40 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ceed/50"
               >
-                {t("viewPastPictures", { defaultValue: "View past pictures" })}
+                <span>
+                  {t("viewPastPictures", {
+                    defaultValue: "View past pictures",
+                  })}
+                </span>
+                <ArrowIcon />
               </a>
             </div>
           </div>
