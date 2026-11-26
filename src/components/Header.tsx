@@ -59,7 +59,7 @@ const Header = () => {
     <Disclosure
       as="nav"
       className={classNames(
-        "fixed top-0 left-0 w-full z-50 bg-[#1a2332]/90 backdrop-blur",
+        "fixed top-0 left-0 w-full z-50 bg-[#1a2332]/80 backdrop-blur-md border-b border-white/10 shadow-lg shadow-black/20",
         "transition-transform duration-300",
         visible ? "translate-y-0" : "-translate-y-full"
       )}

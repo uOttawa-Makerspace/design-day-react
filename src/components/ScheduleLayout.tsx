@@ -3,8 +3,6 @@ import { useTranslation } from "react-i18next";
 
 export type Day = "1" | "2";
 
-//to handle the layout of the schedule page, including the day toggle switch and the display of the schedule content for the selected day.
-
 interface ScheduleLayoutProps {
   children: (day: Day) => React.ReactNode;
 }
@@ -13,6 +11,36 @@ const getInitialDay = (): Day | null => {
   const param = new URLSearchParams(window.location.search).get("day");
   return param === "1" || param === "2" ? param : null;
 };
+
+const ArrowIcon = () => (
+  <svg
+    viewBox="0 0 20 20"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="h-5 w-5 transition-transform duration-200 motion-safe:group-hover:translate-x-1"
+    aria-hidden="true"
+  >
+    <path d="M4 10h12M11 5l5 5-5 5" />
+  </svg>
+);
+
+const CheckIcon = () => (
+  <svg
+    viewBox="0 0 20 20"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="h-5 w-5"
+    aria-hidden="true"
+  >
+    <path d="M4 10.5l4 4 8-9" />
+  </svg>
+);
 
 const ScheduleLayout: React.FC<ScheduleLayoutProps> = ({ children }) => {
   const { t } = useTranslation();
@@ -27,86 +55,72 @@ const ScheduleLayout: React.FC<ScheduleLayoutProps> = ({ children }) => {
 
   const selectDay = (day: Day) => {
     setActiveDay(day);
-
     const url = new URL(window.location.href);
     url.searchParams.set("day", day);
     window.history.replaceState({}, "", url);
   };
 
   return (
-    <main className="pt-32">
-      {/* Prompt */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6 text-center">
-        <p className="text-2xl font-semibold text-slate-700">
+    <main className="pt-28 pb-16 px-1 sm:px-4">
+      {/* Heading */}
+      <header className="mx-auto max-w-4xl px-0 text-center">
+        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-slate-900">
           {t("scheduleDays.selectDayTitle")}
-        </p>
-
-        <p className="mt-2 text-slate-500">
+        </h1>
+        <p className="mx-auto mt-3 max-w-none text-base sm:text-lg text-slate-600">
           {t("scheduleDays.selectDaySubtitle")}
         </p>
-      </div>
+      </header>
 
-      {/* Day Toggle Switch */}
-      <div className={`flex justify-center ${current ? "mb-6" : "mb-16"}`}>
-        <div
-          role="tablist"
-          aria-label={t("scheduleDays.ariaTablistLabel") as string}
-          className="inline-flex rounded-xl bg-slate-100 p-1.5 border border-slate-200"
-        >
-          {days.map((day) => {
-            const selected = activeDay === day.id;
+      {/* Day selector */}
+      <div
+        role="tablist"
+        aria-label={t("scheduleDays.ariaTablistLabel") as string}
+        className={`mx-auto mt-6 grid max-w-3xl grid-cols-1 gap-4 sm:grid-cols-2 ${
+          !current ? "mb-12" : ""
+        }`}
+      >
+        {days.map((day) => {
+          const selected = activeDay === day.id;
 
-            return (
-              <button
-                key={day.id}
-                role="tab"
-                aria-selected={selected}
-                onClick={() => selectDay(day.id)}
-                className={`flex flex-col items-center px-8 py-2.5 rounded-lg text-base font-bold transition-all duration-200 ${
-                  selected
-                    ? "bg-[#F84A32] text-white shadow-md"
-                    : "text-slate-500 hover:text-slate-900 hover:bg-white"
+          return (
+            <button
+              key={day.id}
+              role="tab"
+              aria-selected={selected}
+              onClick={() => selectDay(day.id)}
+              className={`group relative flex flex-col rounded-xl border-2 p-7 sm:p-6 text-left transition-colors duration-200 focus:outline-none focus-visible:ring-4 focus-visible:ring-[#F84A32]/30 ${
+                selected
+                  ? "border-[#F84A32] bg-[#F84A32] text-white"
+                  : "border-slate-300 bg-white text-[#F84A32] hover:border-slate-900"
+              }`}
+            >
+              <span className="mt-1.5 text-4xl sm:text-5xl font-bold tracking-tight">
+                {t(`scheduleDays.${day.key}.date`)}
+              </span>
+
+              <span
+                className={`mt-4 flex items-center justify-between text-lg sm:text-3xl font-semibold ${
+                  selected ? "text-white" : "text-black"
                 }`}
               >
-                <span>{t(`scheduleDays.${day.key}.label`)}</span>
-
-                <span
-                  className={`text-sm font-medium ${
-                    selected ? "text-white/90" : "text-slate-500"
-                  }`}
-                >
-                  {t(`scheduleDays.${day.key}.date`)}
-                </span>
-              </button>
-            );
-          })}
-        </div>
+                {selected
+                  ? t("scheduleDays.viewing")
+                  : t("scheduleDays.viewSchedule")}
+                {selected ? <CheckIcon /> : <ArrowIcon />}
+              </span>
+            </button>
+          );
+        })}
       </div>
 
       {current && (
         <>
-          {/* Day Banner */}
-          <div className="flex justify-center mb-8">
-            <div className="w-full lg:w-1/2 px-4 lg:px-0">
-              <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-5 py-3.5 shadow-sm">
-                <span className="text-lg font-bold text-[#F84A32]">
-                  {t(`scheduleDays.${current.key}.label`)}
-                </span>
-
-                <span className="text-slate-300">—</span>
-
-                <span className="text-lg font-semibold text-slate-700">
-                  {t(`scheduleDays.${current.key}.longDate`)}
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Schedule Content */}
+          {/* Schedule content */}
           <div
             key={current.id}
             role="tabpanel"
-            className="space-y-12 animate-[fadeIn_200ms_ease-out]"
+            className="px-4 lg:px-1 mb-10 mt-12 space-y-12 animate-[fadeIn_200ms_ease-out]"
           >
             {children(current.id)}
           </div>
