@@ -116,26 +116,11 @@ const ScheduleLayout: React.FC<ScheduleLayoutProps> = ({ children }) => {
 
       {current && (
         <>
-          {/* Day banner */}
-          <div className="mt-10 mb-8 flex justify-center">
-            <div className="w-full lg:w-1/2">
-              <div className="flex items-center gap-3 border-l-4 border-[#F84A32] bg-slate-50 px-3 py-3">
-                <span className="text-lg font-bold text-slate-900">
-                  {t(`scheduleDays.${current.key}.label`)}
-                </span>
-                <span className="text-slate-300">/</span>
-                <span className="text-lg font-medium text-slate-600">
-                  {t(`scheduleDays.${current.key}.longDate`)}
-                </span>
-              </div>
-            </div>
-          </div>
-
           {/* Schedule content */}
           <div
             key={current.id}
             role="tabpanel"
-            className="space-y-12 animate-[fadeIn_200ms_ease-out]"
+            className="px-4 lg:px-1 mb-10 mt-12 space-y-12 animate-[fadeIn_200ms_ease-out]"
           >
             {children(current.id)}
           </div>

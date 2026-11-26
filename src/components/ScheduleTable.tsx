@@ -23,8 +23,8 @@ const ScheduleTable: React.FC<ScheduleTableProps> = ({
   const title = type === "judges" ? t("judges") : t("students");
 
   return (
-    <div id="schedule" className="flex justify-center py-2">
-      <div className="w-full lg:w-1/2 px-4 lg:px-0 text-left">
+    <div id="schedule" className="flex justify-center py-5">
+      <div className="w-full lg:w-1/2 lg:px-0 text-left">
         <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-slate-900 mb-3 text-left">
           {title}
         </h2>
