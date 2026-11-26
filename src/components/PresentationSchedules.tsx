@@ -85,10 +85,30 @@ const DisplayTd = ({
   cell: keyof Presentation;
 }) => {
   return category.presentations[presentationSection].some((el) => el[cell]) ? (
-    <td className="px-5 py-5 border-b border-gray-300 text-sm">
-      <p className="text-gray-900 whitespace-no-wrap">{presentation[cell]}</p>
+    <td className={tdClass(Boolean(presentation[cell]))}>
+      <MobileLabel cell={cell} />
+      <p className="text-gray-900">{presentation[cell]}</p>
     </td>
   ) : null;
+};
+
+// Below md, each row is a stacked card ("LABEL  value" per line) instead of
+// a wide table, so nothing has to scroll sideways on phones. A line with no
+// value is hidden on phones; on desktop the empty cell stays so columns line up.
+const tdClass = (hasValue: boolean) =>
+  `${
+    hasValue ? "flex" : "hidden"
+  } items-baseline gap-3 px-1 py-1 text-sm md:table-cell md:px-5 md:py-5 md:border-b md:border-gray-300`;
+
+const isLink = (value?: string) => Boolean(value?.includes("https://"));
+
+const MobileLabel = ({ cell }: { cell: keyof Presentation }) => {
+  const { t } = useTranslation();
+  return (
+    <span className="md:hidden w-20 shrink-0 text-xs uppercase font-semibold text-gray-800">
+      {t(cell)}
+    </span>
+  );
 };
 
 const PROJECT_CELLS = [
@@ -121,12 +141,12 @@ const ProjectTh = ({
 };
 
 const LinkButton = ({ href, label }: { href?: string; label: string }) =>
-  href?.includes("https://") ? (
+  isLink(href) ? (
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="block w-full rounded-lg bg-ceed px-3 py-1.5 text-center text-sm font-medium text-white hover:opacity-90 whitespace-nowrap"
+      className="block w-full rounded-lg bg-gray-400 px-3 py-1.5 text-center text-sm font-medium text-white hover:opacity-90 whitespace-nowrap"
     >
       {label}
     </a>
@@ -143,10 +163,19 @@ const ProjectTd = ({
 }) => {
   const { t } = useTranslation();
   return sectionHasProject(category, presentationSection) ? (
-    <td className="px-5 py-5 border-b border-gray-300 text-sm align-top">
-      <div className="flex items-center justify-between gap-4">
-        <p className="text-gray-900">{presentation.project}</p>
-        <div className="flex flex-col gap-2 shrink-0">
+    <td
+      className={tdClass(
+        Boolean(presentation.project) ||
+          isLink(presentation.project_description) ||
+          isLink(presentation.project_repo)
+      )}
+    >
+      <MobileLabel cell="project" />
+      <div className="flex flex-1 flex-col gap-2 md:flex-row md:items-center md:justify-between md:gap-4">
+        {presentation.project && (
+          <p className="text-gray-900">{presentation.project}</p>
+        )}
+        <div className="flex gap-2 shrink-0 md:flex-col md:ml-auto">
           <LinkButton
             href={presentation.project_description}
             label={t("description_button")}
@@ -179,7 +208,7 @@ const PresentationDisclosure = ({
     >
       {({ open }) => (
         <div>
-          <Disclosure.Button className="flex w-full bg-ceed-light text-white my-2 items-center justify-between rounded-lg px-4 py-3 text-left text-sm font-medium focus:outline-none">
+          <Disclosure.Button className="flex w-full bg-gray-400 text-white my-2 items-center justify-between rounded-lg px-4 py-3 text-left text-sm font-medium focus:outline-none">
             <span>{presentationSection}</span>
             <FontAwesomeIcon icon={open ? faChevronUp : faChevronDown} />
           </Disclosure.Button>
@@ -193,8 +222,8 @@ const PresentationDisclosure = ({
           >
             <Disclosure.Panel className="px-4 text-sm text-gray-500">
               <div key={i} className="overflow-x-auto">
-                <table className="min-w-full leading-normal">
-                  <thead>
+                <table className="block w-full leading-normal md:table md:min-w-full">
+                  <thead className="hidden md:table-header-group">
                     <tr>
                       <DisplayTh
                         category={category}
@@ -217,10 +246,13 @@ const PresentationDisclosure = ({
                       />
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody className="block md:table-row-group">
                     {category.presentations[presentationSection].map(
                       (presentation, i) => (
-                        <tr key={i}>
+                        <tr
+                          key={i}
+                          className="block py-3 border-b border-gray-300 md:table-row md:py-0 md:border-0"
+                        >
                           <DisplayTd
                             category={category}
                             presentationSection={presentationSection}
@@ -270,9 +302,35 @@ const CategoryDisclosure = ({
     <Disclosure key={category.name}>
       {({ open }) => (
         <>
-          <Disclosure.Button className="flex w-full bg-ceed text-white my-2 items-center justify-between rounded-lg px-4 py-3 text-left text-sm font-medium focus:outline-none">
-            <span>{category.name}</span>
-            <FontAwesomeIcon icon={open ? faChevronUp : faChevronDown} />
+          {/* Rendered as a div so the Description link can sit inside it
+              (a link can't be nested in a <button>). */}
+          <Disclosure.Button
+            as="div"
+            className="flex w-full bg-ceed text-white my-2 items-center justify-between gap-3 rounded-lg px-4 py-3 text-left text-sm font-medium cursor-pointer focus:outline-none"
+          >
+            <span className="min-w-0 break-words">
+              {category.name}
+              {category.description?.includes("https://") && (
+                <>
+                  :{" "}
+                  <a
+                    href={category.description}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline hover:opacity-80"
+                    // Keep clicks and Enter/Space on the link from toggling the dropdown.
+                    onClick={(e) => e.stopPropagation()}
+                    onKeyDown={(e) => e.stopPropagation()}
+                  >
+                    {t("description_button")}
+                  </a>
+                </>
+              )}
+            </span>
+            <span className="flex items-center gap-3 shrink-0">
+              {category.location && <span>{category.location}</span>}
+              <FontAwesomeIcon icon={open ? faChevronUp : faChevronDown} />
+            </span>
           </Disclosure.Button>
           <Transition
             enter="transition duration-100 ease-out"
@@ -283,22 +341,6 @@ const CategoryDisclosure = ({
             leaveTo="transform scale-95 opacity-0"
           >
             <Disclosure.Panel className="px-4 text-sm text-gray-500">
-              <div className="p-2 items-center w-full sm:flex sm:justify-between">
-                {category.description ? (
-                  <p className="mb-2 lg:mb-0">
-                    {t("description")}{" "}
-                    <a className="underline" href={category.description}>
-                      {category.description}
-                    </a>
-                  </p>
-                ) : (
-                  <div></div>
-                )}
-                <div className="px-2 py-1 bg-ceed text-white rounded-2xl flex justify-center">
-                  {category.location}
-                </div>
-              </div>
-
               {Object.keys(category.presentations).map(
                 (presentationSection, i) => (
                   <PresentationDisclosure
