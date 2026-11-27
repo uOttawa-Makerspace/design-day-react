@@ -80,7 +80,9 @@ const Header = () => {
               <div className="flex flex-1 items-center justify-start">
                 <div className="flex-shrink-0 mr-6">
                   <a
-                    href="https://www.uottawa.ca/faculty-engineering/centre-entrepreneurship-engineering-design"
+                    href={t("ceed_url")}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="flex items-center hover:opacity-80 transition-opacity"
                   >
                     <img src={logoSrc} alt={logoAlt} className="h-6 w-auto" />
@@ -147,7 +149,9 @@ const Header = () => {
               ))}
               <Disclosure.Button
                 as="a"
-                href="https://www.uottawa.ca/faculty-engineering/centre-entrepreneurship-engineering-design"
+                href={t("ceed_url")}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="block px-3 py-2 rounded-md hover:bg-gray-700"
               >
                 <img src={logoSrc} alt={logoAlt} className="h-5 w-auto" />

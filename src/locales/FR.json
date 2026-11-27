@@ -9,8 +9,9 @@
   "judges": "Juges",
   "design_day": "Journée du design",
   "home_paragraph": "La créativité et l’ingéniosité en vedette! La Journée du design promet de vous émerveiller par l’innovation et l’inspiration dont font preuve nos étudiants. Grâce au <ceedLink>Centre en génie entrepreneurial de la conception (CGEC)</ceedLink>, ils travaillent en collaboration avec des partenaires externes de la Faculté de génie pour concevoir des solutions destinées à de véritables clients. L’événement met de l’avant les projets de conception en ingénierie et célèbre les réalisations étudiantes. Pour en savoir plus sur la Journée du design, <designDayLink>cliquez ici</designDayLink>.",
-  "ceed_url": "https://www.uottawa.ca/faculty-engineering/centre-entrepreneurship-engineering-design",
-  "what_is_design_day_url": "https://www.uottawa.ca/faculte-genie/centre-genie-entrepreneurial-conception/journee-conception",
+  "ceed_url": "https://www.uottawa.ca/faculte-genie/centre-genie-entrepreneurial-conception",
+  "what_is_design_day_url": "https://www.uottawa.ca/faculte-genie/centre-genie-entrepreneurial-conception/journee-design",
+  "past_winners_url": "https://www.uottawa.ca/faculte-genie/centre-genie-entrepreneurial-conception/gagnants-precedents",
   "schedule_paragraph": "Bienvenue à la journée de design de l'{{ semester }} {{ year }}.",
   "presented_by": "par",
   "semesters": {
@@ -55,15 +56,15 @@
   "schedule_unavailable": "Le programme des présentations est indisponible pour le moment. Veuillez réessayer plus tard.",
 
   "winnersSubtitle": "Félicitations à tous les participants pour leur travail acharné et leur dévouement! Découvrez les équipes qui ont remporté les prix au cours des années passées.",
-  "viewPastWinners": "Voir les gagnants passés",
+  "viewPastWinners": "Voir les gagnants précédents",
   "viewPastPictures": "Voir les images des années passées",
   "winners": "Gagnants",
 
-  "sponsorsThanks": "Merci à nos commanditaires pour avoir fait de Design Day un succès.",
+  "sponsorsThanks": "Merci à nos commanditaires pour avoir fait de la journée du design un succès.",
 
   "scheduleDays": {
     "selectDayTitle": "Sélectionnez une journée",
-    "selectDaySubtitle": "Choisissez une journée ci-dessous pour consulter l'horaire, les informations liées au diner, tous les détails des présentations et les plans des étages.",
+    "selectDaySubtitle": "Choisissez une journée ci-dessous pour consulter l’horaire, les informations relatives au dîner, les détails des présentations ainsi que les plans des étages.",
     "ariaTablistLabel": "Journée de l'événement",
     "viewSchedule": "Voir l'horaire",
     "viewing": "Affichage en cours",
@@ -80,7 +81,7 @@
   },
 
   "food": {
-    "title": "Diner",
+    "title": "Dîner",
     "subtitle_placeholder": "Les détails concernant les repas et rafraîchissements seront annoncés bientôt.",
     "judges_subtitle": "",
     "students_subtitle": ""
