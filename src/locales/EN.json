@@ -62,7 +62,7 @@
 
   "scheduleDays": {
     "selectDayTitle": "Select a day",
-    "selectDaySubtitle": "Pick a day to view the schedule, food information, all presentation details and floor plans.",
+    "selectDaySubtitle": "Pick a day to view the schedule, lunch information, all presentation details and floor plans.",
     "ariaTablistLabel": "Event day",
     "viewSchedule": "View schedule",
     "viewing": "Viewing",
@@ -79,7 +79,7 @@
   },
 
   "food": {
-    "title": "Food",
+    "title": "Lunch",
     "subtitle_placeholder": "Meal and refreshment details will be announced soon.",
     "judges_subtitle": "",
     "students_subtitle": ""
