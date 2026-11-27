@@ -162,20 +162,34 @@ const ProjectTd = ({
   presentation: Presentation;
 }) => {
   const { t } = useTranslation();
-  return sectionHasProject(category, presentationSection) ? (
-    <td
-      className={tdClass(
-        Boolean(presentation.project) ||
-          isLink(presentation.project_description) ||
-          isLink(presentation.project_repo)
-      )}
-    >
+  const hasProject =
+    Boolean(presentation.project) ||
+    isLink(presentation.project_description) ||
+    isLink(presentation.project_repo);
+  if (!sectionHasProject(category, presentationSection)) return null;
+  if (!hasProject) {
+    return (
+      <td className={tdClass(false)}>
+        <p className="text-gray-900">–</p>
+      </td>
+    );
+  }
+  return (
+    <td className={tdClass(true)}>
       <MobileLabel cell="project" />
-      <div className="flex flex-1 flex-col gap-2 md:flex-row md:items-center md:justify-between md:gap-4">
+      <div
+        className={`flex flex-1 flex-col gap-2 md:flex-row md:items-center md:gap-4 ${
+          presentation.project ? "md:justify-between" : ""
+        }`}
+      >
         {presentation.project && (
           <p className="text-gray-900">{presentation.project}</p>
         )}
-        <div className="flex gap-2 shrink-0 md:flex-col md:ml-auto">
+        <div
+          className={`flex gap-2 shrink-0 md:flex-col ${
+            presentation.project ? "md:ml-auto" : ""
+          }`}
+        >
           <LinkButton
             href={presentation.project_description}
             label={t("description_button")}
@@ -187,7 +201,7 @@ const ProjectTd = ({
         </div>
       </div>
     </td>
-  ) : null;
+  );
 };
 
 const PresentationDisclosure = ({
