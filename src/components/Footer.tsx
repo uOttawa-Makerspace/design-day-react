@@ -52,7 +52,7 @@ const Footer = () => {
         {new Date().getFullYear()}{" "}
         <a
           className="underline hover:opacity-80 transition-opacity"
-          href={t("ceed_url")}
+          href={t("ceed_url") ?? ""}
           target="_blank"
           rel="noopener noreferrer"
         >

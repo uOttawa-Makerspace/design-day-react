@@ -48,7 +48,7 @@ const Winners: React.FC = () => {
             {/* Buttons */}
             <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center md:justify-start gap-4">
               <a
-                href={t("past_winners_url", { defaultValue: PAST_WINNERS_URL })}
+                href={t("past_winners_url") ?? PAST_WINNERS_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group inline-flex items-center justify-between gap-3 rounded-xl px-6 py-4 bg-ceed text-white text-lg font-medium shadow-lg shadow-ceed/20 transition-all duration-300 hover:opacity-95 hover:scale-[1.02] hover:shadow-ceed/40 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ceed/50"

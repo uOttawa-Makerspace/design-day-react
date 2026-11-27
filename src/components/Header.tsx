@@ -80,7 +80,7 @@ const Header = () => {
               <div className="flex flex-1 items-center justify-start">
                 <div className="flex-shrink-0 mr-6">
                   <a
-                    href={t("ceed_url")}
+                    href={t("ceed_url") ?? ""}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center hover:opacity-80 transition-opacity"
@@ -149,7 +149,7 @@ const Header = () => {
               ))}
               <Disclosure.Button
                 as="a"
-                href={t("ceed_url")}
+                href={t("ceed_url") ?? ""}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block px-3 py-2 rounded-md hover:bg-gray-700"
