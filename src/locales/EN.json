@@ -27,6 +27,8 @@
   "project": "Project",
   "project_description": "Project Description",
   "project_repo": "Project Repository",
+  "description_button": "Description",
+  "repository_button": "Repository",
   "event": "Event",
   "location": "Location",
   "day_schedule_unavailable": "The schedule is unavailable right now. Please try again later.",
