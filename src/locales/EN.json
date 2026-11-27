@@ -11,6 +11,7 @@
   "home_paragraph": "Creativity and ingenuity on display! Design Day promises to amaze you with our students' innovation and inspiration! Through the <ceedLink>Centre for Entrepreneurship and Engineering Design (CEED)</ceedLink>, students have worked closely with external partners of the Faculty of Engineering to develop solutions for real clients. This event showcases engineering design projects, and celebrates the achievements of our students. For more information on Design Day, <designDayLink>click here</designDayLink>.",
   "ceed_url": "https://www.uottawa.ca/faculty-engineering/centre-entrepreneurship-engineering-design",
   "what_is_design_day_url": "https://www.uottawa.ca/faculty-engineering/centre-entrepreneurship-engineering-design/design-day",
+  "past_winners_url": "https://www.uottawa.ca/faculty-engineering/centre-entrepreneurship-engineering-design/past-winners",
   "schedule_paragraph": "Welcome to the {{ semester }} {{ year }} Design day.",
   "presented_by": "by",
   "semesters": {
@@ -62,7 +63,7 @@
 
   "scheduleDays": {
     "selectDayTitle": "Select a day",
-    "selectDaySubtitle": "Pick a day to view the schedule, food information, all presentation details and floor plans.",
+    "selectDaySubtitle": "Pick a day to view the schedule, lunch information, all presentation details and floor plans.",
     "ariaTablistLabel": "Event day",
     "viewSchedule": "View schedule",
     "viewing": "Viewing",
@@ -79,7 +80,7 @@
   },
 
   "food": {
-    "title": "Food",
+    "title": "Lunch",
     "subtitle_placeholder": "Meal and refreshment details will be announced soon.",
     "judges_subtitle": "",
     "students_subtitle": ""

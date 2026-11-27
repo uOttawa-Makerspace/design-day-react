@@ -19,6 +19,8 @@ const Footer = () => {
       <div className="justify-center flex gap-8 mb-4">
         <a
           href="https://www.facebook.com/uOCEED/"
+          target="_blank"
+          rel="noopener noreferrer"
           aria-label="Facebook"
           className="hover:opacity-80 transition-opacity"
         >
@@ -26,6 +28,8 @@ const Footer = () => {
         </a>
         <a
           href="https://www.instagram.com/cgec.uottawa.ceed"
+          target="_blank"
+          rel="noopener noreferrer"
           aria-label="Instagram"
           className="hover:opacity-80 transition-opacity"
         >
@@ -48,7 +52,7 @@ const Footer = () => {
         {new Date().getFullYear()}{" "}
         <a
           className="underline hover:opacity-80 transition-opacity"
-          href="https://www.uottawa.ca/faculty-engineering/centre-entrepreneurship-engineering-design"
+          href={t("ceed_url") ?? ""}
           target="_blank"
           rel="noopener noreferrer"
         >
