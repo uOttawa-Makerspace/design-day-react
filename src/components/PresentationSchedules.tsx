@@ -390,7 +390,7 @@ const PresentationSchedules = ({ day }: { day: Day }) => {
 
   return (
     <div id="presentation" className="flex justify-center py-12">
-      <div className="w-full lg:w-1/2 pb-10 px-4 lg:px-0 text-left">
+      <div className="w-full lg:w-1/2 pb-10 lg:px-0 text-left">
         <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-slate-900 mb-6 text-left">
           {t("presentation_schedule")}
         </h2>
